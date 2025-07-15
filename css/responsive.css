@@ -25,14 +25,12 @@
         justify-content: center;
         align-items: center;
         margin: 1px auto;
-    } 
-        
-}
-
+    }
     /* Dark mode toggle */
     .dark-mode-toggle {
         display: none;
-    }
+    }        
+}
 
 @media screen and (max-width: 900px){
     /* Responsive hero */

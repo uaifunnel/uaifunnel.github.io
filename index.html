@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css" media="screen">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="img/fav.png">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+
+    <!-- Json manifest for mobile icon App -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#000">
+    <!-- /Json manifest for mobile icon App -->
+
+    <!--Google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Poppins: ital, wght@0,100; 0,200; 0,300; 0,400; 0,500; 0,600; 0,700;0,800;0,900;1,100;1,200; 1,300; 1,400;1,500; 1,600;1,700;1,800; 1,900&display=swap" rel="stylesheet">
+    <!--/Google fonts-->
+
+    <!--Bootstrap icons-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!--/Bootstrap icons-->
+
+    <!--Scripts-->
+    <script src="js/script.js" defer></script>
+    <script src="js/btn-menu-mob.js" defer></script>
+    <script src="js/scrapper.js" defer></script>
+    <!--/Scripts-->
+
+    <title>UaiFunnel - Captura e Gerênciamento de Leads</title>
+
+    <!-- CSS -->
+    <style>
+
+      #doing {
+        height: auto 100vh !important;
+      }
+      #about {
+        height: 100vh !important;
+      }
+      #exportJSON:hover {
+        color: #fff;
+      }
+      #previwbtn:hover {
+        color: #fff;
+      }
+     
+      
+      /* Dark mode */
+      body.dark-mode {
+        background: #1a1a1a;
+        color: #e9ecef;
+      }
+      
+      body.dark-mode .card {
+        background: #2d2d2d;
+        border-color: #404040;
+      }
+      
+      body.dark-mode .form-control {
+        background: #404040;
+        border-color: #555;
+        color: #e9ecef;
+      }
+      
+      body.dark-mode .table {
+        background: #2d2d2d;
+        color: #e9ecef;
+      }
+      
+      body.dark-mode .table-striped > tbody > tr:nth-of-type(even) > td {
+        background: #343a402e !important;
+      }
+      
+      .navbar-brand img {
+        height: 35px;
+      }
+      
+      mark {
+        background-color: #dbf73d;
+        padding: 0 3px;
+        border-radius: 3px;
+      }
+      
+      table {
+        border-radius: 16px;
+        overflow: hidden;
+        zoom: 75%;
+      }
+      
+      /* Cabeçalho da tabela */
+      .table-responsive table thead th,
+      table thead th {
+        background: linear-gradient(135deg, #d83e4c 0%, #d83e4c 100%) !important;
+        color: #fff !important;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+      
+      /* Hover corrigido */
+      .table-responsive table tbody tr:hover td,
+      .table-hover tbody tr:hover td,
+      .table tbody tr:hover td,
+      table tbody tr:nth-child(even):hover td,
+      table tbody tr:nth-child(odd):hover td {
+          background-color: #77ebffa9 !important;
+          box-shadow: inset 0 0 0 9999px #77ebffa9 !important;
+      }
+      
+      /* Linhas alternadas */
+      .table-responsive table tbody tr:nth-child(even),
+      .table-striped > tbody > tr:nth-of-type(even) > td,
+      .table-striped > tbody > tr:nth-of-type(even) > th {
+        background: transparent !important;
+      }
+
+      table td, table th {
+        vertical-align: middle !important;
+      }
+      
+      .table-responsive {
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        max-height: 600px;
+        overflow-y: auto;
+      }
+
+      /* Indicadores de qualidade */
+      .quality-badge {
+        font-size: 0.8em;
+        padding: 5px 9px;
+        border-radius: 12px;
+        font-weight: bold;
+      }
+      .quality-high { background: #d4edda; color: #155724; }
+      .quality-medium { background: #fff3cd; color: #856404; }
+      .quality-basic { background: #f8d7da; color: #721c24; }
+
+      /* Estatísticas */
+      .stat-card {
+        background: transparent;
+        color: #d83e4c;
+        border-radius: 12px;
+        border: 1px solid #d83e4c;
+        padding: 15px;
+        text-align: center;
+        margin-bottom: 10px;
+        transition: all 0.3s ease;
+      }
+      
+      .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(216, 62, 76, 0.2);
+      }
+      /* .card-body {
+        border-radius: 32px !important;
+      } */
+
+      /* Barra de progresso */
+      .progress-container {
+        display: none;
+        margin: 15px 0;
+      }
+
+      /* Preview da busca */
+      .search-preview {
+        background: #e9ecef;
+        border-radius: 8px;
+        padding: 10px;
+        margin: 10px 0;
+        font-family: monospace;
+        font-size: 0.9em;
+      }
+      
+      /* Dark mode toggle */
+      .dark-mode-toggle {
+        position: fixed;
+        top: 5px;
+        right: 50px;
+        z-index: 1000;
+        background: #d83e4c;
+        border: none;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        color: white;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      
+      .dark-mode-toggle:hover {
+        transform: scale(1.1);
+        background: #f35461;
+      }
+      
+      /* Validação */
+      .email-valid { color: #28a745; }
+      .email-invalid { color: #dc3545; }
+      
+      /* Paginação */
+      .pagination-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin: 20px 0;
+      }
+      
+      /* Tooltips */
+      .tooltip-custom {
+        position: relative;
+        cursor: help;
+      }
+      
+      .tooltip-custom::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #333;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+        z-index: 1000;
+      }
+      
+      .tooltip-custom:hover::after {
+        opacity: 1;
+      }
+      
+      /* Mensagens */
+      .error-message {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px 0;
+        display: none;
+      }
+      
+      .success-message {
+        background: #d4edda;
+        color: #155724;
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px 0;
+        display: none;
+      }
+      
+      /* Loading spinner */
+      .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #d83e4c;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+
+
+      #crm {
+        height: 100vh;
+        background-color: #f4f4f4;
+        padding: 50px 0;
+        text-align: center;
+      }
+
+      #emailForm {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+      }
+
+      #userEmail {
+        padding: 15px;
+        font-size: 16px;
+        width: 400px;
+        height: 50px;
+        border: 2px solid #d83e4c;
+        border-radius: 30px;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      #userEmail:focus {
+        border-color: #0056b3;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+      }
+
+      #btn-email {
+        width: 180px;
+        height: 50px;
+        background-color: #d83e4c;
+        border: none;
+        color: #fff;
+        margin-right: 25px;
+        margin-bottom: 2px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: .3s;
+      }
+      #btn-email:hover {
+        background-color: #eb4e5b;
+        transform: scale(1.08);
+      }
+
+    </style>
+
+</head>
+<body>
+
+    <header id="header">
+
+        <div class="interface">
+
+            <section class="logo">
+                <a href="index.html"><img class="logo-white" src="img/logo_.png" alt="Yailup"></a>
+                <a href="index.html"><img class="logo-color" src="img/logo.png" alt="Yailup"></a>
+            </section> 
+
+            <section class="menu-desktop">
+                <nav>
+                    <ul>
+                        <li><a id="cliked" href="#home">Início</a></li>
+                        <li><a id="cliked" href="#doing">Gerar Leads</a></li>
+                        <li><a id="cliked" href="#crm">CRM</a></li>
+                        <li><a id="cliked" href="#contact">Contato</a></li>
+                        <li><a id="cliked" href="blog.html">Blog</a></li>
+                    </ul>
+                </nav>
+            </section>
+
+            <!-- Dark mode toggle -->
+            <button class="dark-mode-toggle" id="darkModeToggle" onclick="toggleDarkMode()"><i class="bi bi-moon"></i></button>
+
+            <section class="btn-contato">
+                <a href="index.html#contact">
+                    <button>Teste GRÁTIS!</button>
+                </a>
+            </section>
+
+            <div class="btn-menu-mob" id="btn-menu-mob">
+                <div class="line-menumob-1"></div>
+                <div class="line-menumob-2"></div>
+                <div class="line-menumob-3"></div>
+            </div>
+
+            <section class="menu-mobile" id="menu-mobile">
+                <nav>
+                    <ul>
+                        <li><a id="cliked" href="#home">Início</a></li>
+                        <li><a id="cliked" href="#doing">Gerar Leads</a></li>
+                        <li><a id="cliked" href="#crm">CRM</a></li>
+                        <li><a id="cliked" href="#contact">Contato</a></li>
+                        <li><a id="cliked" href="blog.html">Blog</a></li>
+                    </ul>
+                </nav>
+            </section>
+
+        </div>          
+
+    </header>
+
+    <section class="hero-site" id="home">
+        <div class="interface">
+            <div class="txt-hero">
+                <h1>Prospecte e gerencie seus clientes de um jeito muito mais <strong>Eficiente</strong> e <strong>Produtivo.</strong></h1><br>
+                <p>Experimente nossa ferramenta <strong>gratuita</strong> para obter muitos <strong id="maxpot">LEADS AGORA! <i class="bi bi-rocket-takeoff"></i></strong></p><br>
+                <div class="video-heroz">
+                    <iframe 
+                        src="https://www.youtube.com/embed/9ICaItcXYMs?rel=0&showinfo=0"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <a href="index.html#doing">
+                    <button>GERAR LEADS AGORA!</button>
+                </a>
+            </div>
+    
+            <div class="video-hero">
+                <div class="video-wrapper" onclick="loadVideo(this)">
+                    <img src="https://img.youtube.com/vi/9ICaItcXYMs/hqdefault.jpg" alt="Vídeo thumbnail">
+                    <div class="play-button"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="scroll-cta" onclick="scrollDown()">
+            <i class="bi bi-mouse"></i>
+        </div>
+        
+    </section>
+
+     <section class="about" id="about" style="display: none;">
+        <div class="interface">
+            <h2>Como <span>funciona?</span></h2>
+            <p>Nossa ferramenta automatiza uma <strong>busca inteligente</strong> no buscador do <strong>Google</strong> e em seguida <strong>organiza todo o resultado</strong> em uma planilha onde você poderá gerenciar seus clientes.</p>
+            <p id="mvv"><strong>1.</strong> Preencha o formulário informando o site de onde pretende extrair os leads, palavra-chave (profissão ou tipo de negócio por exemplo), provedor de e-mail e a localização, que poderá ser uma rua, bairro, cidade, etc, e clique em "Buscar".</p>
+            <p id="mvv"><strong>2.</strong> Abrirá uma nova aba no seu navegador com o resultado da busca. Selecione tudo apertado <strong>Ctrl + A</strong> e depois copie apertando <strong>Ctrl + C</strong> e cole na caixa de texto. Em seguida, aperte o botão <strong>Gerar tabela.</strong></p>
+            <p id="mvv"><strong>3.</strong> Pronto! Agora você tem leads organizados e poderá exportar em arquivo excel ou CSV.</p>
+        </div>
+        <br>
+
+    </section>
+
+    <section class="about" id="doing">
+      <div class="interface">
+        <h2>Bora <span>Gerar Leads!🚀</span></h2><br>
+
+        <div class="container mb-5">
+
+        <!-- Messages -->
+        <div class="error-message" id="errorMessage"></div>
+        <div class="success-message" id="successMessage"></div>
+
+        <!-- Formulário da Busca -->
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Site:</label>
+                  <select class="form-control" id="inputSite">
+                    <option value="instagram.com">Instagram</option>
+                    <option value="linkedin.com">LinkedIn</option>
+                    <option value="facebook.com">Facebook</option>
+                    <option value="twitter.com">Twitter</option>
+                    <option value="tiktok.com">TikTok</option>
+                    <option value="youtube.com">YouTube</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Palavra-chave:</label>
+                  <input type="text" class="form-control" id="inputProfession" placeholder="Ex: personal trainer" required>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Email (opcional):</label>
+                  <input type="text" class="form-control" id="inputEmailType" placeholder='Ex: @gmail.com OR @yahoo.com.br'>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Localização:</label>
+                  <input type="text" class="form-control" id="inputCity" placeholder="Ex: Belo Horizonte" required>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Preview da busca -->
+            <div id="searchPreview" class="search-preview" style="display: none;"></div>
+            
+            <div class="d-flex gap-2">
+              <button onclick="previewSearch()" class="btn btn-outline-info" id="previwbtn"><i class="bi bi-eye-fill"></i> Preview</button>
+              <button onclick="openSearch()" class="btn btn-primary flex-grow-1"><i class="bi bi-search"></i> Buscar <i class="bi bi-google"></i></button>
+              <button onclick="saveSearchTemplate()" class="btn btn-outline-secondary tooltip-custom" data-tooltip="Salvar busca como template"><i class="bi bi-floppy2-fill"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Área de Colagem -->
+        <div class="mb-3">
+          <label class="form-label">Texto da busca:</label>
+          <textarea id="inputText" class="form-control" rows="5" placeholder="Cole aqui o texto da busca do Google..."></textarea>
+          <small class="form-text text-muted">Dica: Use <strong>Ctrl+A</strong> no Google para selecionar tudo, depois <strong>Ctrl+C</strong> para copiar.</small>
+        </div>
+
+        <!-- Barra de progresso -->
+        <div class="progress-container" id="progressContainer">
+          <div class="progress">
+            <div class="progress-bar" id="progressBar" role="progressbar" style="width: 0%"></div>
+          </div>
+          <small class="text-muted" id="progressText">Processando...</small>
+        </div>
+
+        <div class="d-flex justify-content-center flex-wrap gap-2 mb-4">
+          <button onclick="clearTextarea()" class="btn btn-outline-secondary"><i class="bi bi-eraser-fill"></i> Limpar</button>
+          <button onclick="clearAndPaste()" class="btn btn-outline-secondary"><i class="bi bi-eraser-fill"></i><i class="bi bi-clipboard-check"></i> Limpar e Colar</button>
+          <button id="parseBtn" class="btn btn-success"><i class="bi bi-table"></i> Gerar Tabela</button>
+          <input type="search" id="filterInput" class="form-control" placeholder="Filtrar..." disabled style="max-width:200px;">
+          <select id="qualityFilter" class="form-control" disabled style="max-width:150px;">
+            <option value="">Qualidade ▼ </option>
+            <option value="">Todas</option>
+            <option value="high">Alta qualidade</option>
+            <option value="medium">Média qualidade</option>
+            <option value="basic">Básica</option>
+          </select>
+          <button onclick="removeDuplicates()" class="btn btn-outline-warning" disabled id="duplicateBtn"><i class="bi bi-eraser-fill"></i> Remover Duplicatas</button>
+          <button onclick="undoLastAction()" class="btn btn-outline-info" disabled id="undoBtn"><i class="bi bi-arrow-left"></i> Desfazer</button>
+          <button id="exportCSV" class="btn btn-outline-primary" disabled>Exportar CSV</button>
+          <button id="exportXLSX" class="btn btn-outline-success" disabled>Exportar XLSX</button>
+          <button id="exportJSON" class="btn btn-outline-info" disabled>Exportar JSON</button>
+        </div>
+
+        <!-- Estatísticas -->
+        <div id="statsContainer"></div>
+
+        <!-- Paginação -->
+        <div class="pagination-container" id="paginationContainer" style="display: none;">
+          <button id="prevPage" class="btn btn-outline-secondary" onclick="changePage(-1)">← Anterior</button>
+          <span id="pageInfo">Página 1 de 1</span>
+          <button id="nextPage" class="btn btn-outline-secondary" onclick="changePage(1)">Próximo →</button>
+          <select id="itemsPerPage" class="form-control" style="width: auto; margin-left: 10px;" onchange="changeItemsPerPage()">
+            <option value="50">50 por página</option>
+            <option value="100">100 por página</option>
+            <option value="200">200 por página</option>
+            <option value="500">500 por página</option>
+          </select>
+        </div>
+
+        <!-- Tabela -->
+        <div id="tableContainer"></div>
+
+      </div>
+
+    </section>
+
+    <!-- <section class="about" id="planos">
+      <div class="interface">
+        <h2>Conheça <span>nossos planos</span></h2>
+        <div class="plans">
+          
+          <div class="card basic">
+            <h2>Básico</h2>
+            <div class="price">R$ 29⁹⁰/mês</div>
+            <ul class="features">
+              <li>Acesso limitado</li>
+              <li>Suporte por e-mail</li>
+              <li class="disabled">Atualizações semanais</li>
+              <li class="disabled">Recursos exclusivos</li>
+              <li class="disabled">Consultoria personalizada</li>
+              <li class="disabled">Suporte 24h</li>
+              <li class="disabled">Acesso antecipado</li>
+            </ul>
+            <button class="btn">Assinar</button>
+          </div>
+
+          
+          <div class="card gold" style="background-color: #ffffff;zoom: 110%;z-index: 100;">
+            <div class="highlight">Mais popular</div>
+            <h2>Premium Gold</h2>
+            <div class="price">R$ 69⁹⁰/mês</div>
+            <ul class="features">
+              <li>Acesso total</li>
+              <li>Suporte prioritário</li>
+              <li>Atualizações semanais</li>
+              <li>Recursos exclusivos</li>
+              <li class="disabled">Consultoria personalizada</li>
+              <li class="disabled">Suporte 24h</li>
+              <li class="disabled">Acesso antecipado</li>
+            </ul>
+            <button class="btn">Assinar</button>
+          </div>
+
+          
+          <div class="card diamond">
+            <h2>Diamond</h2>
+            <div class="price">R$ 129⁹⁰/mês</div>
+            <ul class="features">
+              <li>Acesso total</li>
+              <li>Suporte prioritário</li>
+              <li>Atualizações semanais</li>
+              <li>Recursos exclusivos</li>
+              <li>Consultoria personalizada</li>
+              <li>Suporte 24h</li>
+              <li>Acesso antecipado</li>
+            </ul>
+            <button class="btn">Assinar</button>
+          </div>
+        </div>
+
+    </section> -->
+
+    <section class="about" id="crm">
+      <div class="interface">
+          <h2 style="margin-top: 200px;">Quer ser o primeiro a usar nosso <span>melhor CRM?</span></h2> <br>
+          <p style="text-align: center; font-size: 22px;">Deixe seu e-mail que em breve avisaremos você! <strong style="color: #d83e4c;"><i class="bi bi-hand-thumbs-up"></i></strong></p> <br>
+          
+          <!-- Formulário de captura de e-mail -->
+          <form id="emailForm">
+              <input type="email" id="userEmail" placeholder="Digite seu melhor e-mail" required>
+              <button id="btn-email" type="submit">Enviar</button>
+          </form>
+      </div>
+    </section>
+
+
+    <section class="contato" id="contact">
+        <div class="interface">
+
+            <article class="txt-contato">
+                <h3><strong>Se interessou?</strong><br id="fale">Preencha o formulário e <span>TESTE GRÁTIS!</span></h3>
+                <p>Estamos disponíveis de <strong>segunda</strong> à <strong>sexta</strong>, das <strong>9h</strong> às <strong>18h</strong>. Ao lado, <strong>preencha o formulário</strong> que em menos de 24 horas entramos em contato com você.</p>
+            </article>
+
+            <article class="icons-contato">
+                <form class="freetrialform" id="contactForm" method="post">
+                    <div class="form-group">
+                        <i class="bi bi-person icon"></i>
+                        <input type="text" id="nome" name="nome" placeholder="Seu Nome" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="bi bi-envelope-at icon"></i>
+                        <input type="email" id="email" name="email" placeholder="Seu Email" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="bi bi-whatsapp icon"></i>
+                        <input type="tel" id="phone" name="phone" placeholder="Seu Telefone/WhatsApp" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="bi bi-buildings icon"></i>
+                        <input type="name" id="business_name" name="business_name" placeholder="Nome da Empresa" required>
+                    </div>
+            
+                    <button type="submit" class="btn-contato" id="btn-contato"><i class="bi bi-arrow-return-right"></i>Enviar</button>
+                </form>
+            </article>
+            <div id="formMessage"></div>
+
+        </div>
+    </section>
+
+
+<!--Footer 1-->
+<footer class="footer1" id="rodape">
+    &copy; <span id="anoAtual"></span> UaiFunnel - Captura e Gerênciamento de Leads.
+</footer>
+<!-- /Footer1 -->
+
+<!--Footer 2-->
+<footer id="footer">
+    <div class="interface">
+        <section class="top-footer">
+
+            <!-- <a href="https://www.linkedin.com/company/yailup" target="_blank"><button><i class="bi bi-linkedin"></i></button></a>
+            <a href="https://www.instagram.com/yailup/" target="_blank"><button><i class="bi bi-instagram"></i></button></a>
+            <a href="https://www.youtube.com/channel/UCnPAEcSoKhVrN--XwGxcVJg" target="_blank"><button><i class="bi bi-youtube"></i></button></a> -->
+        </section><br>
+
+        <section class="middle-footer">
+
+          <img src="img/logo_.png" id="logofooter"><br>
+            <h1 id="footer-text">&copy; <span id="anoAtualz"></span> UaiFunnel - Todos os direitos reservados.</h1> 
+            <h2>by Yailup - Soluções Operacionais</h2>
+
+            <!-- <p>
+                <a href="terms.html" class="terms">Termos e Condições</a> <i class="bi bi-dot terms"></i>
+                <a href="policy.html" class="terms">Política de Privacidade</a> <i class="bi bi-dot terms"></i>
+                <a href="form_partner.html" class="terms">Seja um Parceiro</a>
+            </p> -->
+        </section>
+    </div>
+</footer>
+<!--/Footer2-->
+
+<!-- WhatsApp icon -->
+<a href="https://wa.me/5521992942010" target="_blank" class="whatsapp-icon">
+  <i class="bi bi-whatsapp"></i>
+</a>
+<!-- /WhatsApp icon -->
+    
+    <!-- Contact form Script -->
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+    
+            var formData = new FormData(this);
+    
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "php/send.php", true);
+    
+            xhr.onload = function() {
+                console.log("Resposta do servidor:", xhr.responseText); // Log para depuração
+    
+                try {
+                    var response = JSON.parse(xhr.responseText);
+                    
+                    if (xhr.status === 200 && response.status === "success") {
+                        document.getElementById("formMessage").innerHTML = '<p style="color: #aaff49;">' + response.message + '</p>';
+                        document.getElementById("contactForm").reset();
+                    } else {
+                        document.getElementById("formMessage").innerHTML = '<p style="color: #ff6c6c;">' + response.message + '</p>';
+                    }
+    
+                } catch (e) {
+                    console.error("Erro ao interpretar JSON:", e); // Log do erro
+                    document.getElementById("formMessage").innerHTML = '<p style="color: #ff6c6c;">Erro inesperado ao interpretar a resposta do servidor.</p>';
+                }
+            };
+    
+            xhr.onerror = function() {
+                document.getElementById("formMessage").innerHTML = '<p style="color: #ff6c6c;">Erro de conexão com o servidor.</p>';
+            };
+    
+            xhr.send(formData);
+        });
+    </script>
+
+    <!-- CRM coming soon Script -->
+    <script>
+      document.getElementById("emailForm").addEventListener("submit", function(event) {
+          event.preventDefault();  // Impede o envio padrão do formulário
+          
+          const email = document.getElementById("userEmail").value;
+          
+          // Verificar se o e-mail é válido
+          if (validateEmail(email)) {
+              alert(`Obrigado por se inscrever com o e-mail: ${email}`);
+              // Aqui você pode adicionar uma lógica para enviar o e-mail para um servidor ou banco de dados
+          } else {
+              alert("Por favor, insira um e-mail válido.");
+          }
+      });
+
+      function validateEmail(email) {
+          const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+          return re.test(email);
+      }
+
+    </script>
+</body>
+</html>

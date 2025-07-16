@@ -51,6 +51,12 @@
       #previwbtn:hover {
         color: #fff;
       }
+      #closehowbtn {
+        width: 20px !important;
+        height: 20px !important;
+        border-radius: 25px !important;
+        font-size: 10px;
+      }
      
       
       /* Dark mode */
@@ -182,25 +188,25 @@
       }
       
       /* Dark mode toggle */
-      .dark-mode-toggle {
+      #darkModeToggle {
         position: fixed;
-        top: 5px;
-        right: 50px;
+        top: 8px;
+        right: 100px;
         z-index: 1000;
         background: #d83e4c;
         border: none;
         border-radius: 50%;
-        width: 45px;
-        height: 45px;
+        width: 40px;
+        height: 40px;
         color: white;
         font-size: 1.2em;
         cursor: pointer;
         transition: all 0.3s ease;
       }
       
-      .dark-mode-toggle:hover {
-        transform: scale(1.1);
-        background: #f35461;
+      #darkModeToggle:hover {
+        transform: scale(1.03);
+        background: #eb4e5b;
       }
       
       /* Validação */
@@ -327,6 +333,145 @@
         transform: scale(1.08);
       }
 
+
+
+      /* Modal Tutorial */
+      .modal-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.8);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 9999;
+          backdrop-filter: blur(5px);
+      }
+
+      .modal-content {
+          background: #2d2d2dc1;
+          border-radius: 20px;
+          max-width: 800px;
+          width: 90%;
+          max-height: 90vh;
+          overflow-y: auto;
+          position: relative;
+          animation: modalFadeIn 0.3s ease-out;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Dark mode modal */
+      body.dark-mode .modal-content {
+          background: #2d2d2dc1;
+          color: #e9ecef;
+      }
+
+      .modal-close {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          background: #d83e4c;
+          color: white;
+          border: none;
+          border-radius: 50%;
+          width: 35px;
+          height: 35px;
+          cursor: pointer;
+          font-size: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+          z-index: 10;
+      }
+
+      .modal-close:hover {
+          background: #c73545;
+          transform: scale(1.1);
+      }
+
+      .modal-header {
+          padding: 30px 30px 20px;
+          text-align: center;
+          border-bottom: 1px solid #eee;
+      }
+
+      body.dark-mode .modal-header {
+          border-bottom-color: #404040;
+      }
+
+      .modal-header p {
+          margin: 0;
+          color: #ccc;
+          font-size: 16px;
+      }
+
+      body.dark-mode .modal-header p {
+          color: #ccc;
+      }
+
+      .modal-body {
+          padding: 20px 30px 30px;
+      }
+
+      .video-container {
+          position: relative;
+          width: 100%;
+          padding-bottom: 56.25%; /* 16:9 aspect ratio */
+          height: 0;
+          overflow: hidden;
+          border-radius: 15px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .video-container iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border-radius: 15px;
+      }
+
+      /* Animações */
+      @keyframes modalFadeIn {
+          from {
+              opacity: 0;
+              transform: scale(0.9) translateY(-20px);
+          }
+          to {
+              opacity: 1;
+              transform: scale(1) translateY(0);
+          }
+      }
+
+      /* Responsividade */
+      @media (max-width: 768px) {
+          .modal-content {
+              width: 95%;
+              margin: 20px;
+          }
+          
+          .modal-header {
+              padding: 20px 20px 15px;
+          }
+          
+          .modal-header h3 {
+              font-size: 20px;
+          }
+          
+          .modal-body {
+              padding: 15px 20px 20px;
+          }
+          
+          .video-container {
+              padding-bottom: 60%; /* Ajuste para mobile */
+          }
+      }
+
+
     </style>
 
 </head>
@@ -389,31 +534,44 @@
             <div class="txt-hero">
                 <h1>Prospecte e gerencie seus clientes de um jeito muito mais <strong>Eficiente</strong> e <strong>Produtivo.</strong></h1><br>
                 <p>Experimente nossa ferramenta <strong>gratuita</strong> para obter muitos <strong id="maxpot">LEADS AGORA! <i class="bi bi-rocket-takeoff"></i></strong></p><br>
-                <div class="video-heroz">
-                    <iframe 
-                        src="https://www.youtube.com/embed/9ICaItcXYMs?rel=0&showinfo=0"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen>
-                    </iframe>
-                </div>
                 <a href="index.html#doing">
                     <button>GERAR LEADS AGORA!</button>
                 </a>
-            </div>
-    
-            <div class="video-hero">
-                <div class="video-wrapper" onclick="loadVideo(this)">
-                    <img src="https://img.youtube.com/vi/9ICaItcXYMs/hqdefault.jpg" alt="Vídeo thumbnail">
-                    <div class="play-button"></div>
-                </div>
-            </div>
+                <a href="javascript:void(0)" onclick="openTutorialModal()">
+                  <button id="howbtn"><i style="font-size: 18px; margin-right: 10px;" class="bi bi-play-btn"></i> Entenda como funciona</button>
+                </a>
+            </div>  
         </div>
         
         <div id="scroll-cta" onclick="scrollDown()">
             <i class="bi bi-mouse"></i>
         </div>
-        
+
+        <!-- Modal do Tutorial -->
+        <div id="tutorialModal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <button id="closehowbtn" class="modal-close" onclick="closeTutorialModal()">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+                <div class="modal-header">
+                    <p><i class="bi bi-play-btn"></i> Aprenda passo a passo como usar nossa ferramenta</p>
+                </div>
+                <div class="modal-body">
+                    <div class="video-container">
+                        <iframe 
+                            id="tutorialVideo"
+                            width="100%" 
+                            height="400"
+                            src="" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
     </section>
 
      <section class="about" id="about" style="display: none;">
@@ -748,5 +906,7 @@
       }
 
     </script>
+
+    
 </body>
 </html>

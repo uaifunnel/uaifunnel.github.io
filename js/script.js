@@ -148,6 +148,63 @@ window.addEventListener("load", function () {
 function scrollDown() {
     window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
   }
+
+  // Funções do Modal Tutorial
+function openTutorialModal() {
+    const modal = document.getElementById('tutorialModal');
+    const video = document.getElementById('tutorialVideo');
+    
+    // URL do vídeo do YouTube (formato embed)
+    const videoUrl = 'https://www.youtube.com/embed/9ICaItcXYMs?rel=0&showinfo=0&autoplay=1';
+    
+    // Definir a URL do vídeo
+    video.src = videoUrl;
+    
+    // Mostrar modal
+    modal.style.display = 'flex';
+    
+    // Prevenir scroll do body
+    document.body.style.overflow = 'hidden';
+    
+    // Fechar modal ao clicar fora
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeTutorialModal();
+        }
+    });
+    
+    // Fechar modal com ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeTutorialModal();
+        }
+    });
+}
+
+// Video here section modal
+function closeTutorialModal() {
+    const modal = document.getElementById('tutorialModal');
+    const video = document.getElementById('tutorialVideo');
+    
+    // Parar o vídeo
+    video.src = '';
+    
+    // Esconder modal
+    modal.style.display = 'none';
+    
+    // Restaurar scroll do body
+    document.body.style.overflow = '';
+    
+    // Remover event listeners
+    document.removeEventListener('keydown', closeTutorialModal);
+}
+
+// Adicionar event listener ao botão
+document.getElementById('howbtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    openTutorialModal();
+});
+
 //   --- /Arrow animatino hero section
 
   document.getElementById("anoAtual").textContent = new Date().getFullYear();

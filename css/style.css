@@ -834,8 +834,10 @@ section.portfolio{
 
 
 /* ----Contato Section Style */
-section.contato{
-    background-color: #ffa100;
+/* ----Contato Section Style */
+section.contato {
+    animation: colorCycle 25s infinite;
+    animation-timing-function: ease-in-out;
     padding: 80px 0;
     margin-bottom: 100px;
     width: auto;
@@ -844,6 +846,17 @@ section.contato{
     align-items: center;
     align-content: center;
 }
+
+/* Animação de troca de cor */
+@keyframes colorCycle {
+    0%   { background-color: #2d8fb9; }  /* blue */
+    20%  { background-color: #95bc3f; }  /* green */
+    40%  { background-color: #ffa100; }  /* orange */
+    60%  { background-color: #d83e4c; }  /* red */
+    80%  { background-color: #545454; }  /* gray */
+    100% { background-color: #2d8fb9; }  /* volta ao azul */
+}
+
 .txt-contato, .icons-contato{
     display: inline-block;
     width: 50%;

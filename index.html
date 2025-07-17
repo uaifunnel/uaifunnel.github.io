@@ -284,13 +284,18 @@
         100% { transform: rotate(360deg); }
       }
 
-
-
       #crm {
+        background-position: right center;
+        background-repeat: no-repeat;
+        background-size: 60%;
         height: 100vh;
+        background-image: url(img/mockup.png);   /* linear-gradient(rgba(0, 0, 0, 0.991), rgba(0, 0, 0, 0.776)), */
         background-color: #f4f4f4;
         padding: 50px 0;
         text-align: center;
+      }
+      #crmitf {
+        margin-left: 235px;
       }
 
       #emailForm {
@@ -760,7 +765,7 @@
     </section> -->
 
     <section class="about" id="crm">
-      <div class="interface">
+      <div class="interface" id="crmitf">
           <h2 style="margin-top: 200px;">Quer ser o primeiro a usar nosso <span>melhor CRM?</span></h2> <br>
           <p style="text-align: center; font-size: 22px;">Deixe seu e-mail que em breve avisaremos você! <strong style="color: #d83e4c;"><i class="bi bi-hand-thumbs-up"></i></strong></p> <br>
           

@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css" media="screen">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-    <link rel="stylesheet" href="css/swiper-bundle.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="img/fav.png">
 
@@ -38,28 +36,31 @@
 
     <!-- CSS -->
     <style>
-
+      /* ==================== SEÇÕES GERAIS ==================== */
       #doing {
         height: auto 100vh !important;
       }
+      
       #about {
         height: 100vh !important;
       }
+      
       #exportJSON:hover {
         color: #fff;
       }
+      
       #previwbtn:hover {
         color: #fff;
       }
+      
       #closehowbtn {
         width: 20px !important;
         height: 20px !important;
         border-radius: 25px !important;
         font-size: 10px;
       }
-     
-      
-      /* Dark mode */
+
+      /* ==================== DARK MODE ==================== */
       body.dark-mode {
         background: #1a1a1a;
         color: #e9ecef;
@@ -85,6 +86,29 @@
         background: #343a402e !important;
       }
       
+      /* Dark mode toggle */
+      #darkModeToggle {
+        position: fixed;
+        top: 10px;
+        right: 225px;
+        z-index: 1000;
+        background: transparent;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        color: #ccc;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      
+      #darkModeToggle:hover {
+        transform: scale(1.03);
+        background: transparent;
+      }
+
+      /* ==================== TABELA PRINCIPAL ==================== */
       .navbar-brand img {
         height: 35px;
       }
@@ -97,28 +121,47 @@
       
       table {
         border-radius: 16px;
-        overflow: hidden;
+        overflow: visible; /* IMPORTANTE: Mudado de hidden para visible */
         zoom: 75%;
+        position: relative; /* Adiciona contexto de posicionamento */
       }
       
-      /* Cabeçalho da tabela */
+      /* Container da tabela - CORRIGIDO */
+      .table-responsive {
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        max-height: 600px;
+        overflow-y: auto;
+        overflow-x: auto;
+        position: relative; /* Adiciona contexto para sticky */
+      }
+
+      /* Cabeçalho da tabela - CORRIGIDO PARA STICKY HEADER */
       .table-responsive table thead th,
       table thead th {
         background: linear-gradient(135deg, #d83e4c 0%, #d83e4c 100%) !important;
         color: #fff !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 1020 !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+
+      /* Garantir que o thead funcione com sticky */
+      .table-responsive table thead {
         position: sticky;
         top: 0;
-        z-index: 10;
+        z-index: 1020;
       }
-      
+
       /* Hover corrigido */
       .table-responsive table tbody tr:hover td,
       .table-hover tbody tr:hover td,
       .table tbody tr:hover td,
       table tbody tr:nth-child(even):hover td,
       table tbody tr:nth-child(odd):hover td {
-          background-color: #77ebffa9 !important;
-          box-shadow: inset 0 0 0 9999px #77ebffa9 !important;
+        background-color: #77ebffa9 !important;
+        box-shadow: inset 0 0 0 9999px #77ebffa9 !important;
       }
       
       /* Linhas alternadas */
@@ -131,15 +174,15 @@
       table td, table th {
         vertical-align: middle !important;
       }
-      
-      .table-responsive {
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        max-height: 600px;
-        overflow-y: auto;
+
+      /* Sticky header em modo escuro */
+      body.dark-mode .table-responsive table thead th {
+        background: linear-gradient(135deg, #d83e4c 0%, #d83e4c 100%) !important;
+        color: #fff !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
       }
 
+      /* ==================== INDICADORES E BADGES ==================== */
       /* Indicadores de qualidade */
       .quality-badge {
         font-size: 0.8em;
@@ -167,10 +210,8 @@
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(216, 62, 76, 0.2);
       }
-      /* .card-body {
-        border-radius: 32px !important;
-      } */
 
+      /* ==================== COMPONENTES UI ==================== */
       /* Barra de progresso */
       .progress-container {
         display: none;
@@ -185,28 +226,6 @@
         margin: 10px 0;
         font-family: monospace;
         font-size: 0.9em;
-      }
-      
-      /* Dark mode toggle */
-      #darkModeToggle {
-        position: fixed;
-        top: 8px;
-        right: 100px;
-        z-index: 1000;
-        background: #d83e4c;
-        border: none;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        color: white;
-        font-size: 1.2em;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-      
-      #darkModeToggle:hover {
-        transform: scale(1.03);
-        background: #eb4e5b;
       }
       
       /* Validação */
@@ -284,18 +303,41 @@
         100% { transform: rotate(360deg); }
       }
 
+      /* ==================== SEÇÃO CRM ==================== */
       #crm {
-        background-position: right center;
-        background-repeat: no-repeat;
-        background-size: 60%;
+        position: relative;
         height: 100vh;
-        background-image: url(img/mockup.png);   /* linear-gradient(rgba(0, 0, 0, 0.991), rgba(0, 0, 0, 0.776)), */
-        background-color: #f4f4f4;
+        background-color: #f5f5f5;
         padding: 50px 0;
         text-align: center;
+        overflow: hidden;
       }
+
+      .background-fade {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        padding: 50px 0;        
+        background-size: 60%;
+        background-position: right center;
+        background-repeat: no-repeat;
+        transition: .1s ease-in-out;
+        z-index: 1;
+        opacity: 0;
+      }
+
+      #bg1 {
+        z-index: 1;
+      }
+      #bg2 {
+        z-index: 2;
+      }
+
       #crmitf {
-        margin-left: 235px;
+        position: relative;
+        z-index: 3;
       }
 
       #emailForm {
@@ -338,146 +380,144 @@
         transform: scale(1.08);
       }
 
-
-
-      /* Modal Tutorial */
+      /* ==================== MODAL TUTORIAL ==================== */
       .modal-overlay {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-color: rgba(0, 0, 0, 0.8);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          z-index: 9999;
-          backdrop-filter: blur(5px);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        backdrop-filter: blur(5px);
       }
 
       .modal-content {
-          background: #2d2d2dc1;
-          border-radius: 20px;
-          max-width: 800px;
-          width: 90%;
-          max-height: 90vh;
-          overflow-y: auto;
-          position: relative;
-          animation: modalFadeIn 0.3s ease-out;
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        background: #2d2d2dc1;
+        border-radius: 20px;
+        max-width: 800px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+        animation: modalFadeIn 0.3s ease-out;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
       }
 
       /* Dark mode modal */
       body.dark-mode .modal-content {
-          background: #2d2d2dc1;
-          color: #e9ecef;
+        background: #2d2d2dc1;
+        color: #e9ecef;
       }
 
       .modal-close {
-          position: absolute;
-          top: 20px;
-          right: 20px;
-          background: #d83e4c;
-          color: white;
-          border: none;
-          border-radius: 50%;
-          width: 35px;
-          height: 35px;
-          cursor: pointer;
-          font-size: 16px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: all 0.3s ease;
-          z-index: 10;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: #d83e4c;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        z-index: 10;
       }
 
       .modal-close:hover {
-          background: #c73545;
-          transform: scale(1.1);
+        background: #c73545;
+        transform: scale(1.1);
       }
 
       .modal-header {
-          padding: 30px 30px 20px;
-          text-align: center;
-          border-bottom: 1px solid #eee;
+        padding: 30px 30px 20px;
+        text-align: center;
+        border-bottom: 1px solid #eee;
       }
 
       body.dark-mode .modal-header {
-          border-bottom-color: #404040;
+        border-bottom-color: #404040;
       }
 
       .modal-header p {
-          margin: 0;
-          color: #ccc;
-          font-size: 16px;
+        margin: 0;
+        color: #ccc;
+        font-size: 16px;
       }
 
       body.dark-mode .modal-header p {
-          color: #ccc;
+        color: #ccc;
       }
 
       .modal-body {
-          padding: 20px 30px 30px;
+        padding: 20px 30px 30px;
       }
 
       .video-container {
-          position: relative;
-          width: 100%;
-          padding-bottom: 56.25%; /* 16:9 aspect ratio */
-          height: 0;
-          overflow: hidden;
-          border-radius: 15px;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        height: 0;
+        overflow: hidden;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       }
 
       .video-container iframe {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          border-radius: 15px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 15px;
       }
 
       /* Animações */
       @keyframes modalFadeIn {
-          from {
-              opacity: 0;
-              transform: scale(0.9) translateY(-20px);
-          }
-          to {
-              opacity: 1;
-              transform: scale(1) translateY(0);
-          }
+        from {
+          opacity: 0;
+          transform: scale(0.9) translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
       }
 
-      /* Responsividade */
+      /* ==================== RESPONSIVIDADE ==================== */
       @media (max-width: 768px) {
-          .modal-content {
-              width: 95%;
-              margin: 20px;
-          }
-          
-          .modal-header {
-              padding: 20px 20px 15px;
-          }
-          
-          .modal-header h3 {
-              font-size: 20px;
-          }
-          
-          .modal-body {
-              padding: 15px 20px 20px;
-          }
-          
-          .video-container {
-              padding-bottom: 60%; /* Ajuste para mobile */
-          }
+        .modal-content {
+          width: 95%;
+          margin: 20px;
+        }
+        
+        .modal-header {
+          padding: 20px 20px 15px;
+        }
+        
+        .modal-header h3 {
+          font-size: 20px;
+        }
+        
+        .modal-body {
+          padding: 15px 20px 20px;
+        }
+        
+        .video-container {
+          padding-bottom: 60%; /* Ajuste para mobile */
+        }
       }
-
-
     </style>
+    <!--/CSS-->
+
 
 </head>
 <body>
@@ -667,22 +707,22 @@
         </div>
 
         <div class="d-flex justify-content-center flex-wrap gap-2 mb-4">
-          <button onclick="clearTextarea()" class="btn btn-outline-secondary"><i class="bi bi-eraser-fill"></i> Limpar</button>
-          <button onclick="clearAndPaste()" class="btn btn-outline-secondary"><i class="bi bi-eraser-fill"></i><i class="bi bi-clipboard-check"></i> Limpar e Colar</button>
+          <button onclick="clearTextarea()" class="btn btn-outline-secondary"><i class="bi bi-eraser-fill"></i></button>
+          <button onclick="clearAndPaste()" class="btn btn-outline-secondary"> <i class="bi bi-eraser-fill"></i><i class="bi bi-clipboard-check"></i></button>
           <button id="parseBtn" class="btn btn-success"><i class="bi bi-table"></i> Gerar Tabela</button>
           <input type="search" id="filterInput" class="form-control" placeholder="Filtrar..." disabled style="max-width:200px;">
           <select id="qualityFilter" class="form-control" disabled style="max-width:150px;">
-            <option value="">Qualidade ▼ </option>
+            <option value="">Qualidade</option>
             <option value="">Todas</option>
             <option value="high">Alta qualidade</option>
             <option value="medium">Média qualidade</option>
             <option value="basic">Básica</option>
           </select>
           <button onclick="removeDuplicates()" class="btn btn-outline-warning" disabled id="duplicateBtn"><i class="bi bi-eraser-fill"></i> Remover Duplicatas</button>
-          <button onclick="undoLastAction()" class="btn btn-outline-info" disabled id="undoBtn"><i class="bi bi-arrow-left"></i> Desfazer</button>
-          <button id="exportCSV" class="btn btn-outline-primary" disabled>Exportar CSV</button>
-          <button id="exportXLSX" class="btn btn-outline-success" disabled>Exportar XLSX</button>
-          <button id="exportJSON" class="btn btn-outline-info" disabled>Exportar JSON</button>
+          <!-- <button onclick="undoLastAction()" class="btn btn-outline-info" disabled id="undoBtn"><i class="bi bi-arrow-left"></i> Desfazer</button> -->
+          <button id="exportCSV" class="btn btn-outline-primary" disabled>CSV</button>
+          <button id="exportXLSX" class="btn btn-outline-success" disabled>XLSX</button>
+          <!-- <button id="exportJSON" class="btn btn-outline-info" disabled>Exportar JSON</button> -->
         </div>
 
         <!-- Estatísticas -->
@@ -765,15 +805,21 @@
     </section> -->
 
     <section class="about" id="crm">
+      <!-- Duas camadas para fazer o crossfade -->
+      <div class="background-fade" id="bg1"></div>
+      <div class="background-fade" id="bg2"></div>
+
       <div class="interface" id="crmitf">
-          <h2 style="margin-top: 200px;">Quer ser o primeiro a usar nosso <span>melhor CRM?</span></h2> <br>
-          <p style="text-align: center; font-size: 22px;">Deixe seu e-mail que em breve avisaremos você! <strong style="color: #d83e4c;"><i class="bi bi-hand-thumbs-up"></i></strong></p> <br>
-          
-          <!-- Formulário de captura de e-mail -->
-          <form id="emailForm">
-              <input type="email" id="userEmail" placeholder="Digite seu melhor e-mail" required>
-              <button id="btn-email" type="submit">Enviar</button>
-          </form>
+        <h2>Quer ser o primeiro a usar nosso <br><span>melhor CRM?</span></h2> <br>
+        <p style="text-align: center; font-size: 22px;">
+          Deixe seu e-mail que em breve avisaremos você! 
+          <strong style="color: #d83e4c;"><i class="bi bi-hand-thumbs-up"></i></strong>
+        </p> <br>
+
+        <form id="emailForm">
+          <input type="email" id="userEmail" placeholder="Digite seu melhor e-mail" required>
+          <button id="btn-email" type="submit">Enviar</button>
+        </form>
       </div>
     </section>
 
@@ -912,6 +958,43 @@
 
     </script>
 
+    <!-- CRM backgrond transition -->
+    <script>
+      const images = [
+        'img/1.png',
+        'img/2.png',
+        'img/3.png',
+        'img/4.png',
+        'img/5.png',
+        'img/6.png'
+      ];
+
+      let index = 0;
+      let showingBg1 = true;
+
+      const bg1 = document.getElementById('bg1');
+      const bg2 = document.getElementById('bg2');
+
+      // Defina imagem inicial
+      bg1.style.backgroundImage = `url('${images[index]}')`;
+      bg1.style.opacity = 1;
+
+      setInterval(() => {
+        index = (index + 1) % images.length;
+
+        if (showingBg1) {
+          bg2.style.backgroundImage = `url('${images[index]}')`;
+          bg2.style.opacity = 1;
+          bg1.style.opacity = 1;
+        } else {
+          bg1.style.backgroundImage = `url('${images[index]}')`;
+          bg1.style.opacity = 1;
+          bg2.style.opacity = 1;
+        }
+
+        showingBg1 = !showingBg1;
+      }, 1000); // Troca a cada 5s
+    </script>
     
 </body>
 </html>

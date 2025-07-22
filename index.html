@@ -13,7 +13,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #121212, #1f1f1f);
+            background: linear-gradient(135deg, #121212, #1f1f1f, #323232);
             color: #ffffff;
             display: flex;
             align-items: center;
@@ -24,7 +24,7 @@
             padding: 20px;
         }
 
-        img {
+        #img {
             width: 180px;
             height: auto;
             filter: drop-shadow(0 0 10px #00e0ff);
@@ -36,10 +36,14 @@
             50% { transform: translateY(-15px); }
         }
 
+        img {
+            width: 300px;
+        }
+
         h1 {
             font-size: 2.2rem;
             margin-top: 20px;
-           
+            font-weight: 900;
             background: linear-gradient(270deg, #2d8fb9, #95bc3f, #ffa100, #d83e4c, #545454);
             background-size: 1000% 1000%;
             -webkit-background-clip: text;
@@ -59,6 +63,56 @@
             color: #cccccc;
         }
 
+        .newsletter {
+            margin-top: 30px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .newsletter p {
+            font-size: 1rem;
+            color: #cccccc;
+            margin-bottom: 10px;
+        }
+
+        #newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #newsletter-form input {
+            background-color: transparent;
+            padding: 12px;
+            border: 2px solid #5d5d5d;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        #newsletter-form button {
+            background-color: #5d5d5d;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.4s;
+        }
+
+        #newsletter-form button:hover {
+            background-color: #d83e4c;
+        }
+
+        #form-message {
+            font-size: 0.9rem;
+            color: #95bc3f;
+            text-align: center;
+            min-height: 20px;
+        }
+
+
         footer {
             text-align: center;
             padding: 10px;
@@ -73,12 +127,42 @@
 </head>
 <body>
 
-    <img src="funil_animado.gif" alt="Loading Funil">
+    <img id="img" src="img/funil_animado.gif" alt="Loading Funil">
+    <img src="img/uailogo.png" alt="Loading Funil">
 
     <h1 style="font-weight: 800 !important;">Estamos preparando algo incrível!</h1>
     <p class="message">Nossa página está em manutenção. Voltaremos em breve com novidades.</p>
 
+    <div class="newsletter">
+        <p>Quer ser avisado quando o site estiver no ar?</p>
+        <form id="newsletter-form">
+            <input type="email" name="email" placeholder="Digite seu e-mail aqui" required>
+            <button type="submit">Quero ser avisado!</button>
+            <p id="form-message"></p>
+        </form>
+    </div>
+
     <footer>© 2025 UaiFunnel. Todos os direitos reservados.</footer>
+
+    <script>
+        const form = document.getElementById('newsletter-form');
+        const message = document.getElementById('form-message');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = form.email.value;
+
+            fetch('https://script.google.com/macros/s/AKfycbza35MfkRbizomr1P9A86T0ndP3NejbIrS9f7hapxSdB1EX2ElSHg00cfgsdflegNrM/exec', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'email=' + encodeURIComponent(email)
+            });
+
+            form.reset();
+            message.textContent = 'E-mail cadastrado com sucesso! 🎉';
+        });
+    </script>
 
 </body>
 </html>

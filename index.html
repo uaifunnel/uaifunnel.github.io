@@ -518,7 +518,6 @@
     </style>
     <!--/CSS-->
 
-
 </head>
 <body>
 
@@ -544,7 +543,7 @@
             </section>
 
             <!-- Dark mode toggle -->
-            <button class="dark-mode-toggle" id="darkModeToggle" onclick="toggleDarkMode()"><i class="bi bi-moon"></i></button>
+            <button style="display: none;" class="dark-mode-toggle" id="darkModeToggle" onclick="toggleDarkMode()"><i class="bi bi-moon"></i></button>
 
             <section class="btn-contato">
                 <a href="index.html#contact">
@@ -719,10 +718,10 @@
             <option value="basic">Básica</option>
           </select>
           <button onclick="removeDuplicates()" class="btn btn-outline-warning" disabled id="duplicateBtn"><i class="bi bi-eraser-fill"></i> Remover Duplicatas</button>
-          <!-- <button onclick="undoLastAction()" class="btn btn-outline-info" disabled id="undoBtn"><i class="bi bi-arrow-left"></i> Desfazer</button> -->
+          <button style="display: none;" onclick="undoLastAction()" class="btn btn-outline-info" disabled id="undoBtn"><i class="bi bi-arrow-left"></i> Desfazer</button>
           <button id="exportCSV" class="btn btn-outline-primary" disabled>CSV</button>
           <button id="exportXLSX" class="btn btn-outline-success" disabled>XLSX</button>
-          <!-- <button id="exportJSON" class="btn btn-outline-info" disabled>Exportar JSON</button> -->
+          <button style="display: none;" id="exportJSON" class="btn btn-outline-info" disabled>Exportar JSON</button>
         </div>
 
         <!-- Estatísticas -->
@@ -746,6 +745,25 @@
 
       </div>
 
+    </section>
+
+    <section class="about" id="crm">
+      <!-- Duas camadas para fazer o crossfade -->
+      <div class="background-fade" id="bg1"></div>
+      <div class="background-fade" id="bg2"></div>
+
+      <div class="interface" id="crmitf">
+        <h2>Quer ser o primeiro a usar nosso <br><span>melhor CRM?</span></h2> <br>
+        <p style="text-align: center; font-size: 22px;">
+          Deixe seu e-mail que em breve avisaremos você! 
+          <strong style="color: #d83e4c;"><i class="bi bi-hand-thumbs-up"></i></strong>
+        </p> <br>
+
+        <form id="emailForm">
+          <input type="email" id="userEmail" placeholder="Digite seu melhor e-mail" required>
+          <button id="btn-email" type="submit">Enviar</button>
+        </form>
+      </div>
     </section>
 
     <!-- <section class="about" id="planos">
@@ -804,26 +822,6 @@
 
     </section> -->
 
-    <section class="about" id="crm">
-      <!-- Duas camadas para fazer o crossfade -->
-      <div class="background-fade" id="bg1"></div>
-      <div class="background-fade" id="bg2"></div>
-
-      <div class="interface" id="crmitf">
-        <h2>Quer ser o primeiro a usar nosso <br><span>melhor CRM?</span></h2> <br>
-        <p style="text-align: center; font-size: 22px;">
-          Deixe seu e-mail que em breve avisaremos você! 
-          <strong style="color: #d83e4c;"><i class="bi bi-hand-thumbs-up"></i></strong>
-        </p> <br>
-
-        <form id="emailForm">
-          <input type="email" id="userEmail" placeholder="Digite seu melhor e-mail" required>
-          <button id="btn-email" type="submit">Enviar</button>
-        </form>
-      </div>
-    </section>
-
-
     <section class="contato" id="contact">
         <div class="interface">
 
@@ -858,7 +856,6 @@
 
         </div>
     </section>
-
 
 <!--Footer 1-->
 <footer class="footer1" id="rodape">

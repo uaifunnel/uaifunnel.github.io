@@ -11,14 +11,19 @@ let isDarkMode = false;
 document.addEventListener('DOMContentLoaded', function() {
 loadDarkModePreference();
 loadSearchTemplates();
-formatarDataAtual();
+// formatarDataAtual();
 });
 
 // Dark mode
 function toggleDarkMode() {
 isDarkMode = !isDarkMode;
 document.body.classList.toggle('dark-mode', isDarkMode);
-document.getElementById('darkModeToggle').textContent = isDarkMode ? '☀️' : '🌙';
+
+ // Altera o ícone do botão com base no modo
+    const darkModeButton = document.getElementById('darkModeToggle');
+    darkModeButton.innerHTML = isDarkMode ? 
+        '<i class="bi bi-brightness-high"></i>' : // ícone de sol (modo claro)
+        '<i class="bi bi-moon"></i>'; // ícone de lua (modo escuro)
 
 try {
     localStorage.setItem('darkMode', isDarkMode);
@@ -58,13 +63,13 @@ setTimeout(() => {
 }
 
 // Formatação de data
-function formatarDataAtual() {
-const agora = new Date();
-const diasSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
-const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho','Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-const dataFormatada = diasSemana[agora.getDay()] + ', ' + agora.getDate() + ' de ' + meses[agora.getMonth()] + ' de ' + agora.getFullYear();
-document.getElementById('datetime').textContent = dataFormatada;
-}
+// function formatarDataAtual() {
+// const agora = new Date();
+// const diasSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+// const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho','Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+// const dataFormatada = diasSemana[agora.getDay()] + ', ' + agora.getDate() + ' de ' + meses[agora.getMonth()] + ' de ' + agora.getFullYear();
+// document.getElementById('datetime').textContent = dataFormatada;
+// }
 
 // Validação de email
 function validateEmail(email) {
@@ -318,8 +323,8 @@ if (!site || !keyword || !location) {
     throw new Error('Preencha Site, Palavra-chave e Localização.');
 }
 
-const excludeTerms = '-"fake" -"spam" -"bot" -"parody"';
-const includeTerms = 'contato OR "entre em contato" OR "trabalho" OR "profissional"';
+const excludeTerms = '-"fanpage"';
+const includeTerms = 'contato';
 
 const queryParts = [
     `site:${site}`,
@@ -1005,9 +1010,9 @@ document.getElementById('exportXLSX').addEventListener('click', () => {
 exportToXLSX(filteredProfiles);
 });
 
-document.getElementById('exportJSON').addEventListener('click', () => {
-exportToJSON(filteredProfiles);
-});
+// document.getElementById('exportJSON').addEventListener('click', () => {
+// exportToJSON(filteredProfiles);
+// });
 
 // Adicionar event listener para mudança de itens por página
 document.getElementById('itemsPerPage').addEventListener('change', changeItemsPerPage);

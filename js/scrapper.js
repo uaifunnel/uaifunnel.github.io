@@ -502,7 +502,8 @@ async function openSearchAutomatized() {
             loadingDiv.classList.remove('hidden');
         }
         
-        const response = await fetch('http://localhost:3000/api/search-organic', {
+        // const response = await fetch('http://localhost:3000/api/search-organic', {   BEFORE
+        const response = await fetch('http://192.168.1.150:3000/api/search-organic', {  //NOW
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -1291,4 +1292,5 @@ window.clearTextarea = clearTextarea;
 window.clearAndPaste = clearAndPaste;
 window.exportToCSV = exportToCSV;
 window.exportToXLSX = exportToXLSX;
+
 window.exportToJSON = exportToJSON;

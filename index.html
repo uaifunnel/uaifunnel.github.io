@@ -1,0 +1,2894 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css" media="screen">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" type="image/x-icon" href="img/fav.png">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+
+    <!-- Json manifest for mobile icon App -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#000">
+    <!-- /Json manifest for mobile icon App -->
+
+    <!--Google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Poppins: ital, wght@0,100; 0,200; 0,300; 0,400; 0,500; 0,600; 0,700;0,800;0,900;1,100;1,200; 1,300; 1,400;1,500; 1,600;1,700;1,800; 1,900&display=swap" rel="stylesheet">
+    <!--/Google fonts-->
+
+    <!--Bootstrap icons-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!--/Bootstrap icons-->
+
+    <!--Scripts-->
+    <script src="js/script.js" defer></script>
+    <script src="js/btn-menu-mob.js" defer></script>
+    <script src="js/scrapper.js" defer></script>
+    <script src="js/signup-system.js"></script>
+    <script src="js/maps-integration.js" defer></script>
+    <!--/Scripts-->
+
+    <title>UaiFunnel - Funil de Vendas e CRM</title>
+
+    <!-- CSS -->
+    <style>
+     /* Performance and accessibility improvements for ALL sections */
+    #footer {
+      transition: transform 0.3s ease;
+      will-change: transform;
+    }
+
+    .hero-site #scroll-cta {
+      transition: opacity 1s ease-in-out;
+      will-change: opacity, transform;
+    }
+
+    /* Organic search section optimizations */
+    #doing {
+      contain: layout;
+    }
+
+    #doing .results-container {
+      contain: layout style;
+    }
+
+    #doing #resultsTable {
+      contain: layout;
+    }
+
+    #doing #resultsTable tbody tr {
+      contain: layout;
+    }
+
+    /* Maps search section optimizations */
+    #leadMapsSection {
+      contain: layout;
+    }
+
+    #searchResults {
+      contain: layout style;
+    }
+
+    #mapsTableBody {
+      contain: layout;
+    }
+
+    /* Mobile menu performance */
+    #menu-mobile {
+      will-change: width, height;
+      contain: layout style;
+    }
+
+    .line-menumob-1,
+    .line-menumob-2,
+    .line-menumob-3 {
+      will-change: transform, background-color;
+    }
+
+    /* Lazy loading styles */
+    img.lazy {
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    img.loaded {
+      opacity: 1;
+    }
+
+    /* Smooth scrolling for all sections */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Reduce motion for users who prefer it */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
+    /* GPU acceleration for animations */
+    .start-float,
+    .start-trail {
+      transform: translateZ(0);
+      will-change: transform;
+    }
+
+    /* Optimize table rendering */
+    table {
+      contain: layout;
+    }
+
+    tbody tr {
+      contain: layout;
+    }
+
+    /* Form optimization */
+    form {
+      contain: layout;
+    }
+
+    input, textarea, select {
+      contain: layout;
+    }
+
+      /* ==================== MODAL DE LOGIN/CADASTRO ==================== */
+
+      /* Ações da mensagem de sucesso */
+      .success-actions {
+          margin-top: 1.5rem;
+      }
+
+      /* Links de alternância mais destacados */
+      .auth-links span {
+          font-size: 14px;
+          color: #5c5c5c;
+      }
+
+      .auth-links a[onclick] {
+          color: #d83e4c !important;
+          font-weight: 600 !important;
+          text-decoration: none !important;
+          font-size: 14px;
+      }
+
+      .auth-links a[onclick]:hover {
+          text-decoration: underline !important;
+          color: #c73545 !important;
+      }
+
+      /* Transições suaves para os textos da esquerda */
+      #leftTitle, #leftDescription {
+          transition: all 0.3s ease;
+      }
+
+      /* Melhor indicação visual das tabs ativas */
+      .auth-tab.active {
+          background: linear-gradient(135deg, #d83e4c 0%, #ff6b7a 100%);
+          color: white;
+          box-shadow: 0 4px 12px rgba(216, 62, 76, 0.4);
+          transform: translateY(-1px);
+      }
+
+      /* Hover mais suave */
+      .auth-tab:not(.active):hover {
+          background: rgba(216, 62, 76, 0.1);
+          color: #d83e4c;
+          transform: translateY(-1px);
+      }
+
+      .signup-modal {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 9999;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          animation: modalFadeIn 0.5s ease-out;
+      }
+
+      .signup-modal.hidden {
+          display: none;
+      }
+
+      .modal-backdrop {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.627);
+          backdrop-filter: blur(3px);
+          -webkit-backdrop-filter: blur(3px);
+      }
+
+      .modal-contentz {
+          position: relative;
+          background: none;
+          border-radius: 20px;
+          width: 60%;
+          height: 90vh;
+          overflow: hidden;
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+          animation: modalSlideIn 0.4s ease-out;
+          z-index: 10000000;
+      }
+
+      .modal-closez {
+          position: absolute;
+          top: 10px;
+          right: 8px;
+          background: transparent !important;
+          border: none;
+          border-radius: 50%;
+          width: 35px;
+          height: 35px;
+          color: #585858 !important;
+          font-size: 25px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.4s ease;
+          z-index: 50;
+      }
+
+      .modal-closez:hover {
+          color: #d83e4c !important;
+          transform: scale(1.3) !important;
+      }
+
+      /* Container Principal */
+      .auth-container {
+          display: flex;
+          min-height: 500px;
+      }
+
+      /* Seção Esquerda - Info */
+      .auth-left {
+          animation: colorCycle 25s infinite;
+          animation-timing-function: ease-in-out;
+          flex: 1;
+          padding: 30px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          color: white;
+          text-align: left;
+          height: 100vh;
+          max-width: 50%;
+      }
+
+      /* Animação de troca de cor */
+      @keyframes colorCycle {
+          0%   { background-color: #2d8fb9c9; }  
+          20%  { background-color: #94bc3fcb; }  
+          40%  { background-color: #ffa200ba; } 
+          60%  { background-color: #d83e4bbb; }  
+          80%  { background-color: #545454bd; }  
+          100% { background-color: #2d8fb9bd; }  
+      }
+
+      .auth-left-content {
+        margin-left: 20px;
+      }
+      
+
+      .auth-left-content img {
+        position: relative;
+        width: 250px;
+        justify-content: center;
+        align-items: center;
+        margin-top: -125px;
+        margin-bottom: 35px;
+      }
+
+      .auth-left-content h2 {
+          font-size: 2rem;
+          font-weight: 700;
+          margin-bottom: 1rem;
+          color: white;
+      }
+
+      .auth-left-content p {
+          font-size: 1rem;
+          margin-bottom: 2rem;
+          opacity: 0.9;
+          line-height: 1.6;
+      }
+
+      .benefits h3 {
+          font-size: 1.2rem;
+          font-weight: 600;
+          margin-bottom: 1rem;
+          color: white;
+      }
+
+      .benefits ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+      }
+
+      .benefits li {
+          margin: 0.8rem 0;
+          font-size: 12px;
+          opacity: 0.9;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+      }
+
+      /* Seção Direita - Formulários */
+      .auth-right {
+          flex: 1;
+          padding: 0; /* ✅ Remover padding aqui */
+          display: flex;
+          flex-direction: column;
+          background: white;
+          position: relative; /* ✅ Adicionar para contexto de posicionamento */
+      }
+
+      /* ✅ Container para as tabs fixas */
+      .auth-tabs-container {
+          position: sticky; /* ✅ Sticky em vez de fixed */
+          top: 0;
+          z-index: 10;
+          background: white;
+          padding: 20px 40px 0 40px; /* ✅ Padding apenas nas laterais */
+      }
+
+      /* Tabs de Switch */
+      .auth-tabs {
+          width: 100%; /* ✅ 100% do container pai */
+          display: flex;
+          margin-top: 10px;
+          margin-bottom: 1rem;
+          border-radius: 12px;
+          background: #f8f9fa;
+          padding: 4px;
+          box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      /* ✅ Container para o conteúdo dos formulários */
+      .auth-forms-container {
+          flex: 1;
+          padding: 20px 40px 40px 40px; /* ✅ Padding normal */
+          overflow-y: auto; /* ✅ Scroll se necessário */
+          zoom: 80%;
+      }
+
+      .auth-tab {
+          flex: 1;
+          padding: 12px 16px;
+          background: transparent;
+          border: none;
+          border-radius: 10px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          color: #5f5f5f;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+      }
+
+      .auth-tab.active {
+          background: linear-gradient(135deg, #d83e4c 0%, #ff6b7a 100%);
+          color: white;
+          box-shadow: 0 2px 8px rgba(216, 62, 76, 0.3);
+          transform: translateY(-1px);
+      }
+
+      .auth-tab:not(.active):hover {
+          background: rgba(216, 62, 76, 0.1);
+          color: #d83e4c;
+      }
+
+      /* Formulários */
+      .auth-form {
+          display: none;
+          animation: formSlideIn 0.4s ease-out;
+      }
+
+      .auth-form.active {
+          display: block;
+      }
+
+      .auth-form h3 {
+          color: #053B49;
+          font-size: 1.5rem;
+          margin-bottom:25px;
+          margin-top: -10px;
+          font-weight: 700;
+          text-align: center;
+      }
+
+      .auth-form > p {
+          color: #666;
+          text-align: center;
+          margin-bottom: 1.5rem;
+          font-size: 0.9rem;
+      }
+
+      .form-group {
+          position: relative;
+          margin-bottom: 1rem;
+      }
+
+      .form-group label {
+          display: block;
+          color: #053B49;
+          font-weight: 600;
+          margin-bottom: 7px;
+          font-size: 15px;
+      }
+
+      .form-group input {
+          width: 100%;
+          padding: 15px 20px;
+          border: 2px solid #e1e5e9;
+          border-radius: 10px;
+          font-size: 16px;
+          transition: all 0.3s ease;
+          background: #fff;
+          outline: none;
+          box-sizing: border-box;
+      }
+
+      .form-group input:focus {
+          border: 2px solid #d83e4c;
+          box-shadow: 0 0 0 3px rgba(216, 62, 76, 0.1);
+      }
+
+      /* Ícone de mostrar/esconder senha */
+      .toggle-password {
+          position: absolute;
+          right: 15px;
+          top: 42px;
+          cursor: pointer;
+          color: #5f5f5f;
+          font-size: 20px;
+          transition: color 0.4s ease;
+      }
+
+      .toggle-password:hover {
+          color: #d83e4c;
+      }
+
+      .form-group input[type="password"] {
+          padding-right: 50px;
+      }
+
+      /* Botão de Ação */
+      .auth-btn {
+          width: 100%;
+          background: linear-gradient(135deg, #d83e4c 0%, #ff6b7a 100%);
+          color: white;
+          border: none;
+          padding: 15px;
+          border-radius: 10px;
+          font-size: 16px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          margin-top: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+      }
+
+      .auth-btn:hover {
+          background: linear-gradient(135deg, #c93541 0%, #f06572 100%);
+          transform: scale(1.05);
+          box-shadow: 0 8px 25px rgba(216, 62, 76, 0.3);
+      }
+
+      .auth-btn:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+          transform: none;
+      }
+
+      /* Links */
+      .auth-links {
+          text-align: center;
+          margin-top: 1rem;
+          line-height: 10px;
+      }
+
+      .auth-links a {
+          color: #d83e4c;
+          text-decoration: none;
+          font-size: 12px !important;
+      }
+
+      .auth-links a:hover {
+          text-decoration: underline;
+      }
+
+      .auth-links small {
+          font-size: 12px;
+          color: #525252;
+          line-height: 1.4;
+      }
+
+      /* Mensagem de Sucesso */
+      .success-message {
+          text-align: center;
+          padding: 2rem;
+      }
+
+      .success-message.hidden {
+          display: none;
+      }
+
+      .success-message i {
+          font-size: 4rem;
+          color: #28a745;
+          margin-bottom: 1rem;
+      }
+
+      .success-message h3 {
+          color: #053B49;
+          font-size: 1.5rem;
+          font-weight: 700;
+          margin-bottom: 0.5rem;
+      }
+
+      .success-message p {
+          color: #666;
+          font-size: 1rem;
+      }
+
+      /* Animações */
+      @keyframes modalFadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+      }
+
+      @keyframes modalSlideIn {
+          from {
+              opacity: 0;
+              transform: scale(0.9) translateY(-20px);
+          }
+          to {
+              opacity: 1;
+              transform: scale(1) translateY(0);
+          }
+      }
+
+      @keyframes formSlideIn {
+          from {
+              opacity: 0;
+              transform: translateX(20px);
+          }
+          to {
+              opacity: 1;
+              transform: translateX(0);
+          }
+      }
+      /* ✅ Responsivo para mobile */
+      @media (max-width: 768px) {
+          .auth-tabs-container {
+              padding: 15px 20px 0 20px;
+          }
+          
+          .auth-forms-container {
+              padding: 15px 20px 20px 20px;
+          }
+          
+          .auth-container {
+              flex-direction: column;
+          }
+      }
+
+
+      /* Responsivo */
+      @media (max-width: 768px) {
+          .auth-container {
+              flex-direction: column;
+          }
+          
+          .auth-left {
+              padding: 30px 25px;
+          }
+          
+          .auth-right {
+              padding: 30px 25px;
+          }
+          
+          .auth-left-content h2 {
+              font-size: 1.5rem;
+          }
+          
+          .modal-content {
+              width: 95%;
+              max-height: 95vh;
+          }
+      }
+
+
+      /* Animações */
+      @keyframes modalFadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+      }
+
+      @keyframes modalSlideIn {
+          from {
+              opacity: 0;
+              transform: scale(0.9) translateY(-20px);
+          }
+          to {
+              opacity: 1;
+              transform: scale(1) translateY(0);
+          }
+      }
+
+      /* Responsivo */
+      @media (max-width: 768px) {
+          .modal-content {
+              padding: 25px;
+              margin: 20px;
+          }
+          
+          .modal-header h2 {
+              font-size: 24px;
+          }
+          
+          .signup-form input {
+              padding: 12px;
+          }
+      }
+
+      .lead-switch-bar {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        margin: 30px 0 30px 0;
+      }
+
+      .lead-switch-btn {
+        background: linear-gradient(45deg, #f7f7fa 70%, #e9ecef 100%);
+        border: 2px solid #d83e4c;
+        border-radius: 40px;
+        font-size: 18px;
+        font-weight: 700;
+        padding: 12px 40px;
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 2px 16px rgba(216, 62, 76, 0.09);
+        color: #d83e4c;
+        outline: none;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .lead-switch-btn:hover {
+        transform: scale(1.05);
+      }
+
+      .lead-switch-btn.active, .lead-switch-btn:focus {
+        background: linear-gradient(45deg, #d83e4c 80%, #ff6b6b 100%);
+        color: #fff !important;
+        transform: scale(1.15);
+        padding: 15px 40px;
+        border-width: 3px;
+        box-shadow: 0 6px 25px rgba(216, 62, 76, 0.14);
+      }
+
+      .lead-switch-btn .icon {
+        font-size: 2.3em;
+        line-height: 1;
+      }
+
+
+      /* ✅ LOADING COM GIF ANIMADO - ESTILO UAIFUNNEL */
+      .maps-loading {
+          text-align: center;
+          padding: 40px 20px;
+          background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+          border-radius: 12px;
+          margin: 20px 0;
+          border: 2px solid #d83e4c;
+          box-shadow: 0 8px 25px rgba(216, 62, 76, 0.1);
+      }
+
+      .gif-container {
+          margin-bottom: 25px;
+      }
+
+      .funil-gif {
+          width: 100px;
+          height: 100px;
+          max-width: 150px;
+          border-radius: 50%;
+          animation: funilPulse 2s ease-in-out infinite;
+          filter: drop-shadow(0 4px 8px rgba(216, 62, 76, 0.3));
+      }
+
+      @keyframes funilPulse {
+          0% { 
+              transform: scale(1); 
+              opacity: 1;
+              filter: drop-shadow(0 4px 8px rgba(216, 62, 76, 0.3));
+          }
+          50% { 
+              transform: scale(1.1); 
+              opacity: 0.8;
+              filter: drop-shadow(0 8px 16px rgba(216, 62, 76, 0.4));
+          }
+          100% { 
+              transform: scale(1); 
+              opacity: 1;
+              filter: drop-shadow(0 4px 8px rgba(216, 62, 76, 0.3));
+          }
+      }
+
+      .loading-message {
+          font-size: 18px;
+          font-weight: 600;
+          text-align: center;
+          color: #053B49;
+          margin-bottom: 20px;
+          text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      }
+
+      .loading-progress {
+          margin-top: 15px;
+      }
+
+      .progress-steps {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          align-items: center;
+      }
+
+      .step-text {
+          color: #575757;
+          font-size: 14px;
+          opacity: 0.6;
+          transform: translateY(10px);
+          transition: all 1s ease-in-out;
+          background: rgba(255, 255, 255, 0.8);
+          padding: 6px 15px;
+          border-radius: 20px;
+          border: 1px solid rgba(216, 62, 76, 0.2);
+          font-weight: 500;
+      }
+
+      .step-text.active {
+          opacity: 1;
+          transform: translateY(0);
+          background: rgba(216, 62, 76, 0.1);
+          border-color: rgba(216, 62, 76, 0.4);
+          color: #d83e4c;
+          font-weight: 600;
+      }
+
+      /* Responsivo */
+      @media (max-width: 768px) {
+          .funil-gif {
+              width: 90px;
+              height: 90px;
+          }
+          
+          .loading-message {
+              font-size: 16px;
+          }
+          
+          .step-text {
+              font-size: 12px;
+              padding: 4px 10px;
+          }
+      }
+
+      /* Disable text selection on results table */
+      #mapsTableBody, 
+      #mapsResultsTable,
+      .results-table {
+        user-select: none;
+        -webkit-user-select: none; /* Safari */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE/Edge */
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* Also apply to the entire results section */
+      #searchResults {
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+      }
+
+      /* Make sure table cells are also protected */
+      #mapsTableBody td,
+      #mapsTableBody th {
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+      }
+
+
+      /* Dark mode se você usar */
+      body.dark-mode .maps-loading {
+          background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+          border-color: #d83e4c;
+      }
+
+      body.dark-mode .loading-message {
+          color: #e9ecef;
+      }
+
+      body.dark-mode .step-text {
+          background: rgba(45, 45, 45, 0.8);
+          color: #ccc;
+      }
+
+      body.dark-mode .step-text.active {
+          background: rgba(216, 62, 76, 0.2);
+          color: #ff6b6b;
+      }
+
+      /* ==================== SEÇÃO MAPS SCRAPER ==================== */
+      .maps-scraper {
+          padding: 80px 0;
+      }
+
+      .maps-scraper h2 {
+          font-size: 35px;
+          font-weight: 300;
+          text-align: center;
+          color: #053B49;
+          margin-bottom: 20px;
+      }
+
+      .maps-scraper h2 span {
+          color: #d83e4c;
+          font-weight: 800;
+          font-size: 45px;
+      }
+
+      .scraper-container {
+        position: relative;
+          max-width: 1000px;
+          margin: 0 auto;
+          background: white;
+          border-radius: 20px;
+          padding: 40px;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      }
+
+      .scraper-form {
+          display: grid;
+          grid-template-columns: 1fr 1fr 200px;
+          gap: 20px;
+          align-items: end;
+          margin-bottom: 30px;
+      }
+
+      .scraper-form .form-group {
+          display: flex;
+          flex-direction: column;
+      }
+
+      .scraper-form label {
+          font-weight: 600;
+          color: #053B49;
+          margin-bottom: 8px;
+      }
+
+      .scraper-form input,
+      .scraper-form select {
+          padding: 12px 16px;
+          border: 2px solid #e9ecef;
+          border-radius: 10px;
+          font-size: 16px;
+          transition: all 0.3s ease;
+          outline: none;
+      }
+
+      .scraper-form input:focus,
+      .scraper-form select:focus {
+          outline: none;
+          border-color: #d83e4c;
+          box-shadow: 0 0 0 3px rgba(216, 62, 76, 0.1);
+      }
+
+      #searchBtn {
+          background: linear-gradient(45deg, #d83e4c, #ff6b6b);
+          color: white;
+          border: none;
+          border-radius: 10px;
+          padding: 12px 20px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: .4s;
+      }
+
+      #searchBtn:hover {
+          background: linear-gradient(45deg, #e34a57, #fa7b7b);
+          box-shadow: 0 5px 15px rgba(216, 62, 76, 0.3);
+      }
+
+      .results-section {
+          margin-top: 30px;
+      }
+
+      .hidden {
+          display: none;
+      }
+
+      /* Responsividade */
+      @media (max-width: 768px) {
+          .scraper-form {
+              grid-template-columns: 1fr;
+              gap: 15px;
+          }
+          
+          .scraper-container {
+              margin: 0 20px;
+              padding: 25px;
+          }
+      }
+
+      /* Dark mode para a seção do scraper */
+      body.dark-mode .maps-scraper {
+          background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+      }
+
+      body.dark-mode .scraper-container {
+          background: #2d2d2d;
+          border: 1px solid #404040;
+      }
+
+      body.dark-mode .maps-scraper h2 {
+          color: #e9ecef;
+      }
+
+      body.dark-mode .scraper-form input,
+      body.dark-mode .scraper-form select {
+          background: #404040;
+          border-color: #555;
+          color: #e9ecef;
+      }
+
+
+      /* ==================== SEÇÕES GERAIS ==================== */
+      #doing {
+        height: auto 100vh !important;
+      }
+      
+      #about {
+        height: 100vh !important;
+      }
+      
+      #exportJSON:hover {
+        color: #fff;
+      }
+      
+      #previwbtn:hover {
+        color: #fff;
+      }
+      
+      #closehowbtn {
+        width: 20px !important;
+        height: 20px !important;
+        border-radius: 25px !important;
+        font-size: 10px;
+      }
+
+      /* ==================== DARK MODE ==================== */
+      body.dark-mode {
+        background: #1a1a1a;
+        color: #e9ecef;
+      }
+      
+      body.dark-mode .card {
+        background: #2d2d2d;
+        border-color: #404040;
+      }
+      
+      body.dark-mode .form-control {
+        background: #404040;
+        border-color: #555;
+        color: #e9ecef;
+      }
+      
+      body.dark-mode .table {
+        background: #2d2d2d;
+        color: #e9ecef;
+      }
+      
+      body.dark-mode .table-striped > tbody > tr:nth-of-type(even) > td {
+        background: #343a402e !important;
+      }
+      
+      /* Dark mode toggle */
+      #darkModeToggle {
+        position: fixed;
+        top: 10px;
+        right: 225px;
+        z-index: 1000;
+        background: transparent;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        color: #ccc;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      
+      #darkModeToggle:hover {
+        transform: scale(1.03);
+        background: transparent;
+      }
+
+      /* ==================== TABELA PRINCIPAL ==================== */
+      .navbar-brand img {
+        height: 35px;
+      }
+      
+      mark {
+        background-color: #dbf73d;
+        padding: 0 3px;
+        border-radius: 3px;
+      }
+      
+      table {
+        border-radius: 16px;
+        overflow: visible; /* IMPORTANTE: Mudado de hidden para visible */
+        zoom: 75%;
+        position: relative; /* Adiciona contexto de posicionamento */
+      }
+      
+      /* Container da tabela - CORRIGIDO */
+      .table-responsive {
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        max-height: 600px;
+        overflow-y: auto;
+        overflow-x: auto;
+        position: relative; /* Adiciona contexto para sticky */
+      }
+
+      /* Cabeçalho da tabela - CORRIGIDO PARA STICKY HEADER */
+      .table-responsive table thead th,
+      table thead th {
+        background: linear-gradient(135deg, #d83e4c 0%, #d83e4c 100%) !important;
+        color: #fff !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 1020 !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }   
+
+      /* Garantir que o thead funcione com sticky */
+      .table-responsive table thead {
+        position: sticky;
+        top: 0;
+        z-index: 1020;
+      }
+
+      /* Tel format */
+      /* ✅ CORREÇÃO DEFINITIVA PARA LARGURA DAS COLUNAS */
+      .table-container {
+          overflow-x: auto;
+          width: 100%;
+      }
+
+      table {
+          min-width: 100%; /* Aumenta largura total da tabela */
+          /* table-layout: fixed; Controle manual das larguras */
+          width: auto;
+          zoom: 68%;
+      }
+
+      /* ✅ DEFINIR LARGURAS ESPECÍFICAS PARA CADA COLUNA */
+      table th:nth-child(1), table td:nth-child(1) { width: 2%; }  /* # */
+      table th:nth-child(2), table td:nth-child(2) { width: 15%; } /* Nome */
+      table th:nth-child(3), table td:nth-child(3) { width: 20%; } /* Endereço */
+      table th:nth-child(4), table td:nth-child(4) { width: 12%; } /* TELEFONE - MAIS ESPAÇO */
+      table th:nth-child(5), table td:nth-child(5) { width: 7%; } /* Site */
+      table th:nth-child(6), table td:nth-child(6) { width: 6%; }  /* Avaliação */
+      table th:nth-child(7), table td:nth-child(7) { width: 7%; } /* Categoria */
+      table th:nth-child(8), table td:nth-child(8) { width: 5%; }  /* Ações */
+
+      /* ✅ COLUNA DE TELEFONE SEM QUEBRA */
+      .telefone-cell {
+          white-space: nowrap !important;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          text-align: center;
+          padding: 12px 8px !important;
+      }
+
+      /* ✅ LINK DO TELEFONE SEM QUEBRA */
+      .telefone-link {
+          white-space: nowrap !important;
+          display: inline-block;
+          width: 100%;
+          text-align: center;
+          color: #28a745;
+          text-decoration: none;
+          font-weight: 600;
+          font-size: 13px;
+      }
+
+      .telefone-link:hover {
+          text-decoration: underline;
+      }
+
+      /* ✅ AJUSTES PARA TELAS MENORES */
+      @media (max-width: 1200px) {
+          .table-container {
+              overflow-x: scroll;
+              -webkit-overflow-scrolling: touch;
+          }
+          
+          table {
+              min-width: 1200px;
+          }
+      }
+
+      @media (max-width: 768px) {
+          table {
+              min-width: 1000px;
+          }
+          
+          .telefone-link {
+              font-size: 12px;
+          }
+      }
+
+      /* Hover corrigido */
+      .table-responsive table tbody tr:hover td,
+      .table-hover tbody tr:hover td,
+      .table tbody tr:hover td,
+      table tbody tr:nth-child(even):hover td,
+      table tbody tr:nth-child(odd):hover td {
+        background-color: #77ebffa9 !important;
+        box-shadow: inset 0 0 0 9999px #77ebffa9 !important;
+      }
+      
+      /* Linhas alternadas */
+      .table-responsive table tbody tr:nth-child(even),
+      .table-striped > tbody > tr:nth-of-type(even) > td,
+      .table-striped > tbody > tr:nth-of-type(even) > th {
+        background: transparent !important;
+      }
+
+      table td, table th {
+        vertical-align: middle !important;
+      }
+
+      /* Sticky header em modo escuro */
+      body.dark-mode .table-responsive table thead th {
+        background: linear-gradient(135deg, #d83e4c 0%, #d83e4c 100%) !important;
+        color: #fff !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      }
+
+      /* ==================== INDICADORES E BADGES ==================== */
+      /* Indicadores de qualidade */
+      .quality-badge {
+        font-size: 0.8em;
+        padding: 5px 9px;
+        border-radius: 12px;
+        font-weight: bold;
+      }
+      .quality-high { background: #d4edda; color: #155724; }
+      .quality-medium { background: #fff3cd; color: #856404; }
+      .quality-basic { background: #f8d7da; color: #721c24; }
+
+      /* Estatísticas */
+      .stat-card small{
+        font-size: 12px;
+        font-weight: 500;
+      }
+      .stat-card h4{
+        font-weight: 650;
+      }
+
+      .stat-card {
+        background: transparent;
+        color: #d83e4c;
+        border-radius: 12px;
+        border: 1px solid #d83e4c;
+        padding: 15px;
+        text-align: center;
+        margin-bottom: 10px;
+        transition: all 0.3s ease;
+      }
+      
+      .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(216, 62, 76, 0.2);
+      }
+
+      /* ==================== COMPONENTES UI ==================== */
+      /* Barra de progresso */
+      .progress-container {
+        display: none;
+        margin: 15px 0;
+      }
+
+      /* Preview da busca */
+      .search-preview {
+        background: #e9ecef;
+        border-radius: 8px;
+        padding: 10px;
+        margin: 10px 0;
+        font-family: monospace;
+        font-size: 0.9em;
+      }
+      
+      /* Validação */
+      .email-valid { color: #28a745; }
+      .email-invalid { color: #dc3545; }
+      
+      /* Paginação */
+      .pagination-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin: 20px 0;
+      }
+      
+      /* Tooltips */
+      .tooltip-custom {
+        position: relative;
+        cursor: help;
+      }
+      
+      .tooltip-custom::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #333;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+        z-index: 1000;
+      }
+      
+      .tooltip-custom:hover::after {
+        opacity: 1;
+      }
+      
+      /* Mensagens */
+      .error-message {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px 0;
+        display: none;
+      }
+      
+      .success-message {
+        background: #d4edda;
+        color: #155724;
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px 0;
+        display: none;
+      }
+      
+      /* Loading spinner */
+      .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #d83e4c;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      /* ==================== SEÇÃO CRM ==================== */
+      #crm {
+        position: relative;
+        height: 100vh;
+        background-color: #f5f5f5;
+        padding: 50px 0;
+        text-align: center;
+        overflow: hidden;
+      }
+      .crmnews {
+        position: relative;
+        top: 10%;
+        right: 5%;
+        z-index: 10;
+      }
+
+      .background-fade {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        padding: 50px 0;        
+        background-size: 60%;
+        background-position: right center;
+        background-repeat: no-repeat;
+        transition: .1s ease-in-out;
+        z-index: 1;
+        opacity: 0;
+      }
+
+      #bg1 {
+        z-index: 1;
+      }
+      #bg2 {
+        z-index: 2;
+      }
+
+      #emailForm {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+      }
+
+      #userEmail {
+        padding: 15px;
+        font-size: 16px;
+        width: 400px;
+        height: 50px;
+        border: 2px solid #d83e4c;
+        border-radius: 30px;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      #userEmail:focus {
+        border: 3.2px solid #d83e4c;
+        box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+      }
+
+      #btn-email {
+        width: 180px;
+        height: 50px;
+        background-color: #d83e4c;
+        border: none;
+        color: #fff;
+        margin-right: 25px;
+        margin-bottom: 2px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: .3s;
+      }
+      #btn-email:hover {
+        background-color: #eb4e5b;
+        transform: scale(1.08);
+      }
+      #btn-csv {
+        width: auto;
+        border: none;
+        background: none;
+        position: absolute;
+        top: 18%;
+        right: 50px;
+        color: #474747;
+        box-shadow: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: .3s;
+        font-size: 25px;
+        margin-bottom: 5px;
+        margin-top: -20px;
+      }
+      #btn-csv:hover {
+        color: #d83e4c;
+        transform: scale(1.08);
+      }
+
+      /* ==================== MODAL TUTORIAL ==================== */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        backdrop-filter: blur(5px);
+      }
+
+      .modal-content {
+        background: #2d2d2dc1;
+        border-radius: 20px;
+        max-width: 800px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+        animation: modalFadeIn 0.3s ease-out;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Dark mode modal */
+      body.dark-mode .modal-content {
+        background: #2d2d2dc1;
+        color: #e9ecef;
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: #d83e4c;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        z-index: 10;
+      }
+
+      .modal-close:hover {
+        background: #c73545;
+        transform: scale(1.1);
+      }
+
+      .modal-header {
+        padding: 30px 30px 20px;
+        text-align: center;
+        border-bottom: 1px solid #eee;
+      }
+
+      body.dark-mode .modal-header {
+        border-bottom-color: #404040;
+      }
+
+      .modal-header p {
+        margin: 0;
+        color: #ccc;
+        font-size: 16px;
+      }
+
+      body.dark-mode .modal-header p {
+        color: #ccc;
+      }
+
+      .modal-body {
+        padding: 20px 30px 30px;
+      }
+
+      .video-container {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        height: 0;
+        overflow: hidden;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 15px;
+      }
+
+      /* Animações */
+      @keyframes modalFadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9) translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+
+      /* ==================== RESPONSIVIDADE ==================== */
+      @media (max-width: 768px) {
+        #btn-csv {
+          top: 8%;
+          right: 10px;
+        }
+        .modal-content {
+          width: 95%;
+          margin: 20px;
+        }
+        
+        .modal-header {
+          padding: 20px 20px 15px;
+        }
+        
+        .modal-header h3 {
+          font-size: 20px;
+        }
+        
+        .modal-body {
+          padding: 15px 20px 20px;
+        }
+        
+        .video-container {
+          padding-bottom: 60%; /* Ajuste para mobile */
+        }
+      }
+    </style>
+    <!--/CSS-->
+</head>
+<body>
+
+    <header id="header">
+
+        <div class="interface">
+
+            <section class="logo">
+                <a href="index.html"><img class="logo-white" src="img/logo_.png" alt="Yailup"></a>
+                <a href="index.html"><img class="logo-color" src="img/logo.png" alt="Yailup"></a>
+            </section> 
+
+            <section class="menu-desktop">
+                <nav>
+                    <ul>
+                        <li><a id="cliked" href="#home">Início</a></li>
+                        <li><a id="cliked" href="#doing">Gerar Leads</a></li>
+                        <li><a id="cliked" href="#crm">CRM</a></li>
+                        <li><a id="cliked" href="#planos">Planos</a></li>
+                        <li><a id="cliked" href="blog.html">Blog</a></li>
+                        <li id="cliked" style="font-weight: 100; color: #ccc;">|</li>
+                        <li><a class="username" style="font-size: 10px !important;" id="cliked" href="#"> <i class='bx bx-user userpic'></i> Login</a></li>
+                    </ul>
+                  
+                </nav>
+            </section>
+
+            <!-- Dark mode toggle -->
+            <button style="display: none;" class="dark-mode-toggle" id="darkModeToggle" onclick="toggleDarkMode()"><i class="bi bi-moon"></i></button>
+
+            <section class="btn-contato">
+                <a href="index.html#contact">
+                    <button>Teste <strong>GRÁTIS!</strong></button>
+                </a>
+            </section>
+
+            <div class="btn-menu-mob" id="btn-menu-mob">
+                <div class="line-menumob-1"></div>
+                <div class="line-menumob-2"></div>
+                <div class="line-menumob-3"></div>
+            </div>
+
+            <section class="menu-mobile" id="menu-mobile">
+                <nav>
+                    <ul>
+                        <li><a id="cliked" href="#home">Início</a></li>
+                        <li><a id="cliked" href="#doing">Gerar Leads</a></li>
+                        <li><a id="cliked" href="#crm">CRM</a></li>
+                        <li><a id="cliked" href="#planos">Planos</a></li>
+                        <li><a id="cliked" href="blog.html">Blog</a></li>
+                    </ul>
+                </nav>
+            </section>
+
+        </div>          
+
+    </header>
+
+    <section class="hero-site" id="home">
+        <div class="interface">
+            <div class="txt-hero">
+                <h1>Prospecte e gerencie seus clientes de um jeito muito mais <strong>Eficiente</strong> e <strong>Produtivo.</strong></h1><br>
+                <p>Experimente <strong>gratuitamente</strong> nossa ferramenta para obter muitos <strong id="maxpot">LEADS AGORA! <i class="bi bi-rocket-takeoff"></i></strong></p><br>
+                <a href="index.html#doing">
+                    <button>GERAR LEADS AGORA!</button>
+                </a>
+                <a href="javascript:void(0)" onclick="openTutorialModal()">
+                  <button id="howbtn"><i style="font-size: 18px; margin-right: 10px;" class="bi bi-play-btn"></i> Entenda como funciona</button>
+                </a>
+            </div>  
+        </div>
+        
+        <div id="scroll-cta" onclick="scrollDown()">
+            <i class="bi bi-mouse"></i>
+        </div>
+
+        <!-- Modal do Tutorial -->
+        <div id="tutorialModal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <button id="closehowbtn" class="modal-close" onclick="closeTutorialModal()">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+                <div class="modal-header">
+                    <p><i class="bi bi-play-btn"></i> Aprenda passo a passo como usar nossa ferramenta</p>
+                </div>
+                <div class="modal-body">
+                    <div class="video-container">
+                        <iframe 
+                            id="tutorialVideo"
+                            width="100%" 
+                            height="400"
+                            src="" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+    </section>
+
+    <section id="doing" class="about lead-switch-section">
+      <div class="interface">
+        <h2>Bora <span>Gerar Leads!🚀</span></h2>
+        
+        <!-- Alternador visual -->
+        <div class="lead-switch-bar">
+          <button id="btnMapsEnv" type="button" class="lead-switch-btn active" onclick="switchLeadMode('maps')">
+            <span><i class="bi bi-geo-alt-fill"></i></span>
+            <span class="label">Estabelecimentos Locais</span>
+          </button>
+          <button id="btnSearchEnv" type="button" class="lead-switch-btn" onclick="switchLeadMode('search')">
+            <i class="bi bi-search"></i>
+            <span class="label">Busca Orgânica Geral</span>
+          </button>
+        </div>
+        
+        <!-- SESSÃO GOOGLE MAPS -->
+        <div id="leadMapsSection" id="doing">
+          <section class="maps-scraper" id="doing">
+            <div class="interface">
+                <h2 style="margin-top: -70px;"><span style="font-size: 30px !important;"><i class="bi bi-geo-alt-fill"></i>Leads locais</span></h2>
+                <p style="text-align: center;">Encontre estabelecimentos e extraia dados de contato automaticamente</p>
+                
+                <div class="scraper-container">                    
+                    <div class="scraper-form">
+                      <div class="form-group">
+                        <label for="searchTerm">Termo de busca:</label>
+                        <input type="text" id="searchTerm" placeholder="Ex: restaurante italiano, farmácia 24h">
+                      </div>
+
+                      <div class="form-group">
+                        <label for="maxResults">Quantidade de Leads desejada:</label>
+                        <select id="maxResults">
+                          <option value="50">50 resultados</option>
+                          <option value="100">100 resultados</option>
+                          <option value="200">200 resultados</option>
+                          <option value="300">300 resultados</option>
+                          <option value="400">300+ resultados</option>
+                        </select>
+                      </div>
+
+                      <!-- Colocar botão dentro da mesma estrutura -->
+                      <div class="form-group">
+                        <label style="visibility: hidden;">Buscar</label> <!-- Para manter altura e alinhamento -->
+                        <button onclick="startMapsSearch()" id="searchBtn">
+                          <i class="bi bi-search"></i> Buscar
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- ✅ LOADING COM GIF ANIMADO (adicionar antes da div searchResults) -->
+                    <div id="mapsLoading" class="maps-loading hidden">
+                        <div class="gif-container">
+                            <img src="img/funil_animado.gif" alt="Processando..." class="funil-gif">
+                        </div>
+                        <p class="loading-message" style="text-align: center !important;">Processando a coleta de dados. Por favor, aguarde...</p>
+                        <div class="loading-progress">
+                            <div class="progress-steps">
+                                <small class="step-text">🔍 Navegando para o Google Maps...</small>
+                                <small class="step-text">📜 Coletando links dos estabelecimentos...</small>
+                                <small class="step-text">📊 Extraindo dados detalhados...</small>
+                                <small class="step-text">📞 Formatando telefones...</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="searchResults" class="results-section hidden">
+                      <h5 id="mapsResultsTitle">Resultados encontrados</h5>
+                      <button onclick="exportarCSV()" id="btn-csv">
+                        <i class="bi bi-filetype-csv"></i>
+                      </button>
+                      <div class="table-responsive">
+                          <table class="table table-striped">
+                              <thead>
+                                  <tr>
+                                      <th>#</th>
+                                      <th>Nome</th>
+                                      <th>Endereço</th>
+                                      <th id="phone-colum">Telefone</th>
+                                      <th>Site</th>
+                                      <th>Avaliação</th>
+                                      <th>Categoria</th>
+                                      <th>Ações</th>
+                                  </tr>
+                              </thead>
+                              <tbody id="mapsTableBody">
+                                  <!-- Resultados aparecerão aqui -->
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+                </div>
+            </div>
+          </section>
+        </div>
+        <!-- SESSÃO GOOGLE SEARCH -->
+        <div id="leadSearchSection" style="display:none;">
+          <section class="about" id="doing">
+            <div class="interface">
+              <h2 style="margin-top: 10px;""><span style="font-size: 30px !important;"> <i class="bi bi-search"></i> Leads por Busca Orgânica</span></h2>
+              <p style="text-align: center;">Extraia o contato de potenciais clientes de um site específico, como uma rede social por exemplo.</p>
+
+              <div class="container mb-5">
+
+              <!-- Messages -->
+              <div class="error-message" id="errorMessage"></div>
+              <div class="success-message" id="successMessage"></div>
+
+              <!-- Formulário da Busca -->
+              <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label">Site:</label>
+                        <input type="text" class="form-control" id="inputSite" placeholder="Ex: instagram.com">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label">Palavra-chave:</label>
+                        <input type="text" class="form-control" id="inputProfession" placeholder="Ex: personal trainer" required>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label">Email (opcional):</label>
+                        <input type="text" class="form-control" id="inputEmailType" placeholder='Ex: @gmail.com OR @yahoo.com.br'>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label">Localização:</label>
+                        <input type="text" class="form-control" id="inputCity" placeholder="Ex: Belo Horizonte" required>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Preview da busca -->
+                  <div id="searchPreview" class="search-preview" style="display: none;"></div>
+                  
+                  <div class="d-flex gap-2">
+                    <button onclick="previewSearch()" class="btn btn-outline-info" id="previwbtn"><i class="bi bi-eye-fill"></i> Preview</button>
+                    <button id="autoSearchBtn" onclick="openSearchAutomatized()" class="btn btn-danger"><i class="bi bi-search"></i> Buscar <i class="bi bi-google"></i></button>
+                    <button onclick="saveSearchTemplate()" class="btn btn-outline-secondary tooltip-custom" data-tooltip="Salvar busca como template"><i class="bi bi-floppy2-fill"></i></button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Área de Colagem style="display: none;" -->
+              <div class="mb-3"> 
+                <label class="form-label">Texto da busca:</label>
+                <textarea id="inputText" class="form-control" rows="5" placeholder="Cole aqui o texto da busca do Google..."></textarea>
+                <small class="form-text text-muted">Dica: Use <strong>Ctrl+A</strong> no Google para selecionar tudo, depois <strong>Ctrl+C</strong> para copiar.</small>
+              </div>
+
+              <!-- Barra de progresso -->
+              <div class="progress-container" id="progressContainer">
+                <div class="progress">
+                  <div class="progress-bar" id="progressBar" role="progressbar" style="width: 0%"></div>
+                </div>
+                <small class="text-muted" id="progressText">Processando...</small>
+              </div>
+
+              <div class="d-flex justify-content-center flex-wrap gap-2 mb-4">
+                <button onclick="clearTextarea()" class="btn btn-outline-secondary"><i class="bi bi-eraser-fill"></i></button>
+                <button onclick="clearAndPaste()" class="btn btn-outline-secondary"> <i class="bi bi-eraser-fill"></i><i class="bi bi-clipboard-check"></i></button>
+                <button id="parseBtn" class="btn btn-success"><i class="bi bi-table"></i> Gerar Tabela</button>
+                <input type="search" id="filterInput" class="form-control" placeholder="Filtrar..." disabled style="max-width:200px;">
+                <select id="qualityFilter" class="form-control" disabled style="max-width:150px;">
+                  <option value="">Qualidade</option>
+                  <option value="">Todas</option>
+                  <option value="high">Alta qualidade</option>
+                  <option value="medium">Média qualidade</option>
+                  <option value="basic">Básica</option>
+                </select>
+                <button onclick="removeDuplicates()" class="btn btn-outline-warning" style="display: none;" disabled id="duplicateBtn"><i class="bi bi-eraser-fill"></i> Remover Duplicatas</button>
+                <button style="display: none;" onclick="undoLastAction()" class="btn btn-outline-info" disabled id="undoBtn"><i class="bi bi-arrow-left"></i> Desfazer</button>
+                <button id="exportCSV" class="btn btn-outline-primary" disabled>CSV</button>
+                <button id="exportXLSX" class="btn btn-outline-success" disabled>XLSX</button>
+                <button style="display: none;" id="exportJSON" class="btn btn-outline-info" disabled>Exportar JSON</button>
+              </div>
+
+              <!-- Estatísticas -->
+              <div id="statsContainer"></div>
+
+              <!-- Paginação -->
+              <div class="pagination-container" id="paginationContainer" style="display: none;">
+                <button id="prevPage" class="btn btn-outline-secondary" onclick="changePage(-1)">← Anterior</button>
+                <span id="pageInfo">Página 1 de 1</span>
+                <button id="nextPage" class="btn btn-outline-secondary" onclick="changePage(1)">Próximo →</button>
+                <select id="itemsPerPage" class="form-control" style="width: auto; margin-left: 10px;" onchange="changeItemsPerPage()">
+                  <option value="50">50 por página</option>
+                  <option value="100">100 por página</option>
+                  <option value="200">200 por página</option>
+                  <option value="500">500 por página</option>
+                </select>
+              </div>
+
+              <!-- Tabela -->
+              <div id="tableContainer"></div>
+
+            </div>
+
+          </section>
+        </div>
+      </div>
+    </section>
+    
+    <section class="about" id="crm">
+      <!-- Duas camadas para fazer o crossfade -->
+      <div class="background-fade" id="bg1"></div>
+      <div class="background-fade" id="bg2"></div>
+
+      <div class="interface crmnews" id="crmitf">
+        <h2>Quer ser o primeiro a usar nosso <br><span>melhor CRM?</span></h2> <br>
+        <p style="text-align: center; font-size: 22px;">
+          Deixe seu e-mail que em breve avisaremos você! 
+          <strong style="color: #d83e4c;"><i class="bi bi-hand-thumbs-up"></i></strong>
+        </p> <br>
+
+        <form id="emailForm">
+          <input type="email" id="userEmail" placeholder="Digite seu melhor e-mail" required>
+          <button id="btn-email" type="submit">Enviar</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="about" id="planos">
+      <div class="interface">
+        <h2>Nossos <span>Planos</span></h2> <br>
+
+        <div class="pricing-grid">
+
+          <!-- Plano Free -->
+          <div class="pricing-card">
+            <h3 class="plan-name">Essencial</h3>
+            <p class="plan-price">Gratuito</p>
+            <ul class="plan-features">
+              <li>2 scraps por dia</li>
+              <li>Suporte por e-mail</li>
+              <li class="not-included"><s>Resultados ilimitados</s></li>
+              <li class="not-included"><s>Consultoria personalizada</s></li>
+              <li class="not-included"><s>Dashboard de desempenho</s></li>
+              <li class="not-included"><s>Acesso ao CRM</s></li>
+              <li class="not-included"><s>Relatórios automatizados</s></li>
+              <li class="not-included"><s>Chat com IA Generativa</s></li>
+            </ul>
+            <button class="plan-button">Começar grátis</button>
+          </div>
+
+          <!-- Plano Inicial -->
+          <div class="pricing-card">
+            <h3 class="plan-name">Start</h3>
+            <p class="plan-price"><span>R$ 24,99</span>/mês</p>
+            <ul class="plan-features">
+              <li>10 scraps por dia</li>
+              <li>Suporte por WhatsApp</li>
+              <li>Resultados ilimitados</li>
+              <li class="not-included"><s>Consultoria personalizada</s></li>
+              <li class="not-included"><s>Dashboard de desempenho</s></li>
+              <li class="not-included"><s>Acesso ao CRM</s></li>
+              <li class="not-included"><s>Relatórios automatizados</s></li>
+              <li class="not-included"><s>Chat com IA Generativa</s></li>
+            </ul>
+            <button class="plan-button"> Assinar </button>
+          </div>
+
+          <!-- Plano Intermediário (em destaque) -->
+          <div class="pricing-card highlight-plan">
+            <div class="badge">RECOMENDADO</div>
+            <h3 class="plan-name">Pro</h3>
+            <p class="plan-price"><span>R$ 49,99</span>/mês</p>
+            <ul class="plan-features">
+              <li>30 scraps por dia</li>
+              <li>Suporte por WhatsApp</li>
+              <li>Resultados ilimitados</li>
+              <li>1h de Consultoria/mês</li>
+              <li>Dashboard de desempenho</li>
+              <li>Acesso ao CRM</li>
+              <li>Relatórios automatizados</li>
+              <li class="not-included"><s>Chat com IA Generativa</s></li>
+            </ul>
+            <button class="plan-button primary"> Assinar </button>
+          </div>
+
+          <!-- Plano Avançado -->
+          <div class="pricing-card">
+            <h3 class="plan-name">Scale</h3>
+            <p class="plan-price"><span>R$ 99,99</span>/mês</p>
+            <ul class="plan-features">
+              <li>50 scraps por dia</li>
+              <li>Suporte prioritário</li>
+              <li>Resultados ilimitados</li>
+              <li>3h de Consultoria/mês</li>
+              <li>Dashboard de desempenho</li>
+              <li>Acesso ao CRM</li>
+              <li>Relatórios automatizados</li>
+              <li>Chat com IA Generativa</li>
+            </ul>
+            <button class="plan-button"> Assinar </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="contato" id="contact">
+        <div class="interface">
+
+            <article class="txt-contato">
+                <h3><strong>E aí,<br> Gostou?</strong></h3>
+                <p>Então preencha o formulário e experimente <span>GRÁTIS</span> nossa ferramenta por 30 dias!</p>
+            </article>
+
+            <article class="icons-contato">
+                <form class="freetrialform" id="contactForm" method="post">
+                    <div class="form-group">
+                        <i class="bi bi-person icon"></i>
+                        <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="bi bi-envelope-at icon"></i>
+                        <input type="email" id="email" name="email" placeholder="Seu melhor e-mail" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="bi bi-whatsapp icon"></i>
+                        <input type="tel" id="phone" name="phone" placeholder="Seu Telefone/WhatsApp" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="bi bi-eye-slash-fill toggle-password" id="icone" onclick="togglePassword('loginPasswordz', this)"></i>
+                        <input type="password" id="loginPasswordz" name="password" required placeholder="Sua senha">
+                    </div>
+            
+                    <button type="submit" class="btn-contato" id="btn-contato"><i class="bi bi-person-plus"></i>Criar conta</button>
+                </form>
+            </article>
+            <div id="formMessage"></div>
+
+        </div>
+    </section>
+
+    <!--Footer 1-->
+    <footer class="footer1" id="rodape">
+        &copy; <span id="anoAtual"></span> UaiFunnel - Funil de Vendas e CRM.
+    </footer>
+    <!-- /Footer1 -->
+
+    <!--Footer 2-->
+    <footer id="footer">
+        <div class="interface">
+            <section class="top-footer">
+            </section><br>
+
+            <section class="middle-footer">
+              <img src="img/logo_.png" id="logofooter"><br>
+                <h1 id="footer-text">&copy; <span id="anoAtualz"></span> UaiFunnel - Todos os direitos reservados.</h1> 
+                <h2>Yailup | Soluções Operacionais</h2>
+            </section>
+        </div>
+    </footer>
+    <!--/Footer2-->
+
+  <!-- WhatsApp icon -->
+  <a href="https://wa.me/5521992942010" target="_blank" class="whatsapp-icon">
+    <i class="bi bi-whatsapp"></i>
+  </a>
+  <!-- /WhatsApp icon -->
+
+    <!-- Modal Termos de Uso -->
+    <div id="modal-terms-uaifunnel" class="uaifunnel-modal hidden" tabindex="-1">
+      <div class="uaifunnel-modal-backdrop" onclick="closeTermsModal()"></div>
+      <div class="uaifunnel-modal-content">
+        <button class="uaifunnel-modal-close" onclick="closeTermsModal()">&times;</button>
+        <h2>Termos de Uso — UaiFunnel</h2>
+        <div class="uaifunnel-modal-scroll">
+          <h3>1. Aceitação dos Termos</h3>
+          <p>Ao acessar e utilizar o UaiFunnel (“Plataforma”), você concorda integralmente com estes Termos de Uso. Caso não concorde, não utilize a plataforma.</p>
+          <h3>2. Descrição do Serviço</h3>
+          <p>O UaiFunnel oferece ferramentas para automação de prospecção comercial, extração de leads e funcionalidades de CRM. A coleta dos dados respeita fontes públicas (como Google Maps e redes sociais) e busca sempre cumprir a legislação vigente.</p>
+          <h3>3. Cadastro do Usuário</h3>
+          <ul>
+            <li>É necessário fornecer informações verdadeiras como nome, e-mail, telefone e senha para criar uma conta.</li>
+            <li>Você é responsável por todas as atividades sob sua conta e deve proteger suas credenciais.</li>
+          </ul>
+          <h3>4. Responsabilidades do Usuário</h3>
+          <ul>
+            <li>Usar a plataforma somente para fins lícitos.</li>
+            <li>Não tentar invadir, fraudar, burlar, modificar ou prejudicar o sistema e outros usuários.</li>
+            <li>Não utilizar os dados extraídos para spam, perseguição, assédio ou práticas proibidas por lei, especialmente a LGPD.</li>
+            <li>Manter a confidencialidade de informações e não compartilhar acesso com terceiros.</li>
+          </ul>
+          <h3>5. Dados e Privacidade</h3>
+          <ul>
+            <li>Todos os dados tratados, extraídos ou armazenados são regidos pela <a href="#" onclick="openPrivacyModal();closeTermsModal();return false;">Política de Privacidade</a>.</li>
+            <li>É sua responsabilidade garantir que o uso dos leads segue práticas éticas e consentidas.</li>
+          </ul>
+          <h3>6. Propriedade Intelectual</h3>
+          <ul>
+            <li>Todo o conteúdo visual, código, layout, logotipo e funcionalidades do UaiFunnel são protegidos por direitos autorais pertencentes a Yailup - Soluções Operacionais, sob CNPJ 40.664.197/0001-88, Razão Social Filipe Lima Oliveira (MEI).</li>
+            <li>É proibida a cópia, engenharia reversa ou redistribuição sem autorização.</li>
+          </ul>
+          <h3>7. Limitação de Responsabilidade</h3>
+          <p>O UaiFunnel não garante que os dados sejam 100% precisos ou que a plataforma estará sempre livre de falhas. O uso é por sua conta e risco. Não somos responsáveis por prejuízos decorrentes do uso indevido da plataforma ou dos dados extraídos.</p>
+          <h3>8. Cancelamento e Encerramento</h3>
+          <p>Você pode solicitar exclusão de sua conta a qualquer momento. Reservamo-nos o direito de suspender contas que violem estes termos.</p>
+          <h3>9. Alterações dos Termos</h3>
+          <p>Estes Termos de Uso podem ser atualizados periodicamente. Notificações poderão ser feitas por e-mail ou na própria plataforma.</p>
+          <h3>10. Contato</h3>
+          <p>Dúvidas? Fale conosco pelo e-mail <a href="mailto:contato@yailup.com">contato@yailup.com</a>.</p>
+          <p class="uaifunnel-disclaimer"><strong>Última atualização:</strong> 03 de Agosto de 2025.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Política de Privacidade -->
+    <div id="modal-privacy-uaifunnel" class="uaifunnel-modal hidden" tabindex="-1">
+      <div class="uaifunnel-modal-backdrop" onclick="closePrivacyModal()"></div>
+      <div class="uaifunnel-modal-content">
+        <button class="uaifunnel-modal-close" onclick="closePrivacyModal()">&times;</button>
+        <h2>Política de Privacidade — UaiFunnel</h2>
+        <div class="uaifunnel-modal-scroll">
+          <h3>1. Tipos de Dados Coletados</h3>
+          <ul>
+            <li>Informações de cadastro: nome, e-mail, telefone, senha.</li>
+            <li>Informações de navegação: registros de acesso, IP, data/hora, localização aproximada.</li>
+            <li>Leads extraídos: dados públicos de terceiros provenientes de fontes abertas e públicas.</li>
+          </ul>
+          <h3>2. Uso das Informações</h3>
+          <ul>
+            <li>Para identificar e autenticar você como usuário.</li>
+            <li>Para operacionalizar, melhorar e personalizar a experiência na plataforma.</li>
+            <li>Para prevenir fraudes e abusos.</li>
+            <li>Para enviar notificações, novidades e comunicações importantes (com opção de descadastro).</li>
+          </ul>
+          <h3>3. Compartilhamento de Dados</h3>
+          <p>Seus dados nunca são vendidos ou compartilhados com terceiros para fins comerciais. Só compartilhamos informações quando necessário para cumprir ordens legais ou proteger direitos da plataforma e usuários.</p>
+          <h3>4. Armazenamento & Segurança</h3>
+          <ul>
+            <li>Armazenamento criptografado de senhas.</li>
+            <li>Tráfego sob HTTPS e procedimentos seguros segundo práticas de mercado.</li>
+            <li>Backup regular e controles de acesso restrito.</li>
+          </ul>
+          <h3>5. Cookies e Tecnologias de Rastreamento</h3>
+          <p>Podemos utilizar cookies para melhorar a experiência, avaliar uso e facilitar logins. O usuário pode controlar cookies nas configurações do navegador.</p>
+          <h3>6. Direitos do Usuário (LGPD)</h3>
+          <ul>
+            <li>Você pode consultar, corrigir, atualizar ou solicitar exclusão dos seus dados pessoais a qualquer momento.</li>
+            <li>Basta enviar um e-mail para <a href="mailto:contato@yailup.com">contato@yailup.com</a>.</li>
+            <li>Você pode revogar consentimentos dados anteriormente.</li>
+          </ul>
+          <h3>7. Dados de Terceiros</h3>
+          <p>Todos os leads, contatos e informações coletadas via plataforma são públicas e obtidas por meios lícitos, isentando o UaiFunnel de responsabilidades sobre consentimento do titular desses dados.</p>
+          <h3>8. Atualizações desta Política</h3>
+          <p>Poderemos modificar esta Política periodicamente. Quando fizer sentido, avisaremos por e-mail ou pelo site.</p>
+          <h3>9. Dúvidas ou Solicitações</h3>
+          <p>Entre em contato via <a href="mailto:contato@yailup.com">contato@yailup.com</a>.</p>
+          <p class="uaifunnel-disclaimer"><strong>Última atualização:</strong> 03 de Agosto de 2025.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- :::::: Modal de Login/Cadastro :::::: -->
+    <div id="signupModal" class="signup-modal hidden">
+      <div class="modal-backdrop"></div>
+      <div class="modal-contentz">
+            <button class="modal-closez" onclick="hideModal()">&times;</button>
+            
+            <!-- Container do Modal -->
+            <div class="auth-container">
+                <!-- Seção Esquerda - Informações -->
+                <div class="auth-left">
+                    <div class="auth-left-content">
+                        <img src="img/logo_.png">
+                        <h2 id="leftTitle">Continue Aproveitando! 🚀</h2>
+                        <p id="leftDescription">Você testou nossa ferramenta e viu o potencial. Faça login ou crie sua conta para continuar gerando leads ilimitados!</p>
+                        
+                        <div class="benefits">
+                            <h3>Benefícios de criar a conta:</h3>
+                            <ul>
+                                <li>✔ Busca ilimitada em buscas orgânicas</li>
+                                <li>✔ Extração de estabelecimentos locais</li>
+                                <li>✔ Exportação em arquivo CSV ou XLSX</li>
+                                <li>✔ Prioridade e <strong>valor especial</strong> ao lançar o <strong>CRM</strong></li>
+                                <li>✔ Histórico de buscas</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção Direita - Formulários -->
+                <div class="auth-right">
+                    <!-- ✅ Container fixo para as tabs -->
+                    <div class="auth-tabs-container">
+                        <div class="auth-tabs">
+                            <button type="button" class="auth-tab" id="loginTab" onclick="switchAuthMode('login')">
+                                <i class="bi bi-person-check"></i>
+                                Entrar
+                            </button>
+                            <button type="button" class="auth-tab active" id="signupTab" onclick="switchAuthMode('signup')">
+                                <i class="bi bi-person-plus"></i>
+                                Criar Conta
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ✅ Container com scroll para os formulários -->
+                    <div class="auth-forms-container">
+                        <!-- Formulário de Login -->
+                        <form id="loginForm" class="auth-form">
+                            <h3>Fazer login</h3>
+                            
+                            <div class="form-group">
+                                <label for="loginEmail">E-mail</label>
+                                <input type="email" id="loginEmail" name="email" required placeholder="seu@email.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="loginPassword">Senha</label>
+                                <input type="password" id="loginPassword" name="password" required placeholder="Sua senha">
+                                <i class="bi bi-eye-slash-fill toggle-password" onclick="togglePassword('loginPassword', this)"></i>
+                            </div>
+                            
+                            <button type="submit" class="auth-btn">
+                                <i class="bi bi-box-arrow-in-right"></i>
+                                Entrar
+                            </button>
+                            
+                            <div class="auth-links">
+                                <a href="#" onclick="alert('Em breve!')">Esqueceu sua senha?</a><br>
+                                <br><br>
+                                <span>Não tem conta? 
+                                    <a href="#" onclick="switchAuthMode('signup')" style="font-weight: 600;">Criar Conta</a>
+                                </span>
+                            </div>
+                        </form>
+
+                        <!-- Formulário de Cadastro -->
+                        <form id="signupForm" class="auth-form active">
+                            <h3>Crie sua conta gratuita!</h3>
+                            
+                            <div class="form-group">
+                                <label for="userName">Nome completo</label>
+                                <input type="text" id="userName" name="name" required placeholder="Seu nome completo">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="userEmail">E-mail</label>
+                                <input type="email" id="userEmailz" name="email" required placeholder="seu@email.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="userPhone">Telefone</label>
+                                <input type="tel" id="userPhone" name="phone" required placeholder="(11) 99999-9999">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="userPassword">Senha</label>
+                                <input type="password" id="userPassword" name="password" required placeholder="Mínimo 6 caracteres">
+                                <i class="bi bi-eye-slash-fill toggle-password" onclick="togglePassword('userPassword', this)"></i>
+                            </div>
+                            
+                            <button type="submit" class="auth-btn">
+                                <i class="bi bi-person-plus"></i>
+                                Criar Conta Gratuita
+                            </button>
+                            
+                            <div class="auth-links">
+                                <small>
+                                    Ao criar sua conta, você concorda com nossos<br>
+                                    <a href="#" onclick="openTermsModal();return false;">Termos de Uso</a> e <a href="#" onclick="openPrivacyModal();return false;">Política de Privacidade</a>
+                                </small>
+                                <br><br>
+                                <span>Já tem conta? 
+                                    <a href="#" onclick="switchAuthMode('login')" style="font-weight: 600;">Fazer Login</a>
+                                </span>
+                            </div>
+                        </form>
+                        
+                        <!-- Mensagem de Sucesso -->
+                        <div id="authSuccess" class="success-message hidden">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <h3>Sucesso!</h3>
+                            <p id="successText">Bem-vindo ao UaiFunnel! Agora você pode aproveitar todos os recursos.</p>
+                            
+                            <div class="success-actions">
+                                <button onclick="hideModal()" class="auth-btn">
+                                    <i class="bi bi-check2"></i>
+                                    Continuar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <!-- :::::: /Modal de Login/Cadastro :::::: -->
+
+    <!-- Section switch -->
+    <script>
+      // Alternar UI entre Google Maps e Google Search
+      function switchLeadMode(mode) {
+        // Botões
+        document.getElementById('btnMapsEnv').classList.toggle('active', mode === 'maps');
+        document.getElementById('btnSearchEnv').classList.toggle('active', mode === 'search');
+
+        // Sessões
+        document.getElementById('leadMapsSection').style.display   = mode === 'maps' ? 'block' : 'none';
+        document.getElementById('leadSearchSection').style.display = mode === 'search' ? 'block' : 'none';
+      }
+
+      function showPassword() {
+        var inputPass = document.getElementById('password');
+        var btnShowPass = document.getElementById('btn-password');
+
+        if (inputPass.type === 'password') {
+            inputPass.setAttribute('type', 'text');
+            // Troca o ícone para olho aberto
+            btnShowPass.classList.remove('bi-eye-slash-fill');
+            btnShowPass.classList.add('bi-eye-fill');
+        } else {
+            inputPass.setAttribute('type', 'password');
+            // Troca o ícone para olho fechado
+            btnShowPass.classList.remove('bi-eye-fill');
+            btnShowPass.classList.add('bi-eye-slash-fill');
+        }
+      }
+    </script>
+
+    <!-- Contact form Script -->
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+    
+            var formData = new FormData(this);
+    
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "php/send.php", true);
+    
+            xhr.onload = function() {
+                console.log("Resposta do servidor:", xhr.responseText); // Log para depuração
+    
+                try {
+                    var response = JSON.parse(xhr.responseText);
+                    
+                    if (xhr.status === 200 && response.status === "success") {
+                        document.getElementById("formMessage").innerHTML = '<p style="color: #aaff49;">' + response.message + '</p>';
+                        document.getElementById("contactForm").reset();
+                    } else {
+                        document.getElementById("formMessage").innerHTML = '<p style="color: #ff6c6c;">' + response.message + '</p>';
+                    }
+    
+                } catch (e) {
+                    console.error("Erro ao interpretar JSON:", e); // Log do erro
+                    document.getElementById("formMessage").innerHTML = '<p style="color: #ff6c6c;">Erro inesperado ao interpretar a resposta do servidor.</p>';
+                }
+            };
+    
+            xhr.onerror = function() {
+                document.getElementById("formMessage").innerHTML = '<p style="color: #ff6c6c;">Erro de conexão com o servidor.</p>';
+            };
+    
+            xhr.send(formData);
+        });
+    </script>
+
+    <!-- CRM coming soon Script -->
+    <script>
+      document.getElementById("emailForm").addEventListener("submit", function(event) {
+          event.preventDefault();  // Impede o envio padrão do formulário
+          
+          const email = document.getElementById("userEmail").value;
+          
+          // Verificar se o e-mail é válido
+          if (validateEmail(email)) {
+              alert(`Obrigado por se inscrever com o e-mail: ${email}`);
+              // Aqui você pode adicionar uma lógica para enviar o e-mail para um servidor ou banco de dados
+          } else {
+              alert("Por favor, insira um e-mail válido.");
+          }
+      });
+
+      function validateEmail(email) {
+          const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+          return re.test(email);
+      }
+
+    </script>
+
+    <!-- CRM backgrond transition -->
+    <script>
+      const images = [
+        'img/1.png',
+        'img/2.png',
+        'img/3.png',
+        'img/4.png',
+        'img/5.png',
+        'img/6.png'
+      ];
+
+      let index = 0;
+      let showingBg1 = true;
+
+      const bg1 = document.getElementById('bg1');
+      const bg2 = document.getElementById('bg2');
+
+      // Defina imagem inicial
+      bg1.style.backgroundImage = `url('${images[index]}')`;
+      bg1.style.opacity = 1;
+
+      setInterval(() => {
+        index = (index + 1) % images.length;
+
+        if (showingBg1) {
+          bg2.style.backgroundImage = `url('${images[index]}')`;
+          bg2.style.opacity = 1;
+          bg1.style.opacity = 1;
+        } else {
+          bg1.style.backgroundImage = `url('${images[index]}')`;
+          bg1.style.opacity = 1;
+          bg2.style.opacity = 1;
+        }
+
+        showingBg1 = !showingBg1;
+      }, 1000); // Troca a cada 5s
+    </script>
+
+    <!-- Switch modal login -->
+    <script>
+      // Switch entre Login e Cadastro
+      function switchAuthMode(mode) {
+          const loginTab = document.getElementById('loginTab');
+          const signupTab = document.getElementById('signupTab');
+          const loginForm = document.getElementById('loginForm');
+          const signupForm = document.getElementById('signupForm');
+          const successDiv = document.getElementById('authSuccess');
+          const leftTitle = document.getElementById('leftTitle');
+          const leftDescription = document.getElementById('leftDescription');
+          
+          // ✅ SEMPRE esconder mensagem de sucesso ao trocar
+          if (successDiv) {
+              successDiv.classList.add('hidden');
+          }
+          
+          // ✅ REMOVER classe active de ambos primeiro
+          loginTab.classList.remove('active');
+          signupTab.classList.remove('active');
+          loginForm.classList.remove('active');
+          signupForm.classList.remove('active');
+          
+          if (mode === 'login') {
+              // ✅ Ativar tab e form de login
+              loginTab.classList.add('active');
+              loginForm.classList.add('active');
+              
+              // ✅ Atualizar textos da esquerda
+              if (leftTitle) leftTitle.textContent = 'Bem-vindo de volta!';
+              if (leftDescription) {
+                leftDescription.innerHTML = 'Faça login para acessar sua conta e continuar gerando leads ilimitados com o <strong>U</strong>ai<strong>Funnel</strong>!';
+              }
+              console.log('🔄 Switched to LOGIN mode');
+          } else {
+              // ✅ Ativar tab e form de cadastro
+              signupTab.classList.add('active');
+              signupForm.classList.add('active');
+              
+              // ✅ Atualizar textos da esquerda
+              if (leftTitle) leftTitle.textContent = 'Continue Aproveitando! 🚀';
+              if (leftDescription) leftDescription.textContent = 'Você testou nossa ferramenta e viu o potencial. Crie sua conta gratuita para continuar gerando leads ilimitados!';
+              
+              console.log('🔄 Switched to SIGNUP mode');
+          }
+          
+          // ✅ Limpar campos dos formulários
+          clearFormFields();
+      }
+
+      // ✅ NOVA FUNÇÃO: Limpar campos dos formulários
+      function clearFormFields() {
+          const inputs = document.querySelectorAll('#loginForm input, #signupForm input');
+          inputs.forEach(input => {
+              input.value = '';
+          });
+      }
+
+      // Toggle de mostrar/esconder senha (MANTIDO)
+      function togglePassword(inputId, icon) {
+          const input = document.getElementById(inputId);
+          
+          if (input.type === 'password') {
+              input.type = 'text';
+              icon.classList.remove('bi-eye-slash-fill');
+              icon.classList.add('bi-eye-fill');
+          } else {
+              input.type = 'password';
+              icon.classList.remove('bi-eye-fill');
+              icon.classList.add('bi-eye-slash-fill');
+          }
+      }
+
+      // ✅ Fechar modal 
+      function hideModal() {
+          const modal = document.getElementById('signupModal');
+          modal.classList.add('hidden');
+          document.body.style.overflow = '';
+          
+          // ✅ Resetar para estado inicial (cadastro) quando fechar
+          setTimeout(() => {
+              switchAuthMode('signup');
+          }, 300);
+      }
+
+      // ✅ NOVA FUNÇÃO: Mostrar modal com modo específico
+      function showModal(mode = 'signup') {
+          const modal = document.getElementById('signupModal');
+          modal.classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+          
+          // Definir modo inicial
+          switchAuthMode(mode);
+          
+          // Focar no primeiro input
+          setTimeout(() => {
+              const activeForm = document.querySelector('.auth-form.active');
+              const firstInput = activeForm?.querySelector('input');
+              if (firstInput) {
+                  firstInput.focus();
+              }
+          }, 300);
+      }
+
+      // ✅ Event listeners 
+      document.addEventListener('DOMContentLoaded', function() {
+          // Event listener para formulário de login
+          const loginForm = document.getElementById('loginForm');
+          if (loginForm) {
+              loginForm.addEventListener('submit', async function(e) {
+                  e.preventDefault();
+                  await handleLogin();
+              });
+          }
+          
+          // Event listener para formulário de cadastro
+          const signupForm = document.getElementById('signupForm');
+          if (signupForm) {
+              signupForm.addEventListener('submit', async function(e) {
+                  e.preventDefault();
+                  await handleSignup();
+              });
+          }
+          
+          // ✅ Event listener para fechar modal clicando no backdrop
+          const modal = document.getElementById('signupModal');
+          if (modal) {
+              modal.addEventListener('click', function(e) {
+                  if (e.target.classList.contains('modal-backdrop')) {
+                      hideModal();
+                  }
+              });
+          }
+          
+          // ✅ Event listener para tecla ESC
+          document.addEventListener('keydown', function(e) {
+              if (e.key === 'Escape') {
+                  const modal = document.getElementById('signupModal');
+                  if (modal && !modal.classList.contains('hidden')) {
+                      hideModal();
+                  }
+              }
+          });
+      });
+
+      // Handle Login
+      async function handleLogin() {
+          const form = document.getElementById('loginForm');
+          const submitBtn = form.querySelector('.auth-btn');
+          const originalText = submitBtn.innerHTML;
+          const emailInput = document.getElementById('loginEmail');
+          const passwordInput = document.getElementById('loginPassword');
+          
+          // ✅ Validação básica
+          if (!emailInput.value || !passwordInput.value) {
+              alert('Preencha todos os campos!');
+              return;
+          }
+          
+          // Mostrar loading
+          submitBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Entrando...';
+          submitBtn.disabled = true;
+          
+          try {
+              // Simular verificação de login
+              await new Promise(resolve => setTimeout(resolve, 1500));
+              
+              // ✅ Aqui você adicionaria a lógica real de autenticação
+              console.log('🔐 Login attempt:', {
+                  email: emailInput.value,
+                  password: passwordInput.value
+              });
+              
+              showSuccess('Login realizado com sucesso! Redirecionando...', 'login');
+              
+              // Marcar como logado no sistema
+              if (window.signupSystem) {
+                  window.signupSystem.isLoggedIn = true;
+              }
+              
+              // Fechar modal após sucesso
+              setTimeout(() => {
+                  hideModal();
+              }, 2000);
+              
+          } catch (error) {
+              alert('Erro ao fazer login. Verifique suas credenciais.');
+              console.error('Erro no login:', error);
+          } finally {
+              submitBtn.innerHTML = originalText;
+              submitBtn.disabled = false;
+          }
+      }
+
+      // Handle Signup
+      async function handleSignup() {
+          const form = document.getElementById('signupForm');
+          const formData = new FormData(form);
+          const submitBtn = form.querySelector('.auth-btn');
+          const originalText = submitBtn.innerHTML;
+          
+          const userData = {
+              name: formData.get('name').trim(),
+              email: formData.get('email').trim(),
+              phone: formData.get('phone').trim(),
+              password: formData.get('password').trim()
+          };
+
+          // Validações
+          if (!validateSignupData(userData)) {
+              return;
+          }
+
+          // Mostrar loading
+          submitBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Criando conta...';
+          submitBtn.disabled = true;
+
+          try {
+              // Simular criação de conta
+              await new Promise(resolve => setTimeout(resolve, 2000));
+              
+              console.log('📝 Signup attempt:', userData);
+              
+              // Salvar dados
+              saveUserData(userData);
+              
+              showSuccess('Conta criada com sucesso! Bem-vindo ao UaiFunnel!', 'signup');
+              
+              // Marcar como logado no sistema
+              if (window.signupSystem) {
+                  window.signupSystem.isLoggedIn = true;
+              }
+              
+              // Fechar modal após sucesso
+              setTimeout(() => {
+                  hideModal();
+              }, 3000);
+              
+          } catch (error) {
+              alert('Erro ao criar conta. Tente novamente.');
+              console.error('Erro no cadastro:', error);
+          } finally {
+              submitBtn.innerHTML = originalText;
+              submitBtn.disabled = false;
+          }
+      }
+
+      // ✅ Mostrar mensagem de sucesso
+      function showSuccess(message, type = 'signup') {
+          const forms = document.querySelectorAll('.auth-form');
+          const successDiv = document.getElementById('authSuccess');
+          const successText = document.getElementById('successText');
+          const leftTitle = document.getElementById('leftTitle');
+          const leftDescription = document.getElementById('leftDescription');
+          
+          // Esconder formulários
+          forms.forEach(form => form.classList.remove('active'));
+          
+          // Atualizar textos
+          if (successText) successText.textContent = message;
+          if (leftTitle) leftTitle.textContent = type === 'login' ? '🎉 Bem-vindo!' : '🎉 Parabéns!';
+          if (leftDescription) leftDescription.textContent = 'Agora você tem acesso completo a todas as funcionalidades do UaiFunnel!';
+          
+          // Mostrar sucesso
+          if (successDiv) successDiv.classList.remove('hidden');
+      }
+
+      // ✅ Validação e salvamento (MANTIDOS)
+      function validateSignupData(data) {
+          if (data.name.length < 2) {
+              alert('Nome deve ter pelo menos 2 caracteres');
+              return false;
+          }
+
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(data.email)) {
+              alert('Email inválido');
+              return false;
+          }
+
+          const phoneRegex = /[\d\s\(\)\-\+]{10,}/;
+          if (!phoneRegex.test(data.phone)) {
+              alert('Telefone inválido');
+              return false;
+          }
+
+          if (data.password.length < 6) {
+              alert('Senha deve ter pelo menos 6 caracteres');
+              return false;
+          }
+
+          return true;
+      }
+
+      function saveUserData(userData) {
+          const userToSave = {
+              ...userData,
+              id: 'user_' + Date.now(),
+              createdAt: new Date().toISOString(),
+              plan: 'free'
+          };
+          
+          delete userToSave.password;
+          
+          localStorage.setItem('uaifunnel_user', JSON.stringify(userToSave));
+          console.log('💾 Dados do usuário salvos:', userToSave);
+      }
+    </script>
+
+    <!-- Terms -->
+    <script>
+      function openTermsModal() {
+        document.getElementById("modal-terms-uaifunnel").classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      }
+      function closeTermsModal() {
+        document.getElementById("modal-terms-uaifunnel").classList.add("hidden");
+        document.body.style.overflow = "";
+      }
+      function openPrivacyModal() {
+        document.getElementById("modal-privacy-uaifunnel").classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      }
+      function closePrivacyModal() {
+        document.getElementById("modal-privacy-uaifunnel").classList.add("hidden");
+        document.body.style.overflow = "";
+      }
+    </script>
+
+    <!-- Protection -->
+    <script>
+      // Add this function after your existing code in maps-integration.js
+      function protectTableContent() {
+          const resultsTable = document.getElementById('mapsTableBody');
+          const searchResults = document.getElementById('searchResults');
+          
+          if (resultsTable) {
+              // Disable text selection
+              resultsTable.style.userSelect = 'none';
+              resultsTable.style.webkitUserSelect = 'none';
+              resultsTable.style.msUserSelect = 'none';
+              resultsTable.style.mozUserSelect = 'none';
+              
+              // Block copy events
+              resultsTable.addEventListener('copy', function(e) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  alert('📋 Copiar conteúdo da tabela está desativado!\n\n✅ Use nosso sistema CRM para exportar dados ou\n💾 Utilize o botão "Exportar CSV" para baixar os dados.');
+                  return false;
+              });
+              
+              // Block cut events
+              resultsTable.addEventListener('cut', function(e) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  alert('✂️ Recortar conteúdo está desativado!\n\n✅ Use nosso sistema CRM para gerenciar seus leads.');
+                  return false;
+              });
+              
+              // Block drag and drop
+              resultsTable.addEventListener('dragstart', function(e) {
+                  e.preventDefault();
+                  return false;
+              });
+              
+              // Block right-click context menu on table
+              resultsTable.addEventListener('contextmenu', function(e) {
+                  e.preventDefault();
+                  alert('🚫 Menu de contexto desativado!\n\n✅ Use os botões disponíveis para interagir com os dados.');
+                  return false;
+              });
+              
+              // Block select all (Ctrl+A)
+              resultsTable.addEventListener('keydown', function(e) {
+                  if (e.ctrlKey && (e.key === 'a' || e.key === 'A')) {
+                      e.preventDefault();
+                      alert('🚫 Seleção total desativada!\n\n✅ Use nosso sistema CRM para gerenciar todos os leads.');
+                      return false;
+                  }
+                  // Block Ctrl+C, Ctrl+V, Ctrl+X
+                  if (e.ctrlKey && (e.key === 'c' || e.key === 'C' || e.key === 'v' || e.key === 'V' || e.key === 'x' || e.key === 'X')) {
+                      e.preventDefault();
+                      alert('⌨️ Atalhos de teclado para copiar/colar estão desativados!\n\n✅ Use nosso sistema CRM ou botão de exportar.');
+                      return false;
+                  }
+              });
+              
+              // Additional protection: prevent text selection on mouse events
+              resultsTable.addEventListener('mousedown', function(e) {
+                  if (e.detail > 1) { // Multi-click
+                      e.preventDefault();
+                      return false;
+                  }
+              });
+              
+              resultsTable.addEventListener('selectstart', function(e) {
+                  e.preventDefault();
+                  return false;
+              });
+          }
+          
+          // Also protect the entire search results section
+          if (searchResults) {
+              searchResults.addEventListener('copy', function(e) {
+                  e.preventDefault();
+                  alert('📋 Copiar conteúdo está desativado!\n\n✅ Use nosso sistema CRM para exportar dados.');
+                  return false;
+              });
+          }
+      }
+
+      // Update your displayMapsResults function to call the protection
+      function displayMapsResults(data) {
+          const tbody = document.getElementById('mapsTableBody');
+          const titleElement = document.getElementById('mapsResultsTitle');
+          
+          if (!tbody || !titleElement) {
+              console.error('Elementos da tabela não encontrados no HTML');
+              return;
+          }
+          
+          titleElement.textContent = `${data.total} estabelecimentos encontrados para "${data.termo}"`;
+          
+          // Clear previous table
+          tbody.innerHTML = '';
+          
+          let telefonesEncontrados = 0;
+          
+          // Fill table with results
+          data.resultados.forEach(item => {
+              if (item.telefone !== 'Telefone não encontrado') {
+                  telefonesEncontrados++;
+              }
+              
+              const row = tbody.insertRow();
+              row.innerHTML = `
+                  <td>${item.indice}</td>
+                  <td>${item.nome}</td>
+                  <td>${item.endereco}</td>
+                  <td>${item.telefone}</td>
+                  <td>${item.site !== 'Site não encontrado' ? `<a href="${item.site}" target="_blank">🔗 Site</a>` : 'Site não encontrado'}</td>
+                  <td>${item.avaliacao}</td>
+                  <td>
+                      <button class="btn btn-outline-primary btn-sm" onclick="addToFunnel('${item.nome}', '${item.telefone}', '${item.endereco}')">
+                          ➕ Adicionar ao CRM
+                      </button>
+                  </td>
+              `;
+          });
+          
+          // ✅ APPLY PROTECTION AFTER TABLE IS BUILT
+          protectTableContent();
+          
+          // Update statistics
+          const statsHtml = `
+              <div class="alert alert-info">
+                  📊 <strong>Estatísticas:</strong> 
+                  ${data.total} encontrados | 
+                  📞 ${telefonesEncontrados} com telefone | 
+                  📈 Taxa de telefones: ${((telefonesEncontrados / data.total) * 100).toFixed(1)}%
+              </div>
+          `;
+          
+          const resultsContainer = document.getElementById('searchResults');
+          resultsContainer.insertAdjacentHTML('afterbegin', statsHtml);
+      }
+    </script>
+
+    <!-- Planos -->
+    <script>
+      // ✅ FUNÇÃO PARA REDIRECIONAR PARA PAGAMENTO
+      async function iniciarPagamento(planId) {
+        const userEmail = localStorage.getItem('user_email') || 'user@example.com';
+        
+        try {
+          const response = await fetch('http://localhost:3000/api/create-checkout-session', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ planId, userEmail })
+          });
+          
+          const { url } = await response.json();
+          window.location.href = url; // Redireciona para Stripe
+        } catch (error) {
+          alert('Erro ao processar pagamento');
+        }
+      }
+
+      // ✅ ADICIONAR AOS BOTÕES DOS PLANOS
+      document.getElementById('btn-start').onclick = () => iniciarPagamento('start');
+      document.getElementById('btn-pro').onclick = () => iniciarPagamento('pro');
+      document.getElementById('btn-scale').onclick = () => iniciarPagamento('scale');
+
+    </script>
+    
+</body>
+</html>

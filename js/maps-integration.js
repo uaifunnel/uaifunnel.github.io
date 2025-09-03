@@ -1,11 +1,11 @@
-// ✅ MAPS-INTEGRATION.JS COMPLETO - VERSÃO 4.0 COM SISTEMA DE CADASTRO INTEGRADO
-
+// ✅ MAPS-INTEGRATION.JS COMPLETO - VERSÃO 4.0 CORRIGIDA
 // ==================== VARIÁVEIS GLOBAIS ====================
 let currentMapsData = [];
 
 // ==================== INICIALIZAÇÃO ====================
 document.addEventListener('DOMContentLoaded', function() {
     setupMapsEventListeners();
+    console.log('✅ Maps Integration carregado com sucesso');
 });
 
 // ==================== PROTEÇÃO DA SEÇÃO DE MAPS ====================
@@ -118,7 +118,9 @@ function checkMapsPermission() {
 
 // ==================== BUSCA PRINCIPAL ====================
 async function startMapsSearch() {
-    // IDs corretos
+    console.log('🔍 Iniciando busca no Maps');
+    
+    // IDs corretos dos elementos
     const searchTerm = document.getElementById('searchTerm').value.trim();
     const maxResults = document.getElementById('maxResults').value;
     
@@ -132,20 +134,23 @@ async function startMapsSearch() {
     const loadingSection = document.getElementById('mapsLoading');
 
     // ✅ MOSTRAR LOADING COM GIF
-    loadingSection.classList.remove('hidden');
-    resultsSection.classList.add('hidden');
+    if (loadingSection) loadingSection.classList.remove('hidden');
+    if (resultsSection) resultsSection.classList.add('hidden');
     
     // ✅ ANIMAR STEPS PROGRESSIVAMENTE
     animateLoadingSteps();
 
     // ✅ EFEITO NO BOTÃO
-    searchBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Buscando...';
-    searchBtn.disabled = true;
+    if (searchBtn) {
+        searchBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Buscando...';
+        searchBtn.disabled = true;
+    }
 
     try {
-        // Conectar com o Google Maps Scraper API
-        // const response = await fetch('http://localhost:3000/api/scrape', {  BEFORE
-        const response = await fetch('https://12946747f31b.ngrok-free.app/api/scrape', {    //NOW
+        console.log('📡 Enviando requisição para API...');
+        
+        // ✅ CONECTAR COM O BACKEND VIA NGROK (URL ATUALIZADA)
+        const response = await fetch('https://03ac5380726b.ngrok-free.app/api/scrape', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -156,38 +161,54 @@ async function startMapsSearch() {
             })
         });
 
+        console.log('📡 Resposta recebida, status:', response.status);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const data = await response.json();
+        console.log('📊 Dados processados:', data);
 
         if (data.sucesso) {
             currentMapsData = data.resultados;
             displayMapsResults(data);
             
             // ✅ ESCONDER LOADING E MOSTRAR RESULTADOS
-            loadingSection.classList.add('hidden');
-            resultsSection.classList.remove('hidden');
+            if (loadingSection) loadingSection.classList.add('hidden');
+            if (resultsSection) resultsSection.classList.remove('hidden');
+            
+            console.log('✅ Busca concluída com sucesso');
         } else {
-            loadingSection.classList.add('hidden');
+            if (loadingSection) loadingSection.classList.add('hidden');
             alert('Erro: ' + data.erro);
+            console.error('❌ Erro da API:', data.erro);
         }
 
     } catch (error) {
-        loadingSection.classList.add('hidden');
-        if (error.message.includes('fetch')) {
-            alert('Erro de conexão. Certifique-se de que o servidor está rodando em http://localhost:3000');
+        console.error('❌ Erro na requisição:', error);
+        
+        if (loadingSection) loadingSection.classList.add('hidden');
+        
+        if (error.message.includes('fetch') || error.message.includes('Failed to fetch')) {
+            alert('Erro de conexão. Verifique se o servidor backend está rodando.');
         } else {
-            alert('Erro de conexão: ' + error.message);
+            alert('Erro: ' + error.message);
         }
-        console.error('Erro detalhado:', error);
     } finally {
         // ✅ RESTAURAR BOTÃO
-        searchBtn.innerHTML = '<i class="bi bi-search"></i> Buscar';
-        searchBtn.disabled = false;
+        if (searchBtn) {
+            searchBtn.innerHTML = '<i class="bi bi-search"></i> Buscar';
+            searchBtn.disabled = false;
+        }
     }
 }
 
 // ==================== ANIMAÇÃO DOS STEPS ====================
 function animateLoadingSteps() {
     const steps = document.querySelectorAll('.step-text');
+    
+    if (!steps.length) return;
     
     // Reset todos os steps
     steps.forEach(step => {
@@ -208,9 +229,11 @@ function displayMapsResults(data) {
     const titleElement = document.getElementById('mapsResultsTitle');
     
     if (!tbody || !titleElement) {
-        console.error('Elementos da tabela não encontrados no HTML');
+        console.error('❌ Elementos da tabela não encontrados no HTML');
         return;
     }
+    
+    console.log('📋 Exibindo resultados na tabela...');
     
     titleElement.textContent = `${data.total} estabelecimentos encontrados para "${data.termo}"`;
     
@@ -257,14 +280,17 @@ function displayMapsResults(data) {
     }
 
     // ✅ MARCAR FERRAMENTA COMO USADA APÓS PRIMEIRO SUCESSO
-    if (window.SignupSystem && data.resultados && data.resultados.length > 0) {
-        SignupSystem.markAsUsed();
+    if (window.signupSystem && data.resultados && data.resultados.length > 0) {
+        window.signupSystem.markAsUsed();
+        console.log('🎯 Ferramenta marcada como utilizada');
     }
 
     // ✅ ATIVAR PROTEÇÃO APÓS EXIBIR RESULTADOS
     setTimeout(() => {
         setupMapsProtection();
     }, 100);
+    
+    console.log('✅ Resultados exibidos com sucesso');
 }
 
 // ==================== FORMATAÇÃO ====================
@@ -328,6 +354,8 @@ function formatarAvaliacao(avaliacao) {
 // ==================== FUNÇÕES COM VERIFICAÇÃO DE PERMISSÃO ====================
 // ✅ FUNÇÃO DE EXPORTAÇÃO COM VERIFICAÇÃO
 function exportarCSV() {
+    console.log('📄 Tentativa de exportação CSV');
+    
     // Verificar permissão ANTES de executar
     if (!checkMapsPermission()) {
         console.log('❌ Exportação CSV bloqueada - usuário precisa se cadastrar');
@@ -357,26 +385,25 @@ function exportarCSV() {
         console.log('✅ CSV exportado com sucesso');
         
     } catch (error) {
-        console.error('Erro ao exportar CSV:', error);
+        console.error('❌ Erro ao exportar CSV:', error);
         alert('Erro ao exportar arquivo CSV');
     }
 }
 
 // ✅ FUNÇÃO ADICIONAR AO FUNIL COM VERIFICAÇÃO
 function addToFunnel(name, phone) {
+    console.log('📋 Tentativa de adicionar ao funil:', name);
+    
     // Verificar permissão ANTES de executar
     if (!checkMapsPermission()) {
         console.log('❌ Adicionar ao funil bloqueado - usuário precisa se cadastrar');
         return false;
     }
 
-    console.log('Adicionando ao funil:', { name, phone });
+    console.log('✅ Adicionando ao funil:', { name, phone });
     alert(`${name} adicionado ao seu funil de leads!`);
     
-    // Aqui você pode expandir para integrar com seu sistema de CRM
-    // Por exemplo: salvar no localStorage, enviar para uma API, etc.
-    
-    // Exemplo de integração simples:
+    // Integração com sistema de CRM local
     try {
         const existingFunnel = JSON.parse(localStorage.getItem('leadsFunnel') || '[]');
         const newLead = {
@@ -393,7 +420,7 @@ function addToFunnel(name, phone) {
         
         console.log('✅ Lead adicionado ao funil local');
     } catch (error) {
-        console.error('Erro ao salvar no funil:', error);
+        console.error('❌ Erro ao salvar no funil:', error);
     }
 }
 
@@ -408,6 +435,7 @@ function clearMapsForm() {
     if (resultsSection) resultsSection.classList.add('hidden');
     
     currentMapsData = [];
+    console.log('🧹 Formulário Maps limpo');
 }
 
 function refreshMapsSearch() {
@@ -418,10 +446,15 @@ function refreshMapsSearch() {
 
 // ==================== EVENT LISTENERS ====================
 function setupMapsEventListeners() {
+    console.log('🔧 Configurando event listeners do Maps...');
+    
     // Botão de busca
     const searchBtn = document.getElementById('searchBtn');
     if (searchBtn) {
         searchBtn.addEventListener('click', startMapsSearch);
+        console.log('✅ Event listener do botão buscar configurado');
+    } else {
+        console.warn('⚠️ Botão searchBtn não encontrado');
     }
     
     // Enter no campo de busca
@@ -432,34 +465,40 @@ function setupMapsEventListeners() {
                 startMapsSearch();
             }
         });
+        console.log('✅ Event listener do campo busca configurado');
+    } else {
+        console.warn('⚠️ Campo searchTerm não encontrado');
     }
     
     // Botão de exportar CSV
     const exportBtn = document.getElementById('btn-csv');
     if (exportBtn) {
         exportBtn.addEventListener('click', exportarCSV);
+        console.log('✅ Event listener do botão CSV configurado');
+    } else {
+        console.log('ℹ️ Botão btn-csv não encontrado (normal se não existir)');
     }
     
-    console.log('✅ Event listeners do Maps configurados');
+    console.log('✅ Event listeners do Maps configurados com sucesso');
 }
 
-// ✅ ADICIONAR MODE NO-CORS TEMPORARIAMENTE
-const response = await fetch('https://03ac5380726b.ngrok-free.app/api/scrape', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    termo: searchTerm,
-    maxResultados: parseInt(maxResults)
-  })
-});
-
-
-
 // ==================== EXPORTAR FUNÇÕES GLOBAIS ====================
+// ✅ DISPONIBILIZAR FUNÇÕES GLOBALMENTE PARA USO NO HTML
 window.startMapsSearch = startMapsSearch;
 window.exportarCSV = exportarCSV;
 window.addToFunnel = addToFunnel;
 window.clearMapsForm = clearMapsForm;
 window.refreshMapsSearch = refreshMapsSearch;
+
+// ✅ DEBUG - VERIFICAR SE FUNÇÕES ESTÃO DISPONÍVEIS
+console.log('✅ Maps Integration carregado completamente');
+console.log('✅ startMapsSearch disponível:', typeof window.startMapsSearch);
+console.log('✅ exportarCSV disponível:', typeof window.exportarCSV);
+console.log('✅ addToFunnel disponível:', typeof window.addToFunnel);
+
+// ✅ VERIFICAÇÃO FINAL DE INTEGRIDADE
+if (typeof window.startMapsSearch !== 'function') {
+    console.error('❌ ERRO: startMapsSearch não foi definida corretamente!');
+} else {
+    console.log('🎉 Maps Integration inicializado com sucesso!');
+}

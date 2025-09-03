@@ -145,7 +145,7 @@ async function startMapsSearch() {
     try {
         // Conectar com o Google Maps Scraper API
         // const response = await fetch('http://localhost:3000/api/scrape', {  BEFORE
-        const response = await fetch('https://23d3e05036df.ngrok-free.app/api/scrape', {    //NOW
+        const response = await fetch('https://12946747f31b.ngrok-free.app/api/scrape', {    //NOW
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -443,12 +443,23 @@ function setupMapsEventListeners() {
     console.log('✅ Event listeners do Maps configurados');
 }
 
+// ✅ ADICIONAR MODE NO-CORS TEMPORARIAMENTE
+const response = await fetch('https://03ac5380726b.ngrok-free.app/api/scrape', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    termo: searchTerm,
+    maxResultados: parseInt(maxResults)
+  })
+});
+
+
+
 // ==================== EXPORTAR FUNÇÕES GLOBAIS ====================
 window.startMapsSearch = startMapsSearch;
 window.exportarCSV = exportarCSV;
 window.addToFunnel = addToFunnel;
 window.clearMapsForm = clearMapsForm;
-
 window.refreshMapsSearch = refreshMapsSearch;
-
-

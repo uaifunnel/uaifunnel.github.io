@@ -145,7 +145,7 @@ async function startMapsSearch() {
     try {
         // Conectar com o Google Maps Scraper API
         // const response = await fetch('http://localhost:3000/api/scrape', {  BEFORE
-        const response = await fetch('http://192.168.46.131:3000/api/scrape', {    //NOW
+        const response = await fetch('https://23d3e05036df.ngrok-free.app/api/scrape', {    //NOW
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -450,4 +450,5 @@ window.addToFunnel = addToFunnel;
 window.clearMapsForm = clearMapsForm;
 
 window.refreshMapsSearch = refreshMapsSearch;
+
 

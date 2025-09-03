@@ -280,10 +280,12 @@ function displayMapsResults(data) {
     }
 
     // ✅ MARCAR FERRAMENTA COMO USADA APÓS PRIMEIRO SUCESSO
+    // ✅ CORRIGIDO:
     if (window.signupSystem && data.resultados && data.resultados.length > 0) {
-        window.signupSystem.markAsUsed();
+        window.signupSystem.markToolAsUsed();  // ← FUNÇÃO CORRETA
         console.log('🎯 Ferramenta marcada como utilizada');
     }
+
 
     // ✅ ATIVAR PROTEÇÃO APÓS EXIBIR RESULTADOS
     setTimeout(() => {
@@ -502,3 +504,4 @@ if (typeof window.startMapsSearch !== 'function') {
 } else {
     console.log('🎉 Maps Integration inicializado com sucesso!');
 }
+

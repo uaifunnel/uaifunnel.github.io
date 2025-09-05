@@ -503,7 +503,7 @@ async function openSearchAutomatized() {
         }
         
         // const response = await fetch('http://localhost:3000/api/search-organic', {   BEFORE
-        const response = await fetch('https://03ac5380726b.ngrok-free.app/api/search-organic', {  //NOW
+        const response = await fetch('http://192.168.18.77:3000/api/search-organic', {  //NOW
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -1293,3 +1293,4 @@ window.clearAndPaste = clearAndPaste;
 window.exportToCSV = exportToCSV;
 window.exportToXLSX = exportToXLSX;
 window.exportToJSON = exportToJSON;
+

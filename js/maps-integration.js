@@ -150,7 +150,7 @@ async function startMapsSearch() {
         console.log('📡 Enviando requisição para API...');
         
         // ✅ CONECTAR COM O BACKEND VIA NGROK (URL ATUALIZADA)
-        const response = await fetch('https://03ac5380726b.ngrok-free.app/api/scrape', {
+        const response = await fetch('http://192.168.18.77:3000/api/scrape', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -504,4 +504,5 @@ if (typeof window.startMapsSearch !== 'function') {
 } else {
     console.log('🎉 Maps Integration inicializado com sucesso!');
 }
+
 

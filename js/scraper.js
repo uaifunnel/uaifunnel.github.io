@@ -9,7 +9,7 @@ let currentPage = 1;
 let itemsPerPage = 50;
 let isDarkMode = false;
 
-// ==================== INICIALIZAÇÃO ====================
+// ================== INICIALIZAÇÃO ====================
 document.addEventListener('DOMContentLoaded', function() {
     loadDarkModePreference();
     loadSearchTemplates();
@@ -1293,4 +1293,5 @@ window.clearAndPaste = clearAndPaste;
 window.exportToCSV = exportToCSV;
 window.exportToXLSX = exportToXLSX;
 window.exportToJSON = exportToJSON;
+
 

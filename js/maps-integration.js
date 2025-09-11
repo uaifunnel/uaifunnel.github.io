@@ -149,8 +149,11 @@ async function startMapsSearch() {
     try {
         console.log('📡 Enviando requisição para API...');
         
-        // ✅ CONECTAR COM O BACKEND VIA NGROK (URL ATUALIZADA)
-        const response = await fetch('http://192.168.18.77:3000/api/scrape', {
+        // :::::::::::::::::::::::::: NGROK SETUP ::::::::::::::::::::::::::::::
+        // const response = await fetch('http://localhost:3000/api/scrape', {   BEFORE
+        // const response = await fetch('https://5bd9d625f33b.ngrok-free.app/api...     NOW
+        // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        const response = await fetch('https://5bd9d625f33b.ngrok-free.app/api/scrape', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -504,5 +507,6 @@ if (typeof window.startMapsSearch !== 'function') {
 } else {
     console.log('🎉 Maps Integration inicializado com sucesso!');
 }
+
 
 

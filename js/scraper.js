@@ -468,6 +468,7 @@ function buildAdvancedQuery() {
 
 // ✅ BUSCA AUTOMATIZADA INTEGRADA COM BACKEND
 async function openSearchAutomatized() {
+    // ✅ DECLARAR VARIÁVEIS NO ESCOPO PRINCIPAL
     let searchBtn = null;
     let originalBtnText = '';
     
@@ -481,23 +482,31 @@ async function openSearchAutomatized() {
             showError('Preencha Site, Palavra-chave e Localização.');
             return;
         }
-        
+
+        // ✅ PEGAR O BOTÃO E ALTERAR ESTADO
         searchBtn = document.getElementById('autoSearchBtn');
         
         if (searchBtn) {
             originalBtnText = searchBtn.innerHTML;
+            
+            // ✅ ALTERAR BOTÃO PARA LOADING
             searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Buscando...';
             searchBtn.disabled = true;
         }
         
         showSuccess('Iniciando busca automatizada...');
         
+        // Mostrar loading se existir
         const loadingDiv = document.getElementById('organicLoading');
         if (loadingDiv) {
             loadingDiv.classList.remove('hidden');
         }
         
-        const response = await fetch('http://192.168.18.77:3000/api/search-organic', {
+        // :::::::::::::::::::::::::: NGROK SETUP ::::::::::::::::::::::::::::::
+        // const response = await fetch('http://localhost:3000/api/search-organic', {   BEFORE
+        // const response = await fetch('https://5bd9d625f33b.ngrok-free.app/API...     NOW
+        // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        const response = await fetch('https://c4e9d47019ed.ngrok-free.app/api/search-organic', {  //NOW
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -512,20 +521,24 @@ async function openSearchAutomatized() {
         const data = await response.json();
         
         if (data.sucesso) {
+            // Colocar texto na textarea
             const inputText = document.getElementById('inputText');
             if (inputText) {
                 inputText.value = data.textoParaProcessamento;
             }
             
+            // Processar automaticamente
             try {
                 const profiles = parseProfiles(data.textoParaProcessamento);
                 allProfiles = profiles;
                 originalProfiles = [...profiles];
                 filteredProfiles = [...profiles];
                 
+                // Remover duplicatas automaticamente
                 allProfiles = removeDuplicatesFromArray(allProfiles);
                 filteredProfiles = [...allProfiles];
                 
+                // Atualizar interface
                 updateTable();
                 showStatistics(allProfiles);
                 enableControls();
@@ -544,13 +557,15 @@ async function openSearchAutomatized() {
         showError('Erro na busca automatizada: ' + error.message);
         console.error('Erro completo:', error);
     } finally {
+        // ✅ ESCONDER LOADING
         const loadingDiv = document.getElementById('organicLoading');
         if (loadingDiv) {
             loadingDiv.classList.add('hidden');
         }
         
+        // ✅ RESTAURAR BOTÃO
         if (searchBtn) {
-            searchBtn.innerHTML = originalBtnText || '<i class="bi bi-search"></i> Buscar Google';
+            searchBtn.innerHTML = originalBtnText || '<i class="bi bi-search"></i> Buscar G';
             searchBtn.disabled = false;
         }
     }
@@ -657,6 +672,7 @@ function validateExtractedData(profiles) {
     });
 }
 
+// ✅ FUNÇÃO parseProfiles CORRIGIDA
 function parseProfiles(text) {
     if (!text || text.trim().length === 0) {
         throw new Error('Texto vazio ou inválido');
@@ -721,7 +737,9 @@ function removeDuplicatesFromArray(profiles) {
     });
 }
 
+// ✅ FUNÇÃO COM VERIFICAÇÃO DE PERMISSÃO
 function removeDuplicates() {
+    // Verificar permissão antes de executar
     if (!checkPermission()) return false;
 
     const originalCount = allProfiles.length;
@@ -756,7 +774,9 @@ function saveAction(action, data) {
     if (undoBtn) undoBtn.disabled = false;
 }
 
+// ✅ FUNÇÃO COM VERIFICAÇÃO DE PERMISSÃO
 function undoLastAction() {
+    // Verificar permissão antes de executar
     if (!checkPermission()) return false;
 
     if (actionHistory.length === 0) return;
@@ -785,11 +805,13 @@ function checkPermission() {
         }
         return true;
     }
-    return true;
+    return true; // Se não há sistema, permitir
 }
 
 // ==================== PAGINAÇÃO ====================
+// ✅ FUNÇÃO COM VERIFICAÇÃO DE PERMISSÃO
 function changePage(direction) {
+    // Verificar permissão antes de executar
     if (!checkPermission()) return false;
 
     const totalPages = Math.ceil(filteredProfiles.length / itemsPerPage);
@@ -1023,8 +1045,9 @@ function updateTable() {
     
     updatePagination();
 
-    if (allProfiles.length > 0 && window.signupSystem) {
-        window.signupSystem.markToolAsUsed();
+    // Marcar ferramenta como usada após primeiro sucesso
+    if (allProfiles.length > 0 && window.SignupSystem) {
+        SignupSystem.markAsUsed();
     }
 }
 
@@ -1055,17 +1078,25 @@ function getCachedResults(key, maxAge = 3600000) {
 }
 
 // ==================== EXPORTAÇÃO COM VERIFICAÇÃO ====================
+// ✅ FUNÇÃO COM VERIFICAÇÃO DE PERMISSÃO
 function exportToCSV() {
+    // Verificar permissão ANTES de executar
     if (!checkPermission()) return false;
+    
     exportWithMetadata(filteredProfiles, 'csv');
 }
 
+// ✅ FUNÇÃO COM VERIFICAÇÃO DE PERMISSÃO  
 function exportToXLSX() {
+    // Verificar permissão ANTES de executar
     if (!checkPermission()) return false;
+    
     exportToXLSXFile(filteredProfiles);
 }
 
+// ✅ FUNÇÃO COM VERIFICAÇÃO DE PERMISSÃO
 function exportToJSON() {
+    // Verificar permissão ANTES de executar
     if (!checkPermission()) return false;
     
     const jsonData = JSON.stringify(filteredProfiles, null, 2);
@@ -1215,11 +1246,13 @@ function generateTable() {
 
 // ==================== EVENT LISTENERS ====================
 function initializeEventListeners() {
+    // Botão de processar
     const parseBtn = document.getElementById('parseBtn');
     if (parseBtn) {
         parseBtn.addEventListener('click', generateTable);
     }
 
+    // Filtros - Input de texto (permitir sempre)
     const filterInput = document.getElementById('filterInput');
     if (filterInput) {
         filterInput.addEventListener('input', e => {
@@ -1229,6 +1262,7 @@ function initializeEventListeners() {
         });
     }
 
+    // Preview de busca
     const previewFields = ['inputSite', 'inputProfession', 'inputCity', 'inputEmailType'];
     previewFields.forEach(id => {
         const element = document.getElementById(id);
@@ -1242,6 +1276,7 @@ function initializeEventListeners() {
         }
     });
 
+    // Botões de limpeza
     const clearBtn = document.getElementById('clearBtn');
     if (clearBtn) {
         clearBtn.addEventListener('click', clearTextarea);
@@ -1261,7 +1296,3 @@ window.clearAndPaste = clearAndPaste;
 window.exportToCSV = exportToCSV;
 window.exportToXLSX = exportToXLSX;
 window.exportToJSON = exportToJSON;
-
-console.log('📊 Scraper v4.0 COMPLETO carregado');
-console.log('🔒 Sistema de proteção ativo');
-console.log('✅ Todas funcionalidades mantidas');

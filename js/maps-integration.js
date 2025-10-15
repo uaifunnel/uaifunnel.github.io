@@ -153,7 +153,7 @@ async function startMapsSearch() {
         // const response = await fetch('http://localhost:3000/api/scrape', {   BEFORE
         // const response = await fetch('https://5bd9d625f33b.ngrok-free.app/api...     NOW
         // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        const response = await fetch('https://ba5aa7cca099.ngrok-free.app/api/scrape', {
+        const response = await fetch('https://08890f4a6234.ngrok-free.app/api/scrape', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -507,6 +507,7 @@ if (typeof window.startMapsSearch !== 'function') {
 } else {
     console.log('🎉 Maps Integration inicializado com sucesso!');
 }
+
 
 
 

@@ -1,19 +1,19 @@
-// âœ… MAPS-INTEGRATION.JS COMPLETO - VERSÃƒO 4.0 CORRIGIDA
-// ==================== VARIÃVEIS GLOBAIS ====================
+// ✅ MAPS-INTEGRATION.JS COMPLETO - VERSÃO 5.0 COM LATITUDE E LONGITUDE
+// ==================== VARIÁVEIS GLOBAIS ====================
 let currentMapsData = [];
 
-// ==================== INICIALIZAÃ‡ÃƒO ====================
+// ==================== INICIALIZAÇÃO ====================
 document.addEventListener('DOMContentLoaded', function() {
     setupMapsEventListeners();
-    console.log('âœ… Maps Integration carregado com sucesso');
+    console.log('✅ Maps Integration carregado com sucesso');
 });
 
-// ==================== PROTEÃ‡ÃƒO DA SEÃ‡ÃƒO DE MAPS ====================
+// ==================== PROTEÇÃO DA SEÇÃO DE MAPS ====================
 function setupMapsProtection() {
     const mapsSection = document.getElementById('leadMapsSection');
     if (!mapsSection) return;
 
-    // âœ… INTERCEPTAR TODOS OS CLIQUES DENTRO DA SEÃ‡ÃƒO MAPS
+    // ✅ INTERCEPTAR TODOS OS CLIQUES DENTRO DA SEÇÃO MAPS
     mapsSection.addEventListener('click', function(e) {
         // Verificar se deve mostrar modal
         if (shouldShowModalForMaps(e.target)) {
@@ -21,24 +21,24 @@ function setupMapsProtection() {
             e.stopPropagation();
             e.stopImmediatePropagation();
             
-            // Mostrar modal atravÃ©s do sistema global
+            // Mostrar modal através do sistema global
             if (window.signupSystem && !window.signupSystem.isLoggedIn && window.signupSystem.hasUsedTool) {
                 window.signupSystem.showModal();
                 return false;
             }
         }
-    }, true); // âœ… USAR CAPTURE PHASE
+    }, true); // ✅ USAR CAPTURE PHASE
 }
 
 function shouldShowModalForMaps(element) {
-    // Se nÃ£o hÃ¡ sistema de cadastro ou usuÃ¡rio estÃ¡ logado, permitir
+    // Se não há sistema de cadastro ou usuário está logado, permitir
     if (!window.signupSystem || window.signupSystem.isLoggedIn || !window.signupSystem.hasUsedTool) {
         return false;
     }
 
-    // âœ… ELEMENTOS QUE DEVEM SER BLOQUEADOS APÃ“S PRIMEIRO USO
+    // ✅ ELEMENTOS QUE DEVEM SER BLOQUEADOS APÓS PRIMEIRO USO
     const restrictedSelectors = [
-        // BotÃµes de exportaÃ§Ã£o CSV
+        // Botões de exportação CSV
         '#btn-csv',
         'button[onclick*="exportarCSV"]',
         'button[onclick*="exportCSV"]',
@@ -50,23 +50,23 @@ function shouldShowModalForMaps(element) {
         'a[target="_blank"]',
         'a[href*="maps.google.com"]',
         
-        // BotÃµes de aÃ§Ã£o da tabela Maps
+        // Botões de ação da tabela Maps
         'button[onclick*="addToFunnel"]',
         '.btn[onclick*="addToFunnel"]',
         '.btn-outline-primary',
         '.btn-outline-secondary',
         
-        // Qualquer link/botÃ£o dentro dos resultados
+        // Qualquer link/botão dentro dos resultados
         '#searchResults button:not(.btn-close)',
         '#mapsResultsTitle button',
         
-        // Telefones clicÃ¡veis
+        // Telefones clicáveis
         'a[href^="tel:"]',
         '.telefone-link',
         '#phonefound'
     ];
 
-    // âœ… VERIFICAR SE ELEMENTO CORRESPONDE AOS SELETORES
+    // ✅ VERIFICAR SE ELEMENTO CORRESPONDE AOS SELETORES
     for (const selector of restrictedSelectors) {
         try {
             if (element.matches && element.matches(selector)) {
@@ -80,7 +80,7 @@ function shouldShowModalForMaps(element) {
         }
     }
 
-    // âœ… VERIFICAR ATRIBUTOS ONCLICK
+    // ✅ VERIFICAR ATRIBUTOS ONCLICK
     const onclickAttr = element.getAttribute('onclick');
     if (onclickAttr) {
         const restrictedOnclicks = [
@@ -94,7 +94,7 @@ function shouldShowModalForMaps(element) {
         }
     }
 
-    // âœ… VERIFICAR SE Ã‰ UM LINK EXTERNO
+    // ✅ VERIFICAR SE É UM LINK EXTERNO
     if (element.tagName === 'A' && element.href && 
         (element.href.startsWith('http') && !element.href.includes(window.location.hostname))) {
         return true;
@@ -103,7 +103,7 @@ function shouldShowModalForMaps(element) {
     return false;
 }
 
-// ==================== VERIFICAÃ‡ÃƒO DE PERMISSÃƒO ====================
+// ==================== VERIFICAÇÃO DE PERMISSÃO ====================
 function checkMapsPermission() {
     if (window.signupSystem) {
         const hasPermission = window.signupSystem.isLoggedIn || !window.signupSystem.hasUsedTool;
@@ -113,12 +113,12 @@ function checkMapsPermission() {
         }
         return true;
     }
-    return true; // Se nÃ£o hÃ¡ sistema, permitir
+    return true; // Se não há sistema, permitir
 }
 
 // ==================== BUSCA PRINCIPAL ====================
 async function startMapsSearch() {
-    console.log('ðŸ” Iniciando busca no Maps');
+    console.log('🔍 Iniciando busca no Maps');
     
     // IDs corretos dos elementos
     const searchTerm = document.getElementById('searchTerm').value.trim();
@@ -133,21 +133,21 @@ async function startMapsSearch() {
     const resultsSection = document.getElementById('searchResults');
     const loadingSection = document.getElementById('mapsLoading');
 
-    // âœ… MOSTRAR LOADING COM GIF
+    // ✅ MOSTRAR LOADING COM GIF
     if (loadingSection) loadingSection.classList.remove('hidden');
     if (resultsSection) resultsSection.classList.add('hidden');
     
-    // âœ… ANIMAR STEPS PROGRESSIVAMENTE
+    // ✅ ANIMAR STEPS PROGRESSIVAMENTE
     animateLoadingSteps();
 
-    // âœ… EFEITO NO BOTÃƒO
+    // ✅ EFEITO NO BOTÃO
     if (searchBtn) {
         searchBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Buscando...';
         searchBtn.disabled = true;
     }
 
     try {
-        console.log('ðŸ“¡ Enviando requisiÃ§Ã£o para API...');
+        console.log('📡 Enviando requisição para API...');
         
         // :::::::::::::::::::::::::: NGROK SETUP ::::::::::::::::::::::::::::::
         // const response = await fetch('http://localhost:3000/api/scrape', {   BEFORE
@@ -164,42 +164,42 @@ async function startMapsSearch() {
             })
         });
 
-        console.log('ðŸ“¡ Resposta recebida, status:', response.status);
+        console.log('📡 Resposta recebida, status:', response.status);
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const data = await response.json();
-        console.log('ðŸ“Š Dados processados:', data);
+        console.log('📊 Dados processados:', data);
 
         if (data.sucesso) {
             currentMapsData = data.resultados;
             displayMapsResults(data);
             
-            // âœ… ESCONDER LOADING E MOSTRAR RESULTADOS
+            // ✅ ESCONDER LOADING E MOSTRAR RESULTADOS
             if (loadingSection) loadingSection.classList.add('hidden');
             if (resultsSection) resultsSection.classList.remove('hidden');
             
-            console.log('âœ… Busca concluÃ­da com sucesso');
+            console.log('✅ Busca concluída com sucesso');
         } else {
             if (loadingSection) loadingSection.classList.add('hidden');
             alert('Erro: ' + data.erro);
-            console.error('âŒ Erro da API:', data.erro);
+            console.error('❌ Erro da API:', data.erro);
         }
 
     } catch (error) {
-        console.error('âŒ Erro na requisiÃ§Ã£o:', error);
+        console.error('❌ Erro na requisição:', error);
         
         if (loadingSection) loadingSection.classList.add('hidden');
         
         if (error.message.includes('fetch') || error.message.includes('Failed to fetch')) {
-            alert('Erro de conexÃ£o. Verifique se o servidor backend estÃ¡ rodando.');
+            alert('Erro de conexão. Verifique se o servidor backend está rodando.');
         } else {
             alert('Erro: ' + error.message);
         }
     } finally {
-        // âœ… RESTAURAR BOTÃƒO
+        // ✅ RESTAURAR BOTÃO
         if (searchBtn) {
             searchBtn.innerHTML = '<i class="bi bi-search"></i> Buscar';
             searchBtn.disabled = false;
@@ -207,7 +207,7 @@ async function startMapsSearch() {
     }
 }
 
-// ==================== ANIMAÃ‡ÃƒO DOS STEPS ====================
+// ==================== ANIMAÇÃO DOS STEPS ====================
 function animateLoadingSteps() {
     const steps = document.querySelectorAll('.step-text');
     
@@ -226,88 +226,36 @@ function animateLoadingSteps() {
     });
 }
 
-// ==================== EXIBIÃ‡ÃƒO DE RESULTADOS ====================
-function displayMapsResults(data) {
-    const tbody = document.getElementById('mapsTableBody');
-    const titleElement = document.getElementById('mapsResultsTitle');
-    
-    if (!tbody || !titleElement) {
-        console.error('âŒ Elementos da tabela nÃ£o encontrados no HTML');
-        return;
+// ==================== FORMATAÇÃO DE LATITUDE ====================
+function formatarLatitude(latitude) {
+    if (!latitude || typeof latitude !== 'number' || latitude === 0) {
+        return '<span class="text-muted">-</span>';
     }
     
-    console.log('ðŸ“‹ Exibindo resultados na tabela...');
-    
-    titleElement.textContent = `${data.total} estabelecimentos encontrados para "${data.termo}"`;
-    
-    // Limpar tabela anterior
-    tbody.innerHTML = '';
-    
-    // Contar telefones encontrados
-    let telefonesEncontrados = 0;
-    
-    // Preencher tabela com resultados
-    data.resultados.forEach(item => {
-        if (item.telefone !== 'Telefone nÃ£o encontrado') {
-            telefonesEncontrados++;
-        }
-
-        const row = tbody.insertRow();
-        row.innerHTML = `
-            <td><strong>${item.indice}</strong></td>
-            <td><strong>${item.nome}</strong></td>
-            <td>${item.endereco}</td>
-            <td class="telefone-cell">${formatarTelefone(item.telefone)}</td>
-            <td>${formatarSite(item.site)}</td>
-            <td>${formatarAvaliacao(item.avaliacao)}</td>
-            <td>${item.categoria}</td>
-            <td>
-                <div class="btn-group btn-group-sm">
-                    <button class="btn btn-outline-primary btn-sm" onclick="addToFunnel('${item.nome.replace(/'/g, "\\'")}', '${item.telefone}')">
-                        <i class="bi bi-plus"></i> Adicionar
-                    </button>
-                    <a href="${item.link}" target="_blank" class="btn btn-outline-secondary btn-sm">
-                        <i class="bi bi-geo-alt"></i> Ver
-                    </a>
-                </div>
-            </td>
-        `;
-    });
-    
-    // Mostrar estatÃ­sticas
-    if (telefonesEncontrados > 0) {
-        const infoDiv = document.createElement('div');
-        infoDiv.className = 'alert alert-info mt-2';
-        infoDiv.innerHTML = `ðŸ“ž ${telefonesEncontrados}/${data.total} estabelecimentos com telefone encontrado`;
-        titleElement.appendChild(infoDiv);
-    }
-
-    // âœ… MARCAR FERRAMENTA COMO USADA APÃ“S PRIMEIRO SUCESSO
-    // âœ… CORRIGIDO:
-    if (window.signupSystem && data.resultados && data.resultados.length > 0) {
-        window.signupSystem.markToolAsUsed();  // â† FUNÃ‡ÃƒO CORRETA
-        console.log('ðŸŽ¯ Ferramenta marcada como utilizada');
-    }
-
-
-    // âœ… ATIVAR PROTEÃ‡ÃƒO APÃ“S EXIBIR RESULTADOS
-    setTimeout(() => {
-        setupMapsProtection();
-    }, 100);
-    
-    console.log('âœ… Resultados exibidos com sucesso');
+    const lat = latitude.toFixed(6);
+    return `<span class="text-primary" style="font-family: monospace; font-size: 11px;">${lat}</span>`;
 }
 
-// ==================== FORMATAÃ‡ÃƒO ====================
+// ==================== FORMATAÇÃO DE LONGITUDE ====================
+function formatarLongitude(longitude) {
+    if (!longitude || typeof longitude !== 'number' || longitude === 0) {
+        return '<span class="text-muted">-</span>';
+    }
+    
+    const lng = longitude.toFixed(6);
+    return `<span class="text-success" style="font-family: monospace; font-size: 11px;">${lng}</span>`;
+}
+
+// ==================== FORMATAÇÃO ====================
 function formatarTelefone(telefone) {
-    if (!telefone || telefone === 'Telefone nÃ£o encontrado') {
-        return '<span class="text-muted">NÃ£o encontrado</span>';
+    if (!telefone || telefone === 'Telefone não encontrado') {
+        return '<span class="text-muted">Não encontrado</span>';
     }
 
-    // Remover caracteres nÃ£o numÃ©ricos
+    // Remover caracteres não numéricos
     let numeroLimpo = telefone.replace(/\D/g, '');
     
-    // Remover cÃ³digo do paÃ­s se houver
+    // Remover código do país se houver
     if (numeroLimpo.startsWith('55') && numeroLimpo.length > 11) {
         numeroLimpo = numeroLimpo.substring(2);
     }
@@ -340,30 +288,166 @@ function formatarTelefone(telefone) {
 }
 
 function formatarSite(site) {
-    if (site === 'Site nÃ£o encontrado' || !site) {
-        return '<span class="text-muted">NÃ£o encontrado</span>';
+    if (site === 'Site não encontrado' || !site) {
+        return '<span class="text-muted">Não encontrado</span>';
     }
     if (site.startsWith('http')) {
         return `<a href="${site}" target="_blank" class="text-primary"><i class="bi bi-globe"></i> Visitar</a>`;
     }
-    return '<span class="text-muted">IndisponÃ­vel</span>';
+    return '<span class="text-muted">Indisponível</span>';
 }
 
 function formatarAvaliacao(avaliacao) {
-    if (avaliacao === 'Sem avaliaÃ§Ã£o') {
-        return '<span class="text-muted">Sem avaliaÃ§Ã£o</span>';
+    if (avaliacao === 'Sem avaliação') {
+        return '<span class="text-muted">Sem avaliação</span>';
     }
     return `<span class="text-warning"><i class="bi bi-star-fill"></i> ${avaliacao}</span>`;
 }
 
-// ==================== FUNÃ‡Ã•ES COM VERIFICAÃ‡ÃƒO DE PERMISSÃƒO ====================
-// âœ… FUNÃ‡ÃƒO DE EXPORTAÃ‡ÃƒO COM VERIFICAÃ‡ÃƒO
-function exportarCSV() {
-    console.log('ðŸ“„ Tentativa de exportaÃ§Ã£o CSV');
+// ==================== EXIBIÇÃO DE RESULTADOS COM LATITUDE E LONGITUDE ====================
+function displayMapsResults(data) {
+    const tbody = document.getElementById('mapsTableBody');
+    const titleElement = document.getElementById('mapsResultsTitle');
     
-    // Verificar permissÃ£o ANTES de executar
+    if (!tbody || !titleElement) {
+        console.error('❌ Elementos da tabela não encontrados no HTML');
+        return;
+    }
+    
+    console.log('📋 Exibindo resultados na tabela...');
+    
+    titleElement.textContent = `${data.total} estabelecimentos encontrados para "${data.termo}"`;
+    
+    // Limpar tabela anterior
+    tbody.innerHTML = '';
+    
+    // Contar telefones e coordenadas encontrados
+    let telefonesEncontrados = 0;
+    let coordenadasEncontradas = 0;
+    let sitesEncontrados = 0;
+    
+    // Preencher tabela com resultados
+    data.resultados.forEach(item => {
+        if (item.telefone !== 'Telefone não encontrado') {
+            telefonesEncontrados++;
+        }
+        if (item.site !== 'Site não encontrado') {
+            sitesEncontrados++;
+        }
+        // ✅ VERIFICAR COORDENADAS VÁLIDAS
+        if (item.latitude && item.longitude && 
+            typeof item.latitude === 'number' && typeof item.longitude === 'number' &&
+            item.latitude !== 0 && item.longitude !== 0) {
+            coordenadasEncontradas++;
+        }
+
+        const row = tbody.insertRow();
+        row.innerHTML = `
+            <td><strong>${item.indice}</strong></td>
+            <td><strong>${item.nome}</strong></td>
+            <td>${item.endereco}</td>
+            <td class="telefone-cell">${formatarTelefone(item.telefone)}</td>
+            <td>${formatarSite(item.site)}</td>
+            <td>${formatarAvaliacao(item.avaliacao)}</td>
+            <td>${item.categoria}</td>
+            <td style="text-align: center;">
+                ${formatarLatitude(item.latitude)}
+            </td>
+            <td style="text-align: center;">
+                ${formatarLongitude(item.longitude)}
+            </td>
+            <td>
+                <div class="btn-group btn-group-sm">
+                    <button class="btn btn-outline-primary btn-sm" onclick="addToFunnel('${item.nome.replace(/'/g, "\\'")}', '${item.telefone}')">
+                        <i class="bi bi-plus"></i> Adicionar
+                    </button>
+                    <a href="${item.link}" target="_blank" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-geo-alt"></i> Ver
+                    </a>
+                </div>
+            </td>
+        `;
+    });
+    
+    // ✅ EXIBIR ESTATÍSTICAS DETALHADAS COM COORDENADAS
+    exibirEstatisticasDetalhadas(data.total, telefonesEncontrados, coordenadasEncontradas, sitesEncontrados);
+
+    // ✅ MARCAR FERRAMENTA COMO USADA APÓS PRIMEIRO SUCESSO
+    if (window.signupSystem && data.resultados && data.resultados.length > 0) {
+        window.signupSystem.markToolAsUsed();
+        console.log('🎯 Ferramenta marcada como utilizada');
+    }
+
+    // ✅ ATIVAR PROTEÇÃO APÓS EXIBIR RESULTADOS
+    setTimeout(() => {
+        setupMapsProtection();
+    }, 100);
+    
+    console.log('✅ Resultados exibidos com sucesso');
+    console.log(`📞 Telefones encontrados: ${telefonesEncontrados}/${data.total}`);
+    console.log(`📍 Coordenadas encontradas: ${coordenadasEncontradas}/${data.total}`);
+    console.log(`🌐 Sites encontrados: ${sitesEncontrados}/${data.total}`);
+}
+
+// ==================== ESTATÍSTICAS DETALHADAS ====================
+function exibirEstatisticasDetalhadas(total, telefones, coordenadas, sites) {
+    let statsElement = document.getElementById('mapsStatistics');
+    
+    if (!statsElement) {
+        const resultsSection = document.getElementById('searchResults');
+        if (resultsSection) {
+            statsElement = document.createElement('div');
+            statsElement.id = 'mapsStatistics';
+            statsElement.style.cssText = `
+                margin: 20px 0;
+                padding: 15px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border-radius: 10px;
+                display: flex;
+                justify-content: space-around;
+                flex-wrap: wrap;
+                gap: 15px;
+                color: white;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            `;
+            resultsSection.insertBefore(statsElement, resultsSection.firstChild);
+        }
+    }
+
+    const percentualTelefones = total > 0 ? ((telefones / total) * 100).toFixed(1) : 0;
+    const percentualCoordenadas = total > 0 ? ((coordenadas / total) * 100).toFixed(1) : 0;
+    const percentualSites = total > 0 ? ((sites / total) * 100).toFixed(1) : 0;
+
+    if (statsElement) {
+        statsElement.innerHTML = `
+            <div style="text-align: center; color: white;">
+                <div style="font-size: 28px; font-weight: 700;">${total}</div>
+                <div style="font-size: 12px; opacity: 0.9;">Estabelecimentos</div>
+            </div>
+            <div style="text-align: center; color: white;">
+                <div style="font-size: 28px; font-weight: 700; color: #28a745;">${telefones}</div>
+                <div style="font-size: 12px; opacity: 0.9;">📱 Telefones (${percentualTelefones}%)</div>
+            </div>
+            <div style="text-align: center; color: white;">
+                <div style="font-size: 28px; font-weight: 700; color: #ffc107;">${coordenadas}</div>
+                <div style="font-size: 12px; opacity: 0.9;">📍 Coordenadas (${percentualCoordenadas}%)</div>
+            </div>
+            <div style="text-align: center; color: white;">
+                <div style="font-size: 28px; font-weight: 700; color: #17a2b8;">${sites}</div>
+                <div style="font-size: 12px; opacity: 0.9;">🌐 Sites (${percentualSites}%)</div>
+            </div>
+        `;
+    }
+}
+
+// ==================== FUNÇÕES COM VERIFICAÇÃO DE PERMISSÃO ====================
+// ✅ FUNÇÃO DE EXPORTAÇÃO COM VERIFICAÇÃO E COORDENADAS
+function exportarCSV() {
+    console.log('📄 Tentativa de exportação CSV');
+    
+    // Verificar permissão ANTES de executar
     if (!checkMapsPermission()) {
-        console.log('âŒ ExportaÃ§Ã£o CSV bloqueada - usuÃ¡rio precisa se cadastrar');
+        console.log('❌ Exportação CSV bloqueada - usuário precisa se cadastrar');
         return false;
     }
     
@@ -373,42 +457,43 @@ function exportarCSV() {
     }
 
     try {
+        // ✅ CSV COM COLUNAS SEPARADAS DE LATITUDE E LONGITUDE
         const csvContent = "data:text/csv;charset=utf-8," 
-            + "Nome,EndereÃ§o,Telefone,Site,AvaliaÃ§Ã£o,Categoria\n"
+            + "Nome,Endereço,Telefone,Latitude,Longitude,Site,Avaliação,Categoria,Link Maps\n"
             + currentMapsData.map(item => 
-                `"${item.nome}","${item.endereco}","${item.telefone}","${item.site}","${item.avaliacao}","${item.categoria}"`
+                `"${item.nome || ''}","${item.endereco || ''}","${item.telefone || ''}","${item.latitude || ''}","${item.longitude || ''}","${item.site || ''}","${item.avaliacao || ''}","${item.categoria || ''}","${item.link || ''}"`
             ).join("\n");
 
         const encodedUri = encodeURI(csvContent);
         const link = document.createElement("a");
         link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `estabelecimentos_${new Date().toISOString().split('T')[0]}.csv`);
+        link.setAttribute("download", `estabelecimentos_com_coordenadas_${new Date().toISOString().split('T')[0]}.csv`);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
         
-        console.log('âœ… CSV exportado com sucesso');
+        console.log('✅ CSV exportado com coordenadas separadas');
         
     } catch (error) {
-        console.error('âŒ Erro ao exportar CSV:', error);
+        console.error('❌ Erro ao exportar CSV:', error);
         alert('Erro ao exportar arquivo CSV');
     }
 }
 
-// âœ… FUNÃ‡ÃƒO ADICIONAR AO FUNIL COM VERIFICAÃ‡ÃƒO
+// ✅ FUNÇÃO ADICIONAR AO FUNIL COM VERIFICAÇÃO
 function addToFunnel(name, phone) {
-    console.log('ðŸ“‹ Tentativa de adicionar ao funil:', name);
+    console.log('📋 Tentativa de adicionar ao funil:', name);
     
-    // Verificar permissÃ£o ANTES de executar
+    // Verificar permissão ANTES de executar
     if (!checkMapsPermission()) {
-        console.log('âŒ Adicionar ao funil bloqueado - usuÃ¡rio precisa se cadastrar');
+        console.log('❌ Adicionar ao funil bloqueado - usuário precisa se cadastrar');
         return false;
     }
 
-    console.log('âœ… Adicionando ao funil:', { name, phone });
+    console.log('✅ Adicionando ao funil:', { name, phone });
     alert(`${name} adicionado ao seu funil de leads!`);
     
-    // IntegraÃ§Ã£o com sistema de CRM local
+    // Integração com sistema de CRM local
     try {
         const existingFunnel = JSON.parse(localStorage.getItem('leadsFunnel') || '[]');
         const newLead = {
@@ -423,13 +508,13 @@ function addToFunnel(name, phone) {
         existingFunnel.push(newLead);
         localStorage.setItem('leadsFunnel', JSON.stringify(existingFunnel));
         
-        console.log('âœ… Lead adicionado ao funil local');
+        console.log('✅ Lead adicionado ao funil local');
     } catch (error) {
-        console.error('âŒ Erro ao salvar no funil:', error);
+        console.error('❌ Erro ao salvar no funil:', error);
     }
 }
 
-// ==================== UTILITÃRIOS ====================
+// ==================== UTILITÁRIOS ====================
 function clearMapsForm() {
     const searchTerm = document.getElementById('searchTerm');
     const maxResults = document.getElementById('maxResults');
@@ -440,7 +525,7 @@ function clearMapsForm() {
     if (resultsSection) resultsSection.classList.add('hidden');
     
     currentMapsData = [];
-    console.log('ðŸ§¹ FormulÃ¡rio Maps limpo');
+    console.log('🧹 Formulário Maps limpo');
 }
 
 function refreshMapsSearch() {
@@ -451,15 +536,15 @@ function refreshMapsSearch() {
 
 // ==================== EVENT LISTENERS ====================
 function setupMapsEventListeners() {
-    console.log('ðŸ”§ Configurando event listeners do Maps...');
+    console.log('🔧 Configurando event listeners do Maps...');
     
-    // BotÃ£o de busca
+    // Botão de busca
     const searchBtn = document.getElementById('searchBtn');
     if (searchBtn) {
         searchBtn.addEventListener('click', startMapsSearch);
-        console.log('âœ… Event listener do botÃ£o buscar configurado');
+        console.log('✅ Event listener do botão buscar configurado');
     } else {
-        console.warn('âš ï¸ BotÃ£o searchBtn nÃ£o encontrado');
+        console.warn('⚠️ Botão searchBtn não encontrado');
     }
     
     // Enter no campo de busca
@@ -470,40 +555,48 @@ function setupMapsEventListeners() {
                 startMapsSearch();
             }
         });
-        console.log('âœ… Event listener do campo busca configurado');
+        console.log('✅ Event listener do campo busca configurado');
     } else {
-        console.warn('âš ï¸ Campo searchTerm nÃ£o encontrado');
+        console.warn('⚠️ Campo searchTerm não encontrado');
     }
     
-    // BotÃ£o de exportar CSV
+    // Botão de exportar CSV
     const exportBtn = document.getElementById('btn-csv');
     if (exportBtn) {
         exportBtn.addEventListener('click', exportarCSV);
-        console.log('âœ… Event listener do botÃ£o CSV configurado');
+        console.log('✅ Event listener do botão CSV configurado');
     } else {
-        console.log('â„¹ï¸ BotÃ£o btn-csv nÃ£o encontrado (normal se nÃ£o existir)');
+        console.log('ℹ️ Botão btn-csv não encontrado (normal se não existir)');
     }
     
-    console.log('âœ… Event listeners do Maps configurados com sucesso');
+    console.log('✅ Event listeners do Maps configurados com sucesso');
 }
 
-// ==================== EXPORTAR FUNÃ‡Ã•ES GLOBAIS ====================
-// âœ… DISPONIBILIZAR FUNÃ‡Ã•ES GLOBALMENTE PARA USO NO HTML
+// ==================== EXPORTAR FUNÇÕES GLOBAIS ====================
+// ✅ DISPONIBILIZAR FUNÇÕES GLOBALMENTE PARA USO NO HTML
 window.startMapsSearch = startMapsSearch;
 window.exportarCSV = exportarCSV;
 window.addToFunnel = addToFunnel;
 window.clearMapsForm = clearMapsForm;
 window.refreshMapsSearch = refreshMapsSearch;
 
-// âœ… DEBUG - VERIFICAR SE FUNÃ‡Ã•ES ESTÃƒO DISPONÃVEIS
-console.log('âœ… Maps Integration carregado completamente');
-console.log('âœ… startMapsSearch disponÃ­vel:', typeof window.startMapsSearch);
-console.log('âœ… exportarCSV disponÃ­vel:', typeof window.exportarCSV);
-console.log('âœ… addToFunnel disponÃ­vel:', typeof window.addToFunnel);
+// ✅ DEBUG - VERIFICAR SE FUNÇÕES ESTÃO DISPONÍVEIS
+console.log('✅ Maps Integration carregado completamente');
+console.log('✅ startMapsSearch disponível:', typeof window.startMapsSearch);
+console.log('✅ exportarCSV disponível:', typeof window.exportarCSV);
+console.log('✅ addToFunnel disponível:', typeof window.addToFunnel);
 
-// âœ… VERIFICAÃ‡ÃƒO FINAL DE INTEGRIDADE
+// ✅ VERIFICAÇÃO FINAL DE INTEGRIDADE
 if (typeof window.startMapsSearch !== 'function') {
-    console.error('âŒ ERRO: startMapsSearch nÃ£o foi definida corretamente!');
+    console.error('❌ ERRO: startMapsSearch não foi definida corretamente!');
 } else {
-    console.log('ðŸŽ‰ Maps Integration inicializado com sucesso!');
+    console.log('🎉 Maps Integration v5.0 inicializado com sucesso!');
+    console.log('📍 Funcionalidades ativas:');
+    console.log(' - ✅ Latitude e Longitude em colunas separadas');
+    console.log(' - ✅ Formatação com 6 casas decimais');
+    console.log(' - ✅ Validação de coordenadas');
+    console.log(' - ✅ Estatísticas detalhadas');
+    console.log(' - ✅ Exportação CSV com coordenadas');
+    console.log(' - ✅ Sistema de proteção integrado');
+    console.log(' - ✅ URL Ngrok configurada');
 }

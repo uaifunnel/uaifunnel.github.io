@@ -1,72 +1,85 @@
-// ✅ MAPS-INTEGRATION.JS COMPLETO - VERSÃO 5.0 COM LATITUDE E LONGITUDE
+// ✅ MAPS-INTEGRATION.JS COMPLETO - VERSÃO 5.0 FINAL COM LATITUDE E LONGITUDE
 // ==================== VARIÁVEIS GLOBAIS ====================
 let currentMapsData = [];
 
 // ==================== INICIALIZAÇÃO ====================
 document.addEventListener('DOMContentLoaded', function() {
     setupMapsEventListeners();
-    console.log('✅ Maps Integration carregado com sucesso');
+    console.log('✅ Maps Integration v5.0 carregado com sucesso');
 });
+
+// ==================== CONFIGURAÇÃO DE EVENT LISTENERS ====================
+function setupMapsEventListeners() {
+    console.log('🔧 Configurando event listeners do Maps...');
+    
+    // Botão de busca
+    const searchBtn = document.getElementById('searchBtn');
+    if (searchBtn) {
+        searchBtn.addEventListener('click', startMapsSearch);
+        console.log('✅ Event listener do botão buscar configurado');
+    }
+    
+    // Enter no campo de busca
+    const searchTerm = document.getElementById('searchTerm');
+    if (searchTerm) {
+        searchTerm.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                startMapsSearch();
+            }
+        });
+        console.log('✅ Event listener do campo busca configurado');
+    }
+    
+    // Botão de exportar CSV
+    const exportBtn = document.getElementById('btn-csv');
+    if (exportBtn) {
+        exportBtn.addEventListener('click', exportarCSV);
+        console.log('✅ Event listener do botão CSV configurado');
+    }
+}
 
 // ==================== PROTEÇÃO DA SEÇÃO DE MAPS ====================
 function setupMapsProtection() {
     const mapsSection = document.getElementById('leadMapsSection');
     if (!mapsSection) return;
 
-    // ✅ INTERCEPTAR TODOS OS CLIQUES DENTRO DA SEÇÃO MAPS
     mapsSection.addEventListener('click', function(e) {
-        // Verificar se deve mostrar modal
         if (shouldShowModalForMaps(e.target)) {
             e.preventDefault();
             e.stopPropagation();
             e.stopImmediatePropagation();
             
-            // Mostrar modal através do sistema global
             if (window.signupSystem && !window.signupSystem.isLoggedIn && window.signupSystem.hasUsedTool) {
                 window.signupSystem.showModal();
                 return false;
             }
         }
-    }, true); // ✅ USAR CAPTURE PHASE
+    }, true);
 }
 
 function shouldShowModalForMaps(element) {
-    // Se não há sistema de cadastro ou usuário está logado, permitir
     if (!window.signupSystem || window.signupSystem.isLoggedIn || !window.signupSystem.hasUsedTool) {
         return false;
     }
 
-    // ✅ ELEMENTOS QUE DEVEM SER BLOQUEADOS APÓS PRIMEIRO USO
     const restrictedSelectors = [
-        // Botões de exportação CSV
         '#btn-csv',
         'button[onclick*="exportarCSV"]',
         'button[onclick*="exportCSV"]',
         '[data-export="csv"]',
-        
-        // Links externos da tabela Maps
         '#mapsTableBody a',
         '#searchResults a',
         'a[target="_blank"]',
         'a[href*="maps.google.com"]',
-        
-        // Botões de ação da tabela Maps
         'button[onclick*="addToFunnel"]',
         '.btn[onclick*="addToFunnel"]',
         '.btn-outline-primary',
         '.btn-outline-secondary',
-        
-        // Qualquer link/botão dentro dos resultados
         '#searchResults button:not(.btn-close)',
-        '#mapsResultsTitle button',
-        
-        // Telefones clicáveis
         'a[href^="tel:"]',
-        '.telefone-link',
-        '#phonefound'
+        '.telefone-link'
     ];
 
-    // ✅ VERIFICAR SE ELEMENTO CORRESPONDE AOS SELETORES
     for (const selector of restrictedSelectors) {
         try {
             if (element.matches && element.matches(selector)) {
@@ -80,13 +93,9 @@ function shouldShowModalForMaps(element) {
         }
     }
 
-    // ✅ VERIFICAR ATRIBUTOS ONCLICK
     const onclickAttr = element.getAttribute('onclick');
     if (onclickAttr) {
-        const restrictedOnclicks = [
-            'exportarCSV', 'exportCSV', 'addToFunnel', 
-            'exportar', 'download'
-        ];
+        const restrictedOnclicks = ['exportarCSV', 'exportCSV', 'addToFunnel', 'exportar', 'download'];
         for (const restricted of restrictedOnclicks) {
             if (onclickAttr.includes(restricted)) {
                 return true;
@@ -94,7 +103,6 @@ function shouldShowModalForMaps(element) {
         }
     }
 
-    // ✅ VERIFICAR SE É UM LINK EXTERNO
     if (element.tagName === 'A' && element.href && 
         (element.href.startsWith('http') && !element.href.includes(window.location.hostname))) {
         return true;
@@ -103,7 +111,6 @@ function shouldShowModalForMaps(element) {
     return false;
 }
 
-// ==================== VERIFICAÇÃO DE PERMISSÃO ====================
 function checkMapsPermission() {
     if (window.signupSystem) {
         const hasPermission = window.signupSystem.isLoggedIn || !window.signupSystem.hasUsedTool;
@@ -113,17 +120,16 @@ function checkMapsPermission() {
         }
         return true;
     }
-    return true; // Se não há sistema, permitir
+    return true;
 }
 
 // ==================== BUSCA PRINCIPAL ====================
 async function startMapsSearch() {
     console.log('🔍 Iniciando busca no Maps');
     
-    // IDs corretos dos elementos
     const searchTerm = document.getElementById('searchTerm').value.trim();
     const maxResults = document.getElementById('maxResults').value;
-    
+
     if (!searchTerm) {
         alert('Digite um termo de busca!');
         return;
@@ -133,14 +139,11 @@ async function startMapsSearch() {
     const resultsSection = document.getElementById('searchResults');
     const loadingSection = document.getElementById('mapsLoading');
 
-    // ✅ MOSTRAR LOADING COM GIF
     if (loadingSection) loadingSection.classList.remove('hidden');
     if (resultsSection) resultsSection.classList.add('hidden');
-    
-    // ✅ ANIMAR STEPS PROGRESSIVAMENTE
+
     animateLoadingSteps();
 
-    // ✅ EFEITO NO BOTÃO
     if (searchBtn) {
         searchBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Buscando...';
         searchBtn.disabled = true;
@@ -176,8 +179,7 @@ async function startMapsSearch() {
         if (data.sucesso) {
             currentMapsData = data.resultados;
             displayMapsResults(data);
-            
-            // ✅ ESCONDER LOADING E MOSTRAR RESULTADOS
+
             if (loadingSection) loadingSection.classList.add('hidden');
             if (resultsSection) resultsSection.classList.remove('hidden');
             
@@ -190,7 +192,6 @@ async function startMapsSearch() {
 
     } catch (error) {
         console.error('❌ Erro na requisição:', error);
-        
         if (loadingSection) loadingSection.classList.add('hidden');
         
         if (error.message.includes('fetch') || error.message.includes('Failed to fetch')) {
@@ -199,7 +200,6 @@ async function startMapsSearch() {
             alert('Erro: ' + error.message);
         }
     } finally {
-        // ✅ RESTAURAR BOTÃO
         if (searchBtn) {
             searchBtn.innerHTML = '<i class="bi bi-search"></i> Buscar';
             searchBtn.disabled = false;
@@ -210,57 +210,50 @@ async function startMapsSearch() {
 // ==================== ANIMAÇÃO DOS STEPS ====================
 function animateLoadingSteps() {
     const steps = document.querySelectorAll('.step-text');
-    
     if (!steps.length) return;
-    
-    // Reset todos os steps
+
     steps.forEach(step => {
         step.classList.remove('active');
     });
-    
-    // Animar steps sequencialmente
+
     steps.forEach((step, index) => {
         setTimeout(() => {
             step.classList.add('active');
-        }, (index + 1) * 1500); // 1.5s entre cada step
+        }, (index + 1) * 1500);
     });
 }
 
-// ==================== FORMATAÇÃO DE LATITUDE ====================
+// ==================== FORMATAÇÃO DE COORDENADAS ====================
 function formatarLatitude(latitude) {
     if (!latitude || typeof latitude !== 'number' || latitude === 0) {
-        return '<span class="text-muted">-</span>';
+        return '<span class="text-muted" style="font-size: 11px;">-</span>';
     }
     
     const lat = latitude.toFixed(6);
-    return `<span class="text-primary" style="font-family: monospace; font-size: 11px;">${lat}</span>`;
+    return `<span class="text-primary" style="font-family: monospace; font-size: 11px; font-weight: 600;">${lat}</span>`;
 }
 
-// ==================== FORMATAÇÃO DE LONGITUDE ====================
 function formatarLongitude(longitude) {
     if (!longitude || typeof longitude !== 'number' || longitude === 0) {
-        return '<span class="text-muted">-</span>';
+        return '<span class="text-muted" style="font-size: 11px;">-</span>';
     }
     
     const lng = longitude.toFixed(6);
-    return `<span class="text-success" style="font-family: monospace; font-size: 11px;">${lng}</span>`;
+    return `<span class="text-success" style="font-family: monospace; font-size: 11px; font-weight: 600;">${lng}</span>`;
 }
 
-// ==================== FORMATAÇÃO ====================
+// ==================== FORMATAÇÃO DE OUTROS CAMPOS ====================
 function formatarTelefone(telefone) {
     if (!telefone || telefone === 'Telefone não encontrado') {
-        return '<span class="text-muted">Não encontrado</span>';
+        return '<span class="text-muted" style="font-size: 11px;">Não encontrado</span>';
     }
 
-    // Remover caracteres não numéricos
     let numeroLimpo = telefone.replace(/\D/g, '');
     
-    // Remover código do país se houver
     if (numeroLimpo.startsWith('55') && numeroLimpo.length > 11) {
         numeroLimpo = numeroLimpo.substring(2);
     }
     
-    // Remover zero do DDD
     if (numeroLimpo.length === 11 && numeroLimpo.startsWith('0')) {
         numeroLimpo = numeroLimpo.substring(1);
     }
@@ -268,14 +261,12 @@ function formatarTelefone(telefone) {
     let telefoneFormatado = '';
     
     if (numeroLimpo.length === 11) {
-        // Celular: (21) 9 9294-2010
         const ddd = numeroLimpo.substring(0, 2);
         const nono = numeroLimpo.substring(2, 3);
         const parte1 = numeroLimpo.substring(3, 7);
         const parte2 = numeroLimpo.substring(7, 11);
         telefoneFormatado = `(${ddd}) ${nono} ${parte1}-${parte2}`;
     } else if (numeroLimpo.length === 10) {
-        // Fixo: (21) 3456-7789
         const ddd = numeroLimpo.substring(0, 2);
         const parte1 = numeroLimpo.substring(2, 6);
         const parte2 = numeroLimpo.substring(6, 10);
@@ -284,24 +275,36 @@ function formatarTelefone(telefone) {
         telefoneFormatado = telefone;
     }
     
-    return `<a href="tel:${numeroLimpo}" id="phonefound" class="telefone-link text-success">${telefoneFormatado}</a>`;
+    return `<a href="tel:${numeroLimpo}" class="telefone-link text-success" style="text-decoration: none; font-weight: 500; font-size: 13px;">
+        <i class="bi bi-telephone-fill"></i> ${telefoneFormatado}
+    </a>`;
 }
 
 function formatarSite(site) {
     if (site === 'Site não encontrado' || !site) {
-        return '<span class="text-muted">Não encontrado</span>';
+        return '<span class="text-muted" style="font-size: 11px;">-</span>';
     }
     if (site.startsWith('http')) {
-        return `<a href="${site}" target="_blank" class="text-primary"><i class="bi bi-globe"></i> Visitar</a>`;
+        return `<a href="${site}" target="_blank" class="text-primary" style="text-decoration: none; font-size: 12px;">
+            <i class="bi bi-globe"></i> Visitar
+        </a>`;
     }
-    return '<span class="text-muted">Indisponível</span>';
+    return '<span class="text-muted" style="font-size: 11px;">-</span>';
 }
 
 function formatarAvaliacao(avaliacao) {
-    if (avaliacao === 'Sem avaliação') {
-        return '<span class="text-muted">Sem avaliação</span>';
+    if (avaliacao === 'Sem avaliação' || !avaliacao) {
+        return '<span class="text-muted" style="font-size: 11px;">-</span>';
     }
-    return `<span class="text-warning"><i class="bi bi-star-fill"></i> ${avaliacao}</span>`;
+    
+    const match = avaliacao.match(/(\d+[,\.]\d+)/);
+    if (match) {
+        const nota = parseFloat(match[0].replace(',', '.'));
+        const stars = '⭐'.repeat(Math.round(nota));
+        return `<span class="text-warning" title="${avaliacao}" style="font-size: 12px;">${stars} ${nota}</span>`;
+    }
+    
+    return `<span class="text-warning" style="font-size: 12px;"><i class="bi bi-star-fill"></i> ${avaliacao}</span>`;
 }
 
 // ==================== EXIBIÇÃO DE RESULTADOS COM LATITUDE E LONGITUDE ====================
@@ -318,15 +321,12 @@ function displayMapsResults(data) {
     
     titleElement.textContent = `${data.total} estabelecimentos encontrados para "${data.termo}"`;
     
-    // Limpar tabela anterior
     tbody.innerHTML = '';
     
-    // Contar telefones e coordenadas encontrados
     let telefonesEncontrados = 0;
     let coordenadasEncontradas = 0;
     let sitesEncontrados = 0;
     
-    // Preencher tabela com resultados
     data.resultados.forEach(item => {
         if (item.telefone !== 'Telefone não encontrado') {
             telefonesEncontrados++;
@@ -334,7 +334,6 @@ function displayMapsResults(data) {
         if (item.site !== 'Site não encontrado') {
             sitesEncontrados++;
         }
-        // ✅ VERIFICAR COORDENADAS VÁLIDAS
         if (item.latitude && item.longitude && 
             typeof item.latitude === 'number' && typeof item.longitude === 'number' &&
             item.latitude !== 0 && item.longitude !== 0) {
@@ -342,50 +341,65 @@ function displayMapsResults(data) {
         }
 
         const row = tbody.insertRow();
+        
+        // ✅ ROW COM TODAS AS 10 COLUNAS (INCLUINDO LATITUDE E LONGITUDE)
         row.innerHTML = `
-            <td><strong>${item.indice}</strong></td>
-            <td><strong>${item.nome}</strong></td>
-            <td>${item.endereco}</td>
-            <td class="telefone-cell">${formatarTelefone(item.telefone)}</td>
-            <td>${formatarSite(item.site)}</td>
-            <td>${formatarAvaliacao(item.avaliacao)}</td>
-            <td>${item.categoria}</td>
+            <td style="text-align: center; font-weight: 600; color: #053B49;">${item.indice}</td>
+            <td style="font-weight: 500; color: #053B49; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                ${item.nome || 'Nome não encontrado'}
+            </td>
+            <td style="font-size: 12px; color: #666; max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                ${item.endereco || 'Endereço não encontrado'}
+            </td>
             <td style="text-align: center;">
+                ${formatarTelefone(item.telefone)}
+            </td>
+            <td style="text-align: center;">
+                ${formatarSite(item.site)}
+            </td>
+            <td style="text-align: center;">
+                ${formatarAvaliacao(item.avaliacao)}
+            </td>
+            <td style="font-size: 12px; color: #666; max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                ${item.categoria || 'Categoria não encontrada'}
+            </td>
+            <td style="text-align: center; padding: 8px;">
                 ${formatarLatitude(item.latitude)}
             </td>
-            <td style="text-align: center;">
+            <td style="text-align: center; padding: 8px;">
                 ${formatarLongitude(item.longitude)}
             </td>
-            <td>
-                <div class="btn-group btn-group-sm">
-                    <button class="btn btn-outline-primary btn-sm" onclick="addToFunnel('${item.nome.replace(/'/g, "\\'")}', '${item.telefone}')">
-                        <i class="bi bi-plus"></i> Adicionar
+            <td style="text-align: center;">
+                <div class="btn-group btn-group-sm" style="gap: 4px;">
+                    <button class="btn btn-outline-primary btn-sm" 
+                            onclick="addToFunnel('${item.nome.replace(/'/g, "\\'")}', '${item.telefone}')" 
+                            style="font-size: 11px; padding: 4px 10px;">
+                        <i class="bi bi-plus-circle"></i> Add
                     </button>
-                    <a href="${item.link}" target="_blank" class="btn btn-outline-secondary btn-sm">
-                        <i class="bi bi-geo-alt"></i> Ver
+                    <a href="${item.link}" target="_blank" 
+                       class="btn btn-outline-secondary btn-sm" 
+                       style="font-size: 11px; padding: 4px 10px;">
+                        <i class="bi bi-geo-alt-fill"></i> Ver
                     </a>
                 </div>
             </td>
         `;
     });
     
-    // ✅ EXIBIR ESTATÍSTICAS DETALHADAS COM COORDENADAS
     exibirEstatisticasDetalhadas(data.total, telefonesEncontrados, coordenadasEncontradas, sitesEncontrados);
 
-    // ✅ MARCAR FERRAMENTA COMO USADA APÓS PRIMEIRO SUCESSO
     if (window.signupSystem && data.resultados && data.resultados.length > 0) {
         window.signupSystem.markToolAsUsed();
         console.log('🎯 Ferramenta marcada como utilizada');
     }
 
-    // ✅ ATIVAR PROTEÇÃO APÓS EXIBIR RESULTADOS
     setTimeout(() => {
         setupMapsProtection();
     }, 100);
     
     console.log('✅ Resultados exibidos com sucesso');
     console.log(`📞 Telefones encontrados: ${telefonesEncontrados}/${data.total}`);
-    console.log(`📍 Coordenadas encontradas: ${coordenadasEncontradas}/${data.total}`);
+    console.log(`📍 Coordenadas encontradas: ${coordenadasEncontradas}/${data.total} (${((coordenadasEncontradas/data.total)*100).toFixed(1)}%)`);
     console.log(`🌐 Sites encontrados: ${sitesEncontrados}/${data.total}`);
 }
 
@@ -400,15 +414,15 @@ function exibirEstatisticasDetalhadas(total, telefones, coordenadas, sites) {
             statsElement.id = 'mapsStatistics';
             statsElement.style.cssText = `
                 margin: 20px 0;
-                padding: 15px;
+                padding: 20px;
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                border-radius: 10px;
+                border-radius: 15px;
                 display: flex;
                 justify-content: space-around;
                 flex-wrap: wrap;
-                gap: 15px;
+                gap: 20px;
                 color: white;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             `;
             resultsSection.insertBefore(statsElement, resultsSection.firstChild);
         }
@@ -420,32 +434,30 @@ function exibirEstatisticasDetalhadas(total, telefones, coordenadas, sites) {
 
     if (statsElement) {
         statsElement.innerHTML = `
-            <div style="text-align: center; color: white;">
-                <div style="font-size: 28px; font-weight: 700;">${total}</div>
-                <div style="font-size: 12px; opacity: 0.9;">Estabelecimentos</div>
+            <div style="text-align: center; color: white; min-width: 120px;">
+                <div style="font-size: 32px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">${total}</div>
+                <div style="font-size: 13px; opacity: 0.95; margin-top: 5px;">Estabelecimentos</div>
             </div>
-            <div style="text-align: center; color: white;">
-                <div style="font-size: 28px; font-weight: 700; color: #28a745;">${telefones}</div>
-                <div style="font-size: 12px; opacity: 0.9;">📱 Telefones (${percentualTelefones}%)</div>
+            <div style="text-align: center; color: white; min-width: 120px;">
+                <div style="font-size: 32px; font-weight: 700; color: #28a745; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">${telefones}</div>
+                <div style="font-size: 13px; opacity: 0.95; margin-top: 5px;">📱 Telefones (${percentualTelefones}%)</div>
             </div>
-            <div style="text-align: center; color: white;">
-                <div style="font-size: 28px; font-weight: 700; color: #ffc107;">${coordenadas}</div>
-                <div style="font-size: 12px; opacity: 0.9;">📍 Coordenadas (${percentualCoordenadas}%)</div>
+            <div style="text-align: center; color: white; min-width: 120px;">
+                <div style="font-size: 32px; font-weight: 700; color: #ffc107; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">${coordenadas}</div>
+                <div style="font-size: 13px; opacity: 0.95; margin-top: 5px;">📍 Coordenadas (${percentualCoordenadas}%)</div>
             </div>
-            <div style="text-align: center; color: white;">
-                <div style="font-size: 28px; font-weight: 700; color: #17a2b8;">${sites}</div>
-                <div style="font-size: 12px; opacity: 0.9;">🌐 Sites (${percentualSites}%)</div>
+            <div style="text-align: center; color: white; min-width: 120px;">
+                <div style="font-size: 32px; font-weight: 700; color: #17a2b8; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">${sites}</div>
+                <div style="font-size: 13px; opacity: 0.95; margin-top: 5px;">🌐 Sites (${percentualSites}%)</div>
             </div>
         `;
     }
 }
 
-// ==================== FUNÇÕES COM VERIFICAÇÃO DE PERMISSÃO ====================
-// ✅ FUNÇÃO DE EXPORTAÇÃO COM VERIFICAÇÃO E COORDENADAS
+// ==================== EXPORTAÇÃO CSV COM COORDENADAS ====================
 function exportarCSV() {
     console.log('📄 Tentativa de exportação CSV');
     
-    // Verificar permissão ANTES de executar
     if (!checkMapsPermission()) {
         console.log('❌ Exportação CSV bloqueada - usuário precisa se cadastrar');
         return false;
@@ -457,7 +469,6 @@ function exportarCSV() {
     }
 
     try {
-        // ✅ CSV COM COLUNAS SEPARADAS DE LATITUDE E LONGITUDE
         const csvContent = "data:text/csv;charset=utf-8," 
             + "Nome,Endereço,Telefone,Latitude,Longitude,Site,Avaliação,Categoria,Link Maps\n"
             + currentMapsData.map(item => 
@@ -467,12 +478,13 @@ function exportarCSV() {
         const encodedUri = encodeURI(csvContent);
         const link = document.createElement("a");
         link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `estabelecimentos_com_coordenadas_${new Date().toISOString().split('T')[0]}.csv`);
+        link.setAttribute("download", `estabelecimentos_coordenadas_${new Date().toISOString().split('T')[0]}.csv`);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
         
-        console.log('✅ CSV exportado com coordenadas separadas');
+        console.log('✅ CSV exportado com sucesso');
+        showNotification('✅ CSV exportado com coordenadas!', 'success');
         
     } catch (error) {
         console.error('❌ Erro ao exportar CSV:', error);
@@ -480,20 +492,17 @@ function exportarCSV() {
     }
 }
 
-// ✅ FUNÇÃO ADICIONAR AO FUNIL COM VERIFICAÇÃO
+// ==================== ADICIONAR AO FUNIL ====================
 function addToFunnel(name, phone) {
     console.log('📋 Tentativa de adicionar ao funil:', name);
     
-    // Verificar permissão ANTES de executar
     if (!checkMapsPermission()) {
         console.log('❌ Adicionar ao funil bloqueado - usuário precisa se cadastrar');
         return false;
     }
 
     console.log('✅ Adicionando ao funil:', { name, phone });
-    alert(`${name} adicionado ao seu funil de leads!`);
     
-    // Integração com sistema de CRM local
     try {
         const existingFunnel = JSON.parse(localStorage.getItem('leadsFunnel') || '[]');
         const newLead = {
@@ -509,9 +518,40 @@ function addToFunnel(name, phone) {
         localStorage.setItem('leadsFunnel', JSON.stringify(existingFunnel));
         
         console.log('✅ Lead adicionado ao funil local');
+        showNotification(`✅ ${name} adicionado ao funil!`, 'success');
     } catch (error) {
         console.error('❌ Erro ao salvar no funil:', error);
+        showNotification('❌ Erro ao adicionar ao funil', 'error');
     }
+}
+
+// ==================== NOTIFICAÇÕES ====================
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#17a2b8'};
+        color: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        z-index: 10000;
+        font-weight: 500;
+        font-size: 14px;
+        animation: slideInRight 0.3s ease;
+    `;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    }, 3000);
 }
 
 // ==================== UTILITÁRIOS ====================
@@ -528,75 +568,21 @@ function clearMapsForm() {
     console.log('🧹 Formulário Maps limpo');
 }
 
-function refreshMapsSearch() {
-    if (currentMapsData.length > 0) {
-        startMapsSearch();
-    }
-}
-
-// ==================== EVENT LISTENERS ====================
-function setupMapsEventListeners() {
-    console.log('🔧 Configurando event listeners do Maps...');
-    
-    // Botão de busca
-    const searchBtn = document.getElementById('searchBtn');
-    if (searchBtn) {
-        searchBtn.addEventListener('click', startMapsSearch);
-        console.log('✅ Event listener do botão buscar configurado');
-    } else {
-        console.warn('⚠️ Botão searchBtn não encontrado');
-    }
-    
-    // Enter no campo de busca
-    const searchTerm = document.getElementById('searchTerm');
-    if (searchTerm) {
-        searchTerm.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                startMapsSearch();
-            }
-        });
-        console.log('✅ Event listener do campo busca configurado');
-    } else {
-        console.warn('⚠️ Campo searchTerm não encontrado');
-    }
-    
-    // Botão de exportar CSV
-    const exportBtn = document.getElementById('btn-csv');
-    if (exportBtn) {
-        exportBtn.addEventListener('click', exportarCSV);
-        console.log('✅ Event listener do botão CSV configurado');
-    } else {
-        console.log('ℹ️ Botão btn-csv não encontrado (normal se não existir)');
-    }
-    
-    console.log('✅ Event listeners do Maps configurados com sucesso');
-}
-
 // ==================== EXPORTAR FUNÇÕES GLOBAIS ====================
-// ✅ DISPONIBILIZAR FUNÇÕES GLOBALMENTE PARA USO NO HTML
 window.startMapsSearch = startMapsSearch;
 window.exportarCSV = exportarCSV;
 window.addToFunnel = addToFunnel;
 window.clearMapsForm = clearMapsForm;
-window.refreshMapsSearch = refreshMapsSearch;
 
-// ✅ DEBUG - VERIFICAR SE FUNÇÕES ESTÃO DISPONÍVEIS
-console.log('✅ Maps Integration carregado completamente');
-console.log('✅ startMapsSearch disponível:', typeof window.startMapsSearch);
-console.log('✅ exportarCSV disponível:', typeof window.exportarCSV);
-console.log('✅ addToFunnel disponível:', typeof window.addToFunnel);
-
-// ✅ VERIFICAÇÃO FINAL DE INTEGRIDADE
-if (typeof window.startMapsSearch !== 'function') {
-    console.error('❌ ERRO: startMapsSearch não foi definida corretamente!');
-} else {
-    console.log('🎉 Maps Integration v5.0 inicializado com sucesso!');
-    console.log('📍 Funcionalidades ativas:');
-    console.log(' - ✅ Latitude e Longitude em colunas separadas');
-    console.log(' - ✅ Formatação com 6 casas decimais');
-    console.log(' - ✅ Validação de coordenadas');
-    console.log(' - ✅ Estatísticas detalhadas');
-    console.log(' - ✅ Exportação CSV com coordenadas');
-    console.log(' - ✅ Sistema de proteção integrado');
-    console.log(' - ✅ URL Ngrok configurada');
-}
+// ==================== VERIFICAÇÃO FINAL ====================
+console.log('✅ Maps Integration v5.0 carregado completamente');
+console.log('📍 Funcionalidades ativas:');
+console.log(' - ✅ Latitude e Longitude em colunas separadas');
+console.log(' - ✅ Formatação com 6 casas decimais');
+console.log(' - ✅ Validação de coordenadas (não mostra 0,0)');
+console.log(' - ✅ Estatísticas com percentual de coordenadas');
+console.log(' - ✅ Exportação CSV com lat/lng separados');
+console.log(' - ✅ Sistema de proteção integrado');
+console.log(' - ✅ URL Ngrok configurada');
+console.log(' - ✅ Notificações visuais');
+console.log(' - ✅ Todas as 10 colunas da tabela');

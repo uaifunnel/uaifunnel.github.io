@@ -423,7 +423,6 @@ function exibirEstatisticasDetalhadas(total, telefones, coordenadas, sites) {
                 flex-wrap: wrap;
                 gap: 20px;
                 color: white;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             `;
             resultsSection.insertBefore(statsElement, resultsSection.firstChild);
         }
@@ -587,4 +586,5 @@ console.log(' - ✅ Sistema de proteção integrado');
 console.log(' - ✅ URL Ngrok configurada');
 console.log(' - ✅ Notificações visuais');
 console.log(' - ✅ Todas as 10 colunas da tabela');
+
 

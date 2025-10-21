@@ -348,7 +348,7 @@ function displayMapsResults(data) {
             <td style="font-weight: 500; color: #053B49; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                 ${item.nome || 'Nome não encontrado'}
             </td>
-            <td style="font-size: 12px; color: #666; max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            <td style="font-size: 12px; color: #757575; max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                 ${item.endereco || 'Endereço não encontrado'}
             </td>
             <td style="text-align: center;">
@@ -360,7 +360,7 @@ function displayMapsResults(data) {
             <td style="text-align: center;">
                 ${formatarAvaliacao(item.avaliacao)}
             </td>
-            <td style="font-size: 12px; color: #666; max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            <td style="font-size: 12px; color: #757575; max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                 ${item.categoria || 'Categoria não encontrada'}
             </td>
             <td style="text-align: center; padding: 8px;">
@@ -415,8 +415,9 @@ function exibirEstatisticasDetalhadas(total, telefones, coordenadas, sites) {
             statsElement.style.cssText = `
                 margin: 20px 0;
                 padding: 20px;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                background: transparent;
                 border-radius: 15px;
+                border: 1px solid #d83e4c;
                 display: flex;
                 justify-content: space-around;
                 flex-wrap: wrap;
@@ -434,19 +435,19 @@ function exibirEstatisticasDetalhadas(total, telefones, coordenadas, sites) {
 
     if (statsElement) {
         statsElement.innerHTML = `
-            <div style="text-align: center; color: white; min-width: 120px;">
-                <div style="font-size: 32px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">${total}</div>
+            <div style="text-align: center; color: #3e3e3e; min-width: 120px;">
+                <div style="font-size: 32px; font-weight: 700; color: #d83e4c; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">${total}</div>
                 <div style="font-size: 13px; opacity: 0.95; margin-top: 5px;">Estabelecimentos</div>
             </div>
-            <div style="text-align: center; color: white; min-width: 120px;">
+            <div style="text-align: center; color: #3e3e3e; min-width: 120px;">
                 <div style="font-size: 32px; font-weight: 700; color: #28a745; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">${telefones}</div>
                 <div style="font-size: 13px; opacity: 0.95; margin-top: 5px;">📱 Telefones (${percentualTelefones}%)</div>
             </div>
-            <div style="text-align: center; color: white; min-width: 120px;">
+            <div style="text-align: center; color: #3e3e3e; min-width: 120px;">
                 <div style="font-size: 32px; font-weight: 700; color: #ffc107; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">${coordenadas}</div>
                 <div style="font-size: 13px; opacity: 0.95; margin-top: 5px;">📍 Coordenadas (${percentualCoordenadas}%)</div>
             </div>
-            <div style="text-align: center; color: white; min-width: 120px;">
+            <div style="text-align: center; color: #3e3e3e; min-width: 120px;">
                 <div style="font-size: 32px; font-weight: 700; color: #17a2b8; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">${sites}</div>
                 <div style="font-size: 13px; opacity: 0.95; margin-top: 5px;">🌐 Sites (${percentualSites}%)</div>
             </div>
@@ -586,3 +587,4 @@ console.log(' - ✅ Sistema de proteção integrado');
 console.log(' - ✅ URL Ngrok configurada');
 console.log(' - ✅ Notificações visuais');
 console.log(' - ✅ Todas as 10 colunas da tabela');
+

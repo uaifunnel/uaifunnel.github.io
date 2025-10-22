@@ -156,7 +156,7 @@ async function startMapsSearch() {
         // const response = await fetch('http://localhost:3000/api/scrape', {   BEFORE
         // const response = await fetch('https://5bd9d625f33b.ngrok-free.app/api...     NOW
         // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        const response = await fetch('https://1f126abc3a60.ngrok-free.app/api/scrape', {
+        const response = await fetch('https://5d1f1105df4d.ngrok-free.app/api/scrape', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -586,5 +586,6 @@ console.log(' - ✅ Sistema de proteção integrado');
 console.log(' - ✅ URL Ngrok configurada');
 console.log(' - ✅ Notificações visuais');
 console.log(' - ✅ Todas as 10 colunas da tabela');
+
 
 
